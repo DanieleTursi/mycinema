@@ -4,7 +4,6 @@ const Home = () => {
   return (
     <div>Old Home
       <p>Hello world</p>
-      <p>How are you?</p>
     </div>
   )
 }
