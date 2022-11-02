@@ -1,11 +1,21 @@
 import React from 'react'
+import Main from '../components/Main/Main'
+import styled from 'styled-components'
 
 const Home = () => {
   return (
-    <div>Old Home
-      <p>Hello world</p>
-    </div>
+    <HomeWrapper>
+      <Main />
+    </HomeWrapper>
   )
 }
 
 export default Home
+
+
+const HomeWrapper = styled.div`
+width:100vw;
+height:100%;
+background:#999 ;
+
+`;
