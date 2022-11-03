@@ -1,32 +1,33 @@
+import { useContext, useEffect, useState } from 'react';
+import TmdbContext from "../../context/TmdbContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import Card from "./Card"
 
 const CardWrapper = (props) => {
+    const { loading } = useContext(TmdbContext);
 
 
+    if (!loading) {
 
-    return (
-        <Wrap>
+        return (
+            <Wrap>
 
-            <Title side={props.side} >
-                {props.name}
-            </Title>
-            <Container>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-            </Container>
+                <Title side={props.side} >
+                    {props.name}
+                </Title>
+                <Container>
+                    {props.movies.map((movie, idx) => (
+                        <Card key={idx} title={movie.title} bg={movie.backdrop_path} />
+                    ))}
+                </Container>
 
-        </Wrap>
-    )
+            </Wrap>
+        )
+    }
+    else {
+        return <h1>Loading</h1>
+    }
 }
 
 export default CardWrapper

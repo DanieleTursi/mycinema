@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-const Card = () => {
-    return (
-        <Container></Container>
-    )
+const Card = (props) => {
+
+  return (
+    <Container bg={props.bg}>{props.title}</Container>
+  )
 }
 
 export default Card
@@ -15,9 +16,9 @@ const Container = styled.div`
   height: 200px;
   border-radius: 10px;
   margin-left: 10px;
-  background-color: #fff;
-  /* background-size: cover;
+  background-image:url(https://www.themoviedb.org/t/p/original${props => props.bg});
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center; */
+  background-position: center center;
 
 `;
