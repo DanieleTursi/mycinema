@@ -6,6 +6,24 @@ const tmdbReducer = (state, action) => {
                 movies: action.payload,
                 loading: false
             }
+        case 'POPULAR_SHOWS':
+            return {
+                ...state,
+                series: action.payload,
+                loading: false
+            }
+        case 'TOP_SHOWS':
+            return {
+                ...state,
+                topSeries: action.payload,
+                loading: false
+            }
+        case 'TOP_MOVIES':
+            return {
+                ...state,
+                topMovies: action.payload,
+                loading: false
+            }
         case 'SET_LOADING':
             return {
                 ...state,

@@ -5,11 +5,14 @@ import CardWrapper from "../CardWrapper/CardWrapper";
 import TmdbContext from "../../context/TmdbContext";
 const Main = () => {
 
-  const { getPopularMovies, loading, movies } = useContext(TmdbContext)
+  const { getPopularMovies, getPopularShows, getTopShows, getTopMovies, topMovies, topSeries, series, loading, movies } = useContext(TmdbContext)
 
 
   useEffect(() => {
     getPopularMovies();
+    getPopularShows();
+    getTopShows();
+    getTopMovies();
   }, [])
 
 
@@ -19,10 +22,10 @@ const Main = () => {
   return (
     <MainWrapper>
       <CardWrapperHolder>
-        <CardWrapper side='left' name='Most Popular Shows' movies={movies} />
+        <CardWrapper side='left' name='Most Popular Shows' movies={series} />
         <CardWrapper side='right' name='Most Popular Movies' movies={movies} />
-        <CardWrapper side='left' name='Just Relased Shows' movies={movies} />
-        <CardWrapper side='right' name='Just Relased Movies' movies={movies} />
+        <CardWrapper side='left' name='Top Rated Shows' movies={topSeries} />
+        <CardWrapper side='right' name='Top Rated Movies' movies={topMovies} />
       </CardWrapperHolder>
 
     </MainWrapper>
