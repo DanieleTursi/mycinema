@@ -18,7 +18,8 @@ const CardWrapper = (props) => {
                 </Title>
                 <Container>
                     {props.movies.map((movie, idx) => (
-                        <Card key={idx} title={movie.title} bg={movie.backdrop_path} />
+
+                        <Card key={idx} bg={movie.poster_path} />
                     ))}
                 </Container>
 
