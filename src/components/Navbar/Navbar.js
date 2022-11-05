@@ -1,18 +1,41 @@
 import React from 'react'
+import styled from "styled-components"
+import Button from '../Button/Button';
 
 const Navbar = () => {
+
   return (
-    <div>Navbar
-      <h1>test</h1>
-      <h2>test2</h2>
-      <h3>test3</h3>
-      <h3>test4</h3>
-      <h3>test5</h3>
-      <h3>test6</h3>
-      <h3>test7</h3>
-      <h3>test8</h3>
-    </div>
+    <NavbarContainer>
+      <Logo>MYCINEMA</Logo>
+      <ButtonsContainer>
+        <Button text='LOG IN' />
+        <Button text='REGISTER' />
+      </ButtonsContainer>
+    </NavbarContainer>
   )
 }
+
+const NavbarContainer = styled.div`
+width:100%;
+height:70px;
+display:flex ;
+justify-content: space-between;
+align-items:center;
+background:black;
+`;
+
+const ButtonsContainer = styled.div`
+   margin-right:20px;
+   justify-content:flex-end;
+`;
+
+const Logo = styled.h1`
+font-size: 42px;
+text-shadow: 3px 3px 3px gray;
+font-family: 'Gochi Hand', cursive;
+color:white;
+margin-left:20px;
+cursor:pointer;
+`
 
 export default Navbar
