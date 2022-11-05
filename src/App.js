@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import './App.css';
 import { TmdbProvider } from './context/TmdbContext';
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<Home />} />
           </Routes>
         </Router>
+        <Footer />
       </div>
     </TmdbProvider>
   );
