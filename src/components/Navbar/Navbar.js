@@ -3,14 +3,14 @@ import styled from "styled-components"
 import Button from '../Button/Button';
 
 const Navbar = () => {
-  
+
   return (
     <NavbarContainer>
-     <Logo>MYCINEMA</Logo>
-     <ButtonsContainer>
-        <Button  text='LOG IN'/>
-        <Button  text='REGISTER'/>
-     </ButtonsContainer>
+      <Logo>MYCINEMA</Logo>
+      <ButtonsContainer>
+        <Button text='LOG IN' />
+        <Button text='REGISTER' />
+      </ButtonsContainer>
     </NavbarContainer>
   )
 }
@@ -29,7 +29,7 @@ const ButtonsContainer = styled.div`
    justify-content:flex-end;
 `;
 
-const Logo= styled.h1`
+const Logo = styled.h1`
 font-size: 42px;
 text-shadow: 3px 3px 3px gray;
 font-family: 'Gochi Hand', cursive;

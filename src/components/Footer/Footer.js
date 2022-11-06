@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from "styled-components"
-import {BiCopyright} from 'react-icons/bi'
-import {BsInstagram, BsFacebook, BsTwitter,BsYoutube} from 'react-icons/bs'
+import { BiCopyright } from 'react-icons/bi'
+import { BsInstagram, BsFacebook, BsTwitter, BsYoutube } from 'react-icons/bs'
 
 const Footer = () => {
   return (
     <FooterContainer>
       <Copyright>
-        <BiCopyright/> Created by Nagy and Tursi
+        <BiCopyright /> Created by Nagy and Tursi
       </Copyright>
       <Socials>
-        <BsInstagram size={'30px'} style={{margin:10,cursor:'pointer'}}/>
-        <BsFacebook  size={'30px'} style={{margin:10,cursor:'pointer'}}/>
-        <BsTwitter size={'30px'} style={{margin:10,cursor:'pointer'}}/>
-        <BsYoutube size={'30px'} style={{margin:10,cursor:'pointer'}}/>
+        <BsInstagram size={'30px'} style={{ margin: 10, cursor: 'pointer' }} />
+        <BsFacebook size={'30px'} style={{ margin: 10, cursor: 'pointer' }} />
+        <BsTwitter size={'30px'} style={{ margin: 10, cursor: 'pointer' }} />
+        <BsYoutube size={'30px'} style={{ margin: 10, cursor: 'pointer' }} />
       </Socials>
     </FooterContainer>
   )
@@ -28,6 +28,9 @@ justify-content: center;
 align-items:center;
 background:black;
 color:white;
+
+
+
 `;
 
 const Socials = styled.div`
