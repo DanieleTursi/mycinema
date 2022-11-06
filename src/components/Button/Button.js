@@ -21,5 +21,8 @@ cursor:pointer;
 &:hover{
   background:lightgray;
 }
+
+@media screen and (max-width: 768px){
+  width:80px;
 `
 export default Button
