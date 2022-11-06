@@ -22,6 +22,7 @@ display:flex ;
 justify-content: space-between;
 align-items:center;
 background:black;
+margin-bottom:20px;
 `;
 
 const ButtonsContainer = styled.div`
