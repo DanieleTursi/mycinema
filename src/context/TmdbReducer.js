@@ -29,6 +29,18 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 loading: true,
             }
+        case 'SET_DETAILS_LOADING':
+            return {
+                ...state,
+                detailsLoading: true,
+            }
+        case 'GET_DETAILS':
+            return {
+                ...state,
+                details: action.payload,
+                detailsLoading: false,
+                movieAndTvID: action.id,
+            }
 
 
         default:

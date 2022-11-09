@@ -22,10 +22,10 @@ const Main = () => {
   return (
     <MainWrapper>
       <CardWrapperHolder>
-        <CardWrapper side='left' name='Most Popular Shows' movies={series} />
-        <CardWrapper side='right' name='Most Popular Movies' movies={movies} />
-        <CardWrapper side='left' name='Top Rated Shows' movies={topSeries} />
-        <CardWrapper side='right' name='Top Rated Movies' movies={topMovies} />
+        <CardWrapper side='left' name='Most Popular Shows' movies={series} type='tv' />
+        <CardWrapper side='right' name='Most Popular Movies' movies={movies} type='movie' />
+        <CardWrapper side='left' name='Top Rated Shows' movies={topSeries} type='tv' />
+        <CardWrapper side='right' name='Top Rated Movies' movies={topMovies} type='movie' />
       </CardWrapperHolder>
 
     </MainWrapper>

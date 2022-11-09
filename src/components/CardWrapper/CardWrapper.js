@@ -19,7 +19,7 @@ const CardWrapper = (props) => {
                 <Container>
                     {props.movies.map((movie, idx) => (
 
-                        <Card key={idx} bg={movie.poster_path} />
+                        <Card key={idx} bg={movie.poster_path} id={movie.id} type={props.type} />
                     ))}
                 </Container>
 

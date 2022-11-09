@@ -5,6 +5,7 @@ const TmdbContext = createContext();
 
 const TMDB_URL = process.env.REACT_APP_TMDB_URL;
 const TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
+const URL = 'https://api.themoviedb.org/3/'
 const TMDB_TV_URL = 'https://api.themoviedb.org/3/tv/';
 
 export const TmdbProvider = ({ children }) => {
@@ -13,7 +14,10 @@ export const TmdbProvider = ({ children }) => {
         series: [{ title: 'loading' }, { title: 'loading' }, { title: 'loading' }],
         topSeries: [{ title: 'loading' }, { title: 'loading' }, { title: 'loading' }],
         topMovies: [{ title: 'loading' }, { title: 'loading' }, { title: 'loading' }],
-        loading: false
+        details: [],
+        detailsLoading: false,
+        loading: false,
+        movieAndTvID: '',
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
@@ -22,6 +26,9 @@ export const TmdbProvider = ({ children }) => {
 
     const setLoading = () => {
         dispatch({ type: 'SET_LOADING' })
+    }
+    const setDetailsLoading = () => {
+        dispatch({ type: 'SET_DETAILS_LOADING' })
     }
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
@@ -74,7 +81,21 @@ export const TmdbProvider = ({ children }) => {
         })
     }
 
-    return <TmdbContext.Provider value={{ getPopularMovies, getPopularShows, getTopShows, getTopMovies, movies: state.movies, loading: state.loading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies }} >{children}</TmdbContext.Provider>
+    const getDetails = async (id, channel) => {
+        setDetailsLoading();
+        const response = await fetch(`${URL}${channel}/${id}?${params}&language=en-US&page=1`);
+        const details = await response.json();
+
+
+        dispatch({
+            type: 'GET_DETAILS',
+            payload: details,
+            id: id,
+        })
+        console.log(initialState.movieAndTvID)
+    }
+
+    return <TmdbContext.Provider value={{ getPopularMovies, getPopularShows, getTopShows, getTopMovies, getDetails, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID }} >{children}</TmdbContext.Provider>
 }
 
 
