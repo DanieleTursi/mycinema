@@ -1,8 +1,10 @@
+import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 import React from 'react'
 import styled from "styled-components"
 import Button from '../Button/Button';
 
-const Navbar = () => {
+
+const Navbar = (props) => {
 
   return (
     <NavbarContainer>

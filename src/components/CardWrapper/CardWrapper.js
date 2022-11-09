@@ -53,8 +53,19 @@ const Title = styled.h3`
 width:80%;
 margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
-padding:0 10%;
+padding:5px 10%;
 border-bottom:1px solid #000;
+
+&:before {
+    color: red;
+    content:"${(props) => props.side === 'left' ?'SHOWS ' :''}";
+  }
+
+&:after {
+    color: red;
+    content:"${(props) => props.side === 'right' ?' MOVIES ' :''}";
+  }
+
 @media screen and (max-width: 768px){
     text-align:center ;
 }

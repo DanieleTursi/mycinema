@@ -23,10 +23,10 @@ const Main = () => {
     <MainWrapper>
       <CardWrapperHolder>
         {loading ? <p>...Loading</p> : <>
-          <CardWrapper side='left' name='Most Popular Shows' movies={series} type='tv' />
-          <CardWrapper side='right' name='Most Popular Movies' movies={movies} type='movie' />
-          <CardWrapper side='left' name='Top Rated Shows' movies={topSeries} type='tv' />
-          <CardWrapper side='right' name='Top Rated Movies' movies={topMovies} type='movie' /></>}
+          <CardWrapper side='left' name='|| Most Popular ' movies={series} type='tv' />
+          <CardWrapper side='right' name='Most Popular || ' movies={movies} type='movie' />
+          <CardWrapper side='left' name='|| Top Rated ' movies={topSeries} type='tv' />
+          <CardWrapper side='right' name='Top Rated ||' movies={topMovies} type='movie' /></>}
 
       </CardWrapperHolder>
 
