@@ -1,6 +1,6 @@
 import {useState } from 'react';
 import styled from "styled-components"
-import { BiSearchAlt } from 'react-icons/bi'
+import { FiSearch } from 'react-icons/fi'
 
 const Searchbar = () => {
     const [message, setMessage] = useState('');
@@ -21,7 +21,7 @@ const Searchbar = () => {
         value={message}
       />
    <button type="submit">
-		<span>SEARCH</span>
+		<span><FiSearch/></span>
 	</button>
   </Styledform>
   )
@@ -54,13 +54,12 @@ button{
     color:white;
     background:black;
     cursor:pointer;
-    margin-top:3px;
     font-family: 'PT Sans Narrow', sans-serif;
     font-size:18px;
 }
 
 button:hover{
-    transform:scale(1.02);
+    transform:scale(1.03);
 }
 `
 
