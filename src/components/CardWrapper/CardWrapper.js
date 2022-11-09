@@ -55,14 +55,17 @@ margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
 padding:5px 10%;
 border-bottom:1px solid #000;
+font-family: 'PT Sans Narrow', sans-serif;
 
 &:before {
     color: red;
+    font-size:24px;
     content:"${(props) => props.side === 'left' ?'SHOWS ' :''}";
   }
 
 &:after {
     color: red;
+    font-size:24px;
     content:"${(props) => props.side === 'right' ?' MOVIES ' :''}";
   }
 
