@@ -4,9 +4,13 @@ import { FiSearch } from 'react-icons/fi'
 
 const Searchbar = () => {
     const [message, setMessage] = useState('');
+  
+    
 
     const handleChange = event => {
       setMessage(event.target.value);
+
+      
   
       console.log('value is:', event.target.value);
     };

@@ -9,7 +9,7 @@ const CardWrapper = (props) => {
 
 
     if (!loading) {
-
+         
         return (
             <Wrap>
 
