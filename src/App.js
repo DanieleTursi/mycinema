@@ -6,14 +6,14 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import ShowDetails from './pages/ShowDetails';
 import MovieDetails from './pages/MovieDetails';
-import Searchbar from './components/Searchbar/Searchbar';
+import SearchBox from './components/SearchBox/SearchBox';
 
 function App() {
   return (
     <TmdbProvider>
       <div className="App">
         <Navbar />
-        <Searchbar />
+        <SearchBox/>
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
