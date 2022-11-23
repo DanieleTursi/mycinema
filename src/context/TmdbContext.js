@@ -71,6 +71,7 @@ export const TmdbProvider = ({ children }) => {
         const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
         const details = await response.json();
 
+        console.log(details)
 
         dispatch({
             type: 'GET_DETAILS',
