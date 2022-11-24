@@ -1,17 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 
+
+
 const MovieDetails = () => {
-    const { details, detailsLoading, getDetails } = useContext(TmdbContext);
+    const { details, detailsLoading, getDetails, rDate, credits } = useContext(TmdbContext);
     const [showId, setShowId] = useLocalStorage('id', '');
     const [screenType, setScreenType] = useLocalStorage('st', '');
-    console.log(details.backdrop_path);
+
+
     useEffect(() => {
         getDetails(showId, screenType)
 
     }, [])
+
     if (!detailsLoading) {
         return (
             // <div>{details.title}</div>
@@ -26,7 +30,20 @@ const MovieDetails = () => {
                                 <span>%</span>
                             </UserScore>
                             <Title>{details.title}</Title>
-                            <RelaseYear>({details.release_date.slice(0, 4)})</RelaseYear>
+                            <RelaseYear>({rDate})</RelaseYear>
+                            <h3>Overview</h3>
+                            <p>{details.overview}</p>
+                            <DirectorWrapper>
+
+                                <div>
+                                    <h3>Director</h3>
+                                    <p>{credits}</p>
+                                </div>
+
+
+                            </DirectorWrapper>
+
+
                         </Details>
                     </DetailsWrapper>
 
@@ -38,6 +55,10 @@ const MovieDetails = () => {
         <h1>...Loading</h1>
     }
 }
+
+
+
+
 
 export default MovieDetails
 
@@ -88,9 +109,18 @@ background-size:cover ;
 const Details = styled.div`
 width:60%;
 height:80%;
-border:1px solid white;
-margin-left:50px;
 
+margin-left:50px;
+display:flex;
+flex-direction:column;
+flex-wrap:wrap;
+h3{
+    color:white;
+
+}
+p{
+    color:#fff;
+}
 `;
 const Title = styled.span`
 color:#fff;
@@ -121,3 +151,21 @@ span{
     padding:0;
 }
 `;
+
+const DirectorWrapper = styled.div`
+display:flex;
+width:100%;
+min-height:100px;
+
+div{
+    display:flex;
+    flex-direction:column;
+    
+    justify-content:center;
+    h3{
+        margin:0;
+        color:red;
+    }
+}
+`;
+
