@@ -1,5 +1,5 @@
 
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import tmdbReducer from './TmdbReducer'
 const TmdbContext = createContext();
 
@@ -16,6 +16,8 @@ export const TmdbProvider = ({ children }) => {
         detailsLoading: false,
         loading: false,
         movieAndTvID: '',
+        releaseDate: '2022',
+        credits: [],
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
@@ -71,17 +73,38 @@ export const TmdbProvider = ({ children }) => {
         const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
         const details = await response.json();
 
-        console.log(details)
+        const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
+        const credits = await creditFetch.json();
+        function getDirector(job) {
+            if (job.job === 'Director') {
+                return job.name
+            }
 
-        dispatch({
-            type: 'GET_DETAILS',
-            payload: details,
-            id: id,
-        })
+        }
+        const director = await credits.crew.map(getDirector)
+
+        if (channel === 'tv') {
+            dispatch({
+                type: 'GET_DETAILS',
+                payload: details,
+                id: id,
+                releaseDate: details.first_air_date.slice(0, 4),
+                credits: director
+            })
+        } else {
+            dispatch({
+                type: 'GET_DETAILS',
+                payload: details,
+                id: id,
+                releaseDate: details.release_date.slice(0, 4),
+                credits: director
+            })
+        }
+
         console.log(initialState.movieAndTvID)
     }
 
-    return <TmdbContext.Provider value={{ getTop, getPopular, getDetails, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID }} >{children}</TmdbContext.Provider>
+    return <TmdbContext.Provider value={{ getTop, getPopular, getDetails, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
 }
 
 

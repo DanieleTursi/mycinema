@@ -40,6 +40,8 @@ const tmdbReducer = (state, action) => {
                 details: action.payload,
                 detailsLoading: false,
                 movieAndTvID: action.id,
+                releaseDate: action.releaseDate,
+                credits: action.credits
             }
 
 
