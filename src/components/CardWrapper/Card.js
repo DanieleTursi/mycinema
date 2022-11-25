@@ -33,15 +33,15 @@ const Card = (props) => {
   return (
     <>
       <Container onClick={idHandler} bg={props.bg} id={props.id} >
-     
+
       </Container>
       <Info>
-      <Rating rating={props.rating}>
-        <h1>{props.rating}</h1>
-      </Rating>
-        <h2>{props.release.slice(0,4)}</h2>
+        <Rating rating={props.rating}>
+          <h1>{props.rating}</h1>
+        </Rating>
+        <h2>{props.release != null ? props.release.slice(0, 4) : 'N/N'}</h2>
       </Info>
-     
+
     </>
   )
 }

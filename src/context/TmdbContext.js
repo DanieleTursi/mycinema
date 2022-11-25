@@ -18,29 +18,15 @@ export const TmdbProvider = ({ children }) => {
         movieAndTvID: '',
         releaseDate: '2022',
         credits: [],
-        searchMovies:[],
-        searchTV:[],
-        searchPeople:[],
+        searchMovies: [],
+        searchTV: [],
+        searchPeople: [],
+        searchLoading: false,
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
-    //Search
 
-    const getSearch = async (value) => {
-        if (value.length > 0) {
-          const resMovies = await fetch(`${URL}search/movie?${params}&language=en-US&query=${value}&page=1`)
-          const dataMovies = await resMovies.json()
-          const resSeries = await fetch(`${URL}search/tv?${params}&language=en-US&query=${value}&page=1`)
-          const dataSeries = await resSeries.json()
-          const resPeople= await fetch(`${URL}search/person?${params}&language=en-US&query=${value}&page=1`)
-          const dataPeople = await resPeople.json()
-          console.log(dataMovies, dataSeries, dataPeople)
-          dispatch({ type: 'GET_SEARCH' , searchMovies: dataMovies, searchTV: dataSeries, searchPeople: dataPeople})
-        }
-      }
-    
-
-   // Set Loading
+    // Set Loading
 
     const setLoading = () => {
         dispatch({ type: 'SET_LOADING' })
@@ -49,10 +35,34 @@ export const TmdbProvider = ({ children }) => {
     const setDetailsLoading = () => {
         dispatch({ type: 'SET_DETAILS_LOADING' })
     }
+
+    const setSearchLoading = () => {
+        dispatch({ type: 'SET_SEARCH_LOADING' })
+    }
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
 
     })
+
+
+    //Search
+
+    const getSearch = async (value) => {
+        if (value.length > 0) {
+            setSearchLoading();
+
+            const resMovies = await fetch(`${URL}search/movie?${params}&language=en-US&query=${value}&page=1`)
+            const dataMovies = await resMovies.json()
+            const resSeries = await fetch(`${URL}search/tv?${params}&language=en-US&query=${value}&page=1`)
+            const dataSeries = await resSeries.json()
+            const resPeople = await fetch(`${URL}search/person?${params}&language=en-US&query=${value}&page=1`)
+            const dataPeople = await resPeople.json()
+            console.log(dataMovies, dataSeries, dataPeople)
+            dispatch({ type: 'GET_SEARCH', searchMovies: dataMovies.results, searchTV: dataSeries.results, searchPeople: dataPeople.results })
+        }
+    }
+
+
     // get popular Movies and Shows
     const getPopular = async () => {
         setLoading();
@@ -123,7 +133,7 @@ export const TmdbProvider = ({ children }) => {
         console.log(initialState.movieAndTvID)
     }
 
-    return <TmdbContext.Provider value={{ getSearch, getTop, getPopular, getDetails, searchMovies: state.searchMovies,searchPeople:state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
+    return <TmdbContext.Provider value={{ getSearch, getTop, getPopular, getDetails, searchMovies: state.searchMovies, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
 }
 
 

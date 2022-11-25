@@ -7,12 +7,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 const SearchBox = () => {
   const [value, setValue] = useState('');
   const { getSearch } = useContext(TmdbContext)
-  // const navigate = useNavigate();
-  
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault()
     getSearch(value)
-    // navigate('/searchresult');
+    navigate('/searchresult');
     setValue('')
   }
 
