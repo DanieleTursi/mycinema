@@ -16,11 +16,9 @@ const Card = (props) => {
 
     getDetails(showId, props.type);
 
-    if (props.type === 'tv') {
-      navigate('/showdetails');
-    } else {
-      navigate('/moviedetails/')
-    }
+
+    navigate('/detailspage/')
+
 
   }
 

@@ -104,13 +104,7 @@ export const TmdbProvider = ({ children }) => {
 
         const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
         const credits = await creditFetch.json();
-        function getDirector(job) {
-            if (job.job === 'Director') {
-                return job.name
-            }
 
-        }
-        const director = await credits.crew.map(getDirector)
 
         if (channel === 'tv') {
             dispatch({
@@ -118,19 +112,18 @@ export const TmdbProvider = ({ children }) => {
                 payload: details,
                 id: id,
                 releaseDate: details.first_air_date.slice(0, 4),
-                credits: director
+                credits: null
             })
         } else {
+            const dir = credits.crew.find(element => element.job === 'Director').name
             dispatch({
                 type: 'GET_DETAILS',
                 payload: details,
                 id: id,
                 releaseDate: details.release_date.slice(0, 4),
-                credits: director
+                credits: dir
             })
         }
-
-        console.log(initialState.movieAndTvID)
     }
 
     return <TmdbContext.Provider value={{ getSearch, getTop, getPopular, getDetails, searchMovies: state.searchMovies, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
