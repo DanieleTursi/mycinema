@@ -44,6 +44,12 @@ const tmdbReducer = (state, action) => {
                 credits: action.credits
             }
 
+        case 'GET_SEARCH':
+            return {
+                ...state,
+                searchMovies: action.searchMovies,
+                searchTV: action.searchTV,
+            }
 
         default:
             return state
