@@ -34,6 +34,11 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 detailsLoading: true,
             }
+        case 'SET_SEARCH_LOADING':
+            return {
+                ...state,
+                searchLoading: true,
+            }
         case 'GET_DETAILS':
             return {
                 ...state,
@@ -50,6 +55,7 @@ const tmdbReducer = (state, action) => {
                 searchMovies: action.searchMovies,
                 searchTV: action.searchTV,
                 searchPeople: action.searchPeople,
+                searchLoading: false,
             }
 
         default:

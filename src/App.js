@@ -15,8 +15,9 @@ function App() {
     <TmdbProvider>
       <div className="App">
         <Navbar />
-        <SearchBox/>
+
         <Router>
+          <SearchBox />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/showdetails" element={<ShowDetails />} />
