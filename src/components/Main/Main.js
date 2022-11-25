@@ -7,17 +7,10 @@ const Main = () => {
 
   const { getPopular, getTop, topMovies, topSeries, series, loading, movies } = useContext(TmdbContext)
 
-
   useEffect(() => {
-
     getPopular()
     getTop();
-
   }, [])
-
-
-
-
 
   return (
     <MainWrapper>

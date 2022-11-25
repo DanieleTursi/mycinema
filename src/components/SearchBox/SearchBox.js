@@ -10,6 +10,7 @@ const SearchBox = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     getSearch(value)
+    setValue('')
   }
 
   return (

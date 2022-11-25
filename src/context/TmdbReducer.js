@@ -49,6 +49,7 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 searchMovies: action.searchMovies,
                 searchTV: action.searchTV,
+                searchPeople: action.searchPeople,
             }
 
         default:
