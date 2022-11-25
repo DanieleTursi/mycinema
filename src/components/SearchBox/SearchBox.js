@@ -1,36 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from "styled-components"
 import { FiSearch } from 'react-icons/fi'
+import TmdbContext from "../../context/TmdbContext";
 
 const SearchBox = () => {
   const [value, setValue] = useState('');
-  const TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
-  const URL = 'https://api.themoviedb.org/3/'
-  const params = new URLSearchParams({
-    api_key: TMDB_KEY,
-  })
-  const [resultMovie, setResultMovie] = useState([])
-  const [resultSeries, setResultSeries] = useState([])
-
-  const handleClick = async (value) => {
-    if (value.length > 0) {
-      const resMovie = await fetch(`${URL}search/movie?${params}&language=en-US&query=${value}&page=1`)
-      const dataMovie = await resMovie.json()
-      setResultMovie(dataMovie)
-      const resSeries = await fetch(`${URL}search/tv?${params}&language=en-US&query=${value}&page=1`)
-      const dataSeries = await resSeries.json()
-      setResultSeries(dataSeries)
-      console.log(dataMovie, dataSeries)
-    }
-    else {
-      setResultMovie([]);
-      setResultSeries([]);
-    }
-  }
-
+  const { getSearch } = useContext(TmdbContext)
+  
   const handleSubmit = (event) => {
     event.preventDefault()
-    handleClick(value)
+    getSearch(value)
   }
 
   return (
