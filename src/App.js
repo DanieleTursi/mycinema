@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer';
 import ShowDetails from './pages/ShowDetails';
 import MovieDetails from './pages/MovieDetails';
 import SearchBox from './components/SearchBox/SearchBox';
+import SearchResultPage from './components/SearchResultPage/SearchResultPage';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/showdetails" element={<ShowDetails />} />
             <Route path="/moviedetails/" element={<MovieDetails />} />
+            <Route path="/searchresult/" element={<SearchResultPage />} />
           </Routes>
         </Router>
         <Footer />

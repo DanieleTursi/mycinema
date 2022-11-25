@@ -2,14 +2,17 @@ import { useState, useContext } from 'react';
 import styled from "styled-components"
 import { FiSearch } from 'react-icons/fi'
 import TmdbContext from "../../context/TmdbContext";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const SearchBox = () => {
   const [value, setValue] = useState('');
   const { getSearch } = useContext(TmdbContext)
+  // const navigate = useNavigate();
   
   const handleSubmit = (event) => {
     event.preventDefault()
     getSearch(value)
+    // navigate('/searchresult');
     setValue('')
   }
 
@@ -25,13 +28,6 @@ const SearchBox = () => {
       <button type="submit">
         <span><FiSearch /></span>
       </button>
-      {/* <div className='box'>{result.map((result,index) => (
-    <a href="#" key= {index}>
-      <div>
-        {result}
-      </div>
-    </a>))}
-  </div> */}
     </Styledform>
   )
 }
