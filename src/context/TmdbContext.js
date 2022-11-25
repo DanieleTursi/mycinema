@@ -18,15 +18,36 @@ export const TmdbProvider = ({ children }) => {
         movieAndTvID: '',
         releaseDate: '2022',
         credits: [],
+        searchMovies:[],
+        searchTV:[],
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
-    // Set Loading
+    //Search
 
+    const [resultMovie, setResultMovie] = useState([])
+    const [resultSeries, setResultSeries] = useState([])
+
+    
+
+    const getSearch = async (value) => {
+        if (value.length > 0) {
+          const resMovies = await fetch(`${URL}search/movie?${params}&language=en-US&query=${value}&page=1`)
+          const dataMovies = await resMovies.json()
+          const resSeries = await fetch(`${URL}search/tv?${params}&language=en-US&query=${value}&page=1`)
+          const dataSeries = await resSeries.json()
+          console.log(dataMovies, dataSeries)
+          dispatch({ type: 'GET_SEARCH' , searchMovies: dataMovies, searchTV: dataSeries})
+        }
+      }
+    
+
+   // Set Loading
 
     const setLoading = () => {
         dispatch({ type: 'SET_LOADING' })
     }
+
     const setDetailsLoading = () => {
         dispatch({ type: 'SET_DETAILS_LOADING' })
     }
@@ -104,7 +125,7 @@ export const TmdbProvider = ({ children }) => {
         console.log(initialState.movieAndTvID)
     }
 
-    return <TmdbContext.Provider value={{ getTop, getPopular, getDetails, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
+    return <TmdbContext.Provider value={{ getSearch, getTop, getPopular, getDetails, searchMovies: state.searchMovies, searchTV: state.searchTV, movies: state.movies, loading: state.loading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID, rDate: state.releaseDate, credits: state.credits }} >{children}</TmdbContext.Provider>
 }
 
 

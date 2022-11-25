@@ -37,9 +37,9 @@ const Card = (props) => {
       </Container>
       <Info>
       <Rating>
-        <h1>{props.rating}</h1>
+        <h1 rating={props.rating}>{props.rating}</h1>
       </Rating>
-        <h2>{props.title}</h2>
+        <h2>{props.release.slice(0,4)}</h2>
       </Info>
      
     </>
@@ -75,7 +75,7 @@ const Info = styled.div`
     h2{
       margin-left:4px;
       text-align:center;
-      font-size:12px;
+      font-size:18px;
     }
 `
 
