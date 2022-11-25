@@ -2,13 +2,16 @@ import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 import React from 'react'
 import styled from "styled-components"
 import Button from '../Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = (props) => {
 
+
+  const navigate = useNavigate();
   return (
     <NavbarContainer>
-      <Logo>MYCINEMA</Logo>
+      <Logo onClick={() => { navigate('/') }}>MYCINEMA</Logo>
       <ButtonsContainer>
         <Button text='LOG IN' />
         <Button text='REGISTER' />

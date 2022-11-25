@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 
 
-const MovieDetails = () => {
+const DetailsPage = () => {
     const { details, detailsLoading, getDetails, rDate, credits } = useContext(TmdbContext);
     const [showId, setShowId] = useLocalStorage('id', '');
     const [screenType, setScreenType] = useLocalStorage('st', '');
@@ -15,10 +15,10 @@ const MovieDetails = () => {
         getDetails(showId, screenType)
 
     }, [])
-
+    console.log(credits)
     if (!detailsLoading) {
         return (
-            // <div>{details.title}</div>
+
             <Wrapper>
                 <HeaderDetails >
                     <BackgroundImage bg={details.backdrop_path} />
@@ -29,16 +29,16 @@ const MovieDetails = () => {
                                 <h3>70</h3>
                                 <span>%</span>
                             </UserScore>
-                            <Title>{details.title}</Title>
+                            <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview</h3>
                             <p>{details.overview}</p>
                             <DirectorWrapper>
 
-                                <div>
+                                {credits != null ? <div>
                                     <h3>Director</h3>
                                     <p>{credits}</p>
-                                </div>
+                                </div> : <></>}
 
 
                             </DirectorWrapper>
@@ -60,7 +60,7 @@ const MovieDetails = () => {
 
 
 
-export default MovieDetails
+export default DetailsPage
 
 
 const Wrapper = styled.div`
