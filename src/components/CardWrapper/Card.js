@@ -33,15 +33,15 @@ const Card = (props) => {
   return (
     <>
       <Container onClick={idHandler} bg={props.bg} id={props.id} >
-     
+
       </Container>
       <Info>
-      <Rating>
-        <h1>{props.rating}</h1>
-      </Rating>
+        <Rating>
+          <h1 rating={props.rating}>{props.rating}</h1>
+        </Rating>
         <h2>{props.title}</h2>
       </Info>
-     
+
     </>
   )
 }
