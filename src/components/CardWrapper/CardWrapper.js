@@ -9,11 +9,11 @@ const CardWrapper = (props) => {
 
 
     if (!loading) {
-         
+       
         return (
-            <Wrap>
+            <Wrap side={props.side}>
 
-                <Title side={props.side} >
+                <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
                 <Container>
@@ -35,9 +35,9 @@ export default CardWrapper
 
 
 const Wrap = styled.div`
-width:45%;
+width:${props => (props.side === 'center' || props.side === 'other' ? '90%' : '45%')};
 height:300px;
-margin:50px 0;
+margin:80px 0;
 display:flex ;
 justify-content:center ;
 align-items:center;
@@ -48,6 +48,7 @@ flex-direction:column ;
     margin:20px 0;
 }
 `;
+
 
 const Title = styled.h3`
 width:80%;
@@ -60,13 +61,13 @@ font-family: 'PT Sans Narrow', sans-serif;
 &:before {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'left' ?'SHOWS ' :''}";
+    content:"${(props) => props.side === 'left' || props.side === 'other' ?'SHOWS ' :''}";
   }
 
 &:after {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'right' ?' MOVIES ' :''}";
+    content:"${(props) => props.side === 'right'  || props.side === 'center' ?' MOVIES' :''}";
   }
 
 @media screen and (max-width: 768px){
