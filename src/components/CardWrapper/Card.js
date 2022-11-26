@@ -13,13 +13,8 @@ const Card = (props) => {
   const navigate = useNavigate();
   const getId = () => {
     console.log(props.id)
-
     getDetails(showId, props.type);
-
-
     navigate('/detailspage/')
-
-
   }
 
   const idHandler = async () => {
@@ -31,7 +26,6 @@ const Card = (props) => {
   return (
     <>
       <Container onClick={idHandler} bg={props.bg} id={props.id} >
-
       </Container>
       <Info>
         <Rating rating={props.rating}>
@@ -39,7 +33,6 @@ const Card = (props) => {
         </Rating>
         <h2>{props.release != null ? props.release.slice(0, 4) : 'N/N'}</h2>
       </Info>
-
     </>
   )
 }
@@ -91,6 +84,5 @@ const Rating = styled.div`
       color:white;
       text-align:center;
       font-size:12px;
-    }
-    
+    }  
     `;
