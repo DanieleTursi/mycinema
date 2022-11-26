@@ -17,9 +17,9 @@ const Main = () => {
       <CardWrapperHolder>
         {loading ? <p>...Loading</p> : <>
           <CardWrapper side='left' name='|| Most Popular ' movies={series} type='tv' />
-          <CardWrapper side='right' name='Most Popular || ' movies={movies} type='movie' />
+          <CardWrapper side='right' name='Most Popular || ' movies={movies} type='movie' content={"MOVIES"} />
           <CardWrapper side='left' name='|| Top Rated ' movies={topSeries} type='tv' />
-          <CardWrapper side='right' name='Top Rated ||' movies={topMovies} type='movie' /></>}
+          <CardWrapper side='right' name='Top Rated ||' movies={topMovies} type='movie' content={"MOVIES"} /></>}
 
       </CardWrapperHolder>
 

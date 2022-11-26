@@ -10,13 +10,24 @@ const SearchResultPage = () => {
   return (
     <>
       {searchLoading ? <p>...Loading</p> :
-        <div>
-          {searchTV.length > 0 ? <CardWrapper side='left' name='|| Shows ' movies={searchTV} type='tv' /> : <></>}
-          {searchMovies.length > 0 ? <CardWrapper side='right' name='|| Movies ' movies={searchMovies} type='movies' /> : <></>}
-          {/* <CardWrapper side='right' name='|| Most People ' movies={searchPeople} type='tv' /> */}
+        <SearchResultWrapper>
+          {searchTV.length > 0 ? <CardWrapper side='other' name='|| Result ' movies={searchTV} type='tv' /> : <></>}
+          {searchMovies.length > 0 ? <CardWrapper side='center' name='Result || ' movies={searchMovies} type='movie' /> : <></>}
+          {/* {searchPeople.length > 0 ? <CardWrapper side='center' name='Result in || ' movies={searchPeople} type='tv' /> : <></>} */}
 
-        </div>}</>
+        </SearchResultWrapper>}</>
   )
 }
 
 export default SearchResultPage
+
+const SearchResultWrapper = styled.div`
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+`;
+
+
