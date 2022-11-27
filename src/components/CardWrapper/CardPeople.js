@@ -27,12 +27,9 @@ const CardPeople = (props) => {
     <>
       <ContainerPeople onClick={idHandler} bg={props.bg} id={props.id} >
       </ContainerPeople>
-      {/* <Info>
-        <Rating rating={props.rating}>
-          <h1>{props.rating}</h1>
-        </Rating>
-        <h2>{props.release != null ? props.release.slice(0, 4) : 'N/N'}</h2>
-      </Info> */}
+      <Info>
+        <h2>{props.name != null ? props.name.toUpperCase() : 'N/N'}</h2>
+      </Info>
     </>
   )
 }
@@ -58,31 +55,31 @@ const ContainerPeople = styled.div`
 
 `
 
-// const Info = styled.div`
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
+const Info = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-//     h2{
-//       margin-left:4px;
-//       text-align:center;
-//       font-size:18px;
-//     }
-// `
+    h2{
+      margin-left:4px;
+      text-align:center;
+      font-size:12px;
+    }
+`
 
-// const Rating = styled.div`
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
-//     background-color:${props => (props.rating >= 6 ? 'green' : 'red')};
-//     border-radius:50%;
-//     height:30px;
-//     width:30px;
-//     margin:4px;
+const Rating = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:${props => (props.rating >= 6 ? 'green' : 'red')};
+    border-radius:50%;
+    height:30px;
+    width:30px;
+    margin:4px;
 
-//     h1{
-//       color:white;
-//       text-align:center;
-//       font-size:12px;
-//     }  
-//     `;
+    h1{
+      color:white;
+      text-align:center;
+      font-size:12px;
+    }  
+    `;

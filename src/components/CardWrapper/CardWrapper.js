@@ -12,17 +12,14 @@ const CardWrapper = (props) => {
        
         return (
             <Wrap side={props.side}>
-
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
                 <Container>
                     {props.movies.map((movie, idx) => (
-
                         <Card key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} release={movie.release_date || movie.first_air_date}/>
                     ))}
                 </Container>
-
             </Wrap>
         )
     }
