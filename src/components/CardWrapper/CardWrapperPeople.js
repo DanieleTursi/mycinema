@@ -19,7 +19,7 @@ const CardWrapperPeople = (props) => {
                 <Container>
                     {props.people.map((person, idx) => (
 
-                        <CardPeople key={idx} bg={person.poster_path} id={person.id} type={props.type} />
+                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} />
                     ))}
                 </Container>
 
@@ -67,7 +67,7 @@ font-family: 'PT Sans Narrow', sans-serif;
 &:after {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'right'  || props.side === 'center' ?' MOVIES' :''}";
+    content:"${(props) => props.side === 'right'  || props.side === 'center' ?' PEOPLE' :''}";
   }
 
 @media screen and (max-width: 768px){
