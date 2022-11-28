@@ -33,7 +33,7 @@ const Card = (props) => {
         <Rating rating={props.rating}>
           <h1>{props.rating}</h1>
         </Rating>
-        <h2>{props.release != null ? props.release.slice(0, 4) : 'N/N'}</h2>
+        <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
       </Info>
     </>
   )
