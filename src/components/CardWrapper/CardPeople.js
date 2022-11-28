@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import noImage from '../../noImage.png'
 const CardPeople = (props) => {
 
   const { getDetails, details, detailsLoading } = useContext(TmdbContext);
@@ -22,6 +23,7 @@ const CardPeople = (props) => {
     await setScreenType(props.type)
     getId()
   }
+
 
   return (
     <>
@@ -43,7 +45,8 @@ const ContainerPeople = styled.div`
   height: 280px;
   border-radius: 10px;
   margin-left: 10px;
-  background-image:url(https://www.themoviedb.org/t/p/original${props => props.bg});
+//   background-image:url(${noImage});
+  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})` };
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
