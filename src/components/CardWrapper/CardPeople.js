@@ -28,7 +28,7 @@ const CardPeople = (props) => {
       <ContainerPeople onClick={idHandler} bg={props.bg} id={props.id} >
       </ContainerPeople>
       <Info>
-        <h2>{props.name != null ? props.name.toUpperCase() : 'N/N'}</h2>
+        <h2>{props.name != null ? props.name.toUpperCase().slice(0,23) : 'N/N'}</h2>
       </Info>
     </>
   )
