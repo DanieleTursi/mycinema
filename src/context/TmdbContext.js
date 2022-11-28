@@ -104,7 +104,7 @@ export const TmdbProvider = ({ children }) => {
 
         const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
         const credits = await creditFetch.json();
-
+        console.log(details);
 
         if (channel === 'tv') {
             dispatch({
