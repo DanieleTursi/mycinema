@@ -1,12 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components"
 import CardWrapper from "../CardWrapper/CardWrapper";
 import CardWrapperPeople from "../CardWrapper/CardWrapperPeople";
 import TmdbContext from "../../context/TmdbContext";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const SearchResultPage = () => {
-  const { searchMovies, searchTV, searchPeople, searchLoading } = useContext(TmdbContext);
+  const { searchMovies, searchTV, searchPeople, searchLoading, getSearch } = useContext(TmdbContext);
   console.log(searchMovies);
+  const [showResult, setShowResult] = useLocalStorage('value', '');
+
+  useEffect(() => {
+    getSearch(showResult)
+  }, [])
 
   return (
     <>

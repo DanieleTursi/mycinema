@@ -1,12 +1,14 @@
-import { useState, useContext } from 'react';
+import { useState, useContext} from 'react';
 import styled from "styled-components"
 import { FiSearch } from 'react-icons/fi'
 import TmdbContext from "../../context/TmdbContext";
 import { useNavigate, useParams } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const SearchBox = () => {
   const [value, setValue] = useState('');
   const { getSearch } = useContext(TmdbContext)
+  const [showResult, setShowResult] = useLocalStorage('value', '');
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -14,6 +16,7 @@ const SearchBox = () => {
     getSearch(value)
     navigate('/searchresult');
     setValue('')
+    setShowResult(value)
   }
 
   return (
