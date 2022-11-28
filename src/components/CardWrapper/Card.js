@@ -11,9 +11,9 @@ const Card = (props) => {
   const [screenType, setScreenType] = useLocalStorage('st', '');
 
   const navigate = useNavigate();
-  const getId = () => {
+  const getId = async () => {
     console.log(props.id)
-    getDetails(showId, props.type);
+    await getDetails(showId, props.type);
     navigate('/detailspage/')
   }
 
