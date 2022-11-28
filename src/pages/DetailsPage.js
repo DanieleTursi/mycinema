@@ -2,54 +2,90 @@ import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
-
+import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, getDetails, rDate, credits } = useContext(TmdbContext);
+    const { details, detailsLoading, getDetails, rDate, credits, actorDetails, cast } = useContext(TmdbContext);
     const [showId, setShowId] = useLocalStorage('id', '');
     const [screenType, setScreenType] = useLocalStorage('st', '');
 
+    const startEffect = async () => {
+        await getDetails(showId, screenType)
+    }
 
     useEffect(() => {
-        getDetails(showId, screenType)
+        startEffect()
 
     }, [])
     console.log(credits)
     if (!detailsLoading) {
-        return (
+        if (screenType === 'person') {
+            return (
+                <Wrapper>
+                    <HeaderDetails >
+                        <ActorBackground />
+                        <DetailsWrapper>
+                            <Poster bg={actorDetails.profile_path} />
+                            <Details>
 
-            <Wrapper>
-                <HeaderDetails >
-                    <BackgroundImage bg={details.backdrop_path} />
-                    <DetailsWrapper>
-                        <Poster bg={details.poster_path} />
-                        <Details>
-                            <UserScore>
-                                <h3>70</h3>
-                                <span>%</span>
-                            </UserScore>
-                            <Title>{details.title || details.name}</Title>
-                            <RelaseYear>({rDate})</RelaseYear>
-                            <h3>Overview</h3>
-                            <p>{details.overview}</p>
-                            <DirectorWrapper>
+                                <Title>{actorDetails.name}</Title>
+                                <DoB>born: {actorDetails.birthday}</DoB>
+                                {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
 
-                                {credits != null ? <div>
-                                    <h3>Director</h3>
-                                    <p>{credits}</p>
-                                </div> : <></>}
+                                <h3>Bio</h3>
+                                <p>{actorDetails.biography}</p>
 
 
-                            </DirectorWrapper>
+
+                            </Details>
+                        </DetailsWrapper>
+
+                    </HeaderDetails>
+                </Wrapper>
 
 
-                        </Details>
-                    </DetailsWrapper>
 
-                </HeaderDetails>
-            </Wrapper>
-        )
+            )
+        }
+        else {
+            return (
+
+                <Wrapper>
+                    <HeaderDetails >
+                        <BackgroundImage bg={details.backdrop_path} />
+                        <DetailsWrapper>
+                            <Poster bg={details.poster_path} />
+                            <Details>
+                                <UserScore>
+                                    <h3>70</h3>
+                                    <span>%</span>
+
+                                </UserScore>
+                                <Title>{details.title || details.name}</Title>
+                                <RelaseYear>({rDate})</RelaseYear>
+                                <h3>Overview</h3>
+                                <p>{details.overview}</p>
+                                <DirectorWrapper>
+
+                                    {credits != null ? <div>
+                                        <h3>Director</h3>
+                                        <p>{credits}</p>
+                                    </div> : <></>}
+
+
+                                </DirectorWrapper>
+
+
+                            </Details>
+                        </DetailsWrapper>
+
+                    </HeaderDetails>
+                    {/* <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' /> */}
+                </Wrapper>
+            )
+        }
+
     }
     else {
         <h1>...Loading</h1>
@@ -65,6 +101,7 @@ export default DetailsPage
 
 const Wrapper = styled.div`
 width:100%;
+min-height:600px;
 display:flex;
 flex-direction:column ;
 
@@ -72,10 +109,10 @@ flex-direction:column ;
 
 const HeaderDetails = styled.div`
 width:100%;
-height:600px;
+min-height:700px;
 margin:20px 0;
 position:relative;
-
+display:flex;
 align-items:center;
 justify-content:center;
 
@@ -90,16 +127,25 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
-const DetailsWrapper = styled.div`
+const ActorBackground = styled.div`
 width:100%;
 height:100%;
+background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+
+filter:blur(3px);
+position:absolute;
+z-index:-1;
+`;
+const DetailsWrapper = styled.div`
+width:100%;
+min-height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
 `;
 const Poster = styled.div`
 width:300px;
-height:80%;
+height:500px;
 border:1px solid white;
 border-radius:7px;
 
@@ -128,6 +174,11 @@ font-size:40px;
 font-weight:bold;
 `;
 const RelaseYear = styled.span`
+color:#999;
+font-size:20px;
+
+`;
+const DoB = styled.span`
 color:#999;
 font-size:20px;
 
