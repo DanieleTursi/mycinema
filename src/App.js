@@ -15,12 +15,9 @@ function App() {
       <div className="App">
         <Router>
           <Navbar />
-
-
           <SearchBox />
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route path="/detailspage/" element={<DetailsPage />} />
             <Route path="/searchresult/" element={<SearchResultPage />} />
           </Routes>
@@ -32,3 +29,4 @@ function App() {
 }
 
 export default App;
+
