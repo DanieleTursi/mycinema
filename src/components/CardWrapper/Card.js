@@ -27,9 +27,9 @@ const Card = (props) => {
 
   return (
     <>
-      <Container onClick={idHandler} bg={props.bg} id={props.id} >
+      <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
       </Container>
-      <Info>
+      <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
         <Rating rating={props.rating}>
           <h1>{props.rating}</h1>
         </Rating>
@@ -43,7 +43,7 @@ export default Card
 
 
 const Container = styled.div`
-  display:flex;
+  display:${props => (props.bg === null && props.rating=== 0  ? 'none' : 'flex')};
   width: 200px;
   height: 280px;
   border-radius: 10px;
@@ -61,7 +61,7 @@ const Container = styled.div`
 `
 
 const Info = styled.div`
-    display:flex;
+    display:${props => (props.bg === null && props.rating=== 0  ? 'none' : 'flex')};
     justify-content:center;
     align-items:center;
 
