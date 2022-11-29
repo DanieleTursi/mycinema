@@ -7,11 +7,14 @@ import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 
 const DetailsPage = () => {
     const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
-    const [showId, setShowId] = useLocalStorage('id', '');
-    const [screenType, setScreenType] = useLocalStorage('st', '');
+    const [showId] = useLocalStorage('id', '');
+    const [screenType] = useLocalStorage('st', '');
+
 
     const startEffect = async () => {
-        await getDetails(showId, screenType)
+        await getDetails(showId, screenType);
+
+
     }
 
     useEffect(() => {
@@ -39,7 +42,8 @@ const DetailsPage = () => {
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview:</h3>
                             <p>{details.overview}</p>
-                            <p>Genre: {details.genres && details.genres[0].name}</p>
+
+                            <p>Genre: {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </p>
                             {details.number_of_seasons > 0
                                 ? <><p>Seasons: {details.number_of_seasons}</p>
                                     <p>Episodes: {details.number_of_episodes}</p></>

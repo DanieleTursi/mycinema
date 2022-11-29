@@ -32,7 +32,7 @@ const ActorDetails = () => {
                             <Title>{actorDetails.name}</Title>
                             <DoB>born: {actorDetails.birthday}</DoB>
                             {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
-
+                            <span>place of birth: {actorDetails.place_of_birth}</span>
                             <h3>Bio</h3>
                             <p>{actorDetails.biography}</p>
 
@@ -60,6 +60,7 @@ width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
+font-family: 'PT Sans Narrow', sans-serif;
 `;
 
 const HeaderDetails = styled.div`

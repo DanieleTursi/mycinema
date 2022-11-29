@@ -19,7 +19,7 @@ const CardWrapperPeople = (props) => {
                 <Container>
                     {props.people && props.people.map((person, idx) => (
 
-                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} />
+                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
                     ))}
                 </Container>
 

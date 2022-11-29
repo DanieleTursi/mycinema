@@ -108,7 +108,7 @@ export const TmdbProvider = ({ children }) => {
         setActorDetailsLoading();
         const actorFetch = await fetch(`${URL}person/${id}?${params}${lang}`);
         const actorDetails = await actorFetch.json();
-        // console.log(actorDetails);
+
         dispatch({
             type: 'GET_ACTOR_DETAILS',
             payload: actorDetails
@@ -128,8 +128,8 @@ export const TmdbProvider = ({ children }) => {
         const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
         const credits = await creditFetch.json();
 
-        console.log(credits.cast)
         const airDate = () => { if (details.first_air_date) { return details.first_air_date.slice(0, 4) } else { return '' } }
+        const releaseDate = () => { if (details.release_date) { return details.release_date.slice(0, 4) } else { return '' } }
         if (channel === 'tv') {
 
 
@@ -145,26 +145,27 @@ export const TmdbProvider = ({ children }) => {
         }
 
         else {
-            if (credits.crew.length > 0 || null) {
+            if (credits.crew === undefined || credits.crew.length === 0) {
+                dispatch({
+                    type: 'GET_DETAILS',
+                    payload: details,
+                    id: id,
+                    releaseDate: releaseDate(),
+                    credits: 'N/N',
+                    cast: credits.cast
+                })
+            }
+            else {
                 const dir = credits.crew.find(element => element.job === 'Director').name
                 dispatch({
                     type: 'GET_DETAILS',
                     payload: details,
                     id: id,
-                    releaseDate: airDate(),
+                    releaseDate: releaseDate(),
                     credits: dir,
                     cast: credits.cast
                 })
-            }
-            else {
-                dispatch({
-                    type: 'GET_DETAILS',
-                    payload: details,
-                    id: id,
-                    releaseDate: details.release_date.slice(0, 4),
-                    credits: 'N/N',
-                    cast: credits.cast
-                })
+
             }
         }
 

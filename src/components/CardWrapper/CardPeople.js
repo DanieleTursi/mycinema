@@ -13,7 +13,7 @@ const CardPeople = (props) => {
 
   const navigate = useNavigate();
   const getId = async () => {
-    console.log(props.id)
+
     await getActorDetails(actorId);
 
   }
@@ -32,6 +32,8 @@ const CardPeople = (props) => {
       </ContainerPeople>
       <Info>
         <h2>{props.name != null ? props.name.toUpperCase().slice(0, 23) : 'N/N'}</h2>
+        <span>as</span>
+        <h6>{props.character || 'n/n'}</h6>
       </Info>
     </>
   )
@@ -63,11 +65,17 @@ const Info = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-
+flex-direction:column;
     h2{
-      margin-left:4px;
+      margin:0 0 0 4px;
       text-align:center;
-      font-size:12px;
+      font-size:14px;
+    }
+    h6{
+      margin:0;
+    }
+    span{
+      font-size:8px ;
     }
 `
 
