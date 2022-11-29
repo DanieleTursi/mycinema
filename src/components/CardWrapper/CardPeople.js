@@ -32,8 +32,12 @@ const CardPeople = (props) => {
       </ContainerPeople>
       <Info>
         <h2>{props.name != null ? props.name.toUpperCase().slice(0, 23) : 'N/N'}</h2>
-        <span>as</span>
-        <h6>{props.character || 'n/n'}</h6>
+        {props.character &&
+          <>
+            <span>as</span>
+            <h6>{props.character}</h6>
+          </>
+        }
       </Info>
     </>
   )
@@ -67,7 +71,7 @@ const Info = styled.div`
     align-items:center;
 flex-direction:column;
     h2{
-      margin:0 0 0 4px;
+      margin:4px 0 0 4px;
       text-align:center;
       font-size:14px;
     }
@@ -79,19 +83,3 @@ flex-direction:column;
     }
 `
 
-const Rating = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background-color:${props => (props.rating >= 6 ? 'green' : 'red')};
-    border-radius:50%;
-    height:30px;
-    width:30px;
-    margin:4px;
-
-    h1{
-      color:white;
-      text-align:center;
-      font-size:12px;
-    }  
-    `;
