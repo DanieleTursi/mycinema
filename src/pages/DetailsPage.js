@@ -30,8 +30,11 @@ const DetailsPage = () => {
                             <Details>
 
                                 <Title>{actorDetails.name}</Title>
-                                <DoB>born: {actorDetails.birthday}</DoB>
+                                <BirthDetails>
+                                <DoB>DOB: {actorDetails.birthday.split("-").reverse().join("-")}</DoB>
                                 {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
+                                <PoB>Place of Birth: {actorDetails.place_of_birth}</PoB>
+                                </BirthDetails>
 
                                 <h3>Bio</h3>
                                 <p>{actorDetails.biography}</p>
@@ -133,6 +136,12 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
+const BirthDetails = styled.div `
+display:flex;
+flex-direction:row;`
+const PoB= styled.p`
+color:#999;
+font-size:20px;`
 const DetailsWrapper = styled.div`
 width:100%;
 min-height:100%;
