@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import noImage from '../../noImage.png'
+import noImage from '../../assets/images/noImage.png'
 
 const Card = (props) => {
 

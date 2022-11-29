@@ -6,7 +6,7 @@ import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, getDetails, rDate, credits, actorDetails, cast } = useContext(TmdbContext);
+    const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
     const [showId, setShowId] = useLocalStorage('id', '');
     const [screenType, setScreenType] = useLocalStorage('st', '');
 
@@ -18,73 +18,43 @@ const DetailsPage = () => {
         startEffect()
 
     }, [])
-    console.log(credits)
+
     if (!detailsLoading) {
-        if (screenType === 'person') {
-            return (
-                <Wrapper>
-                    <HeaderDetails >
-                        <ActorBackground />
-                        <DetailsWrapper>
-                            <Poster bg={actorDetails.profile_path} />
-                            <Details>
 
-                                <Title>{actorDetails.name}</Title>
-                                <DoB>born: {actorDetails.birthday}</DoB>
-                                {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
+        return (
 
-                                <h3>Bio</h3>
-                                <p>{actorDetails.biography}</p>
+            <Wrapper>
+                <HeaderDetails >
+                    <BackgroundImage bg={details.backdrop_path} />
+                    <DetailsWrapper>
+                        <Poster bg={details.poster_path} />
+                        <Details>
+                            <UserScore rating={details.vote_average}>
+                                <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
+                            </UserScore>
+                            <Title>{details.title || details.name}</Title>
+                            <RelaseYear>({rDate})</RelaseYear>
+                            <h3>Overview</h3>
+                            <p>{details.overview}</p>
+                            <DirectorWrapper>
 
-
-
-                            </Details>
-                        </DetailsWrapper>
-
-                    </HeaderDetails>
-                </Wrapper>
-
+                                {credits != null ? <div>
+                                    <h3>Director</h3>
+                                    <p>{credits}</p>
+                                </div> : <></>}
 
 
-            )
-        }
-        else {
-            return (
-
-                <Wrapper>
-                    <HeaderDetails >
-                        <BackgroundImage bg={details.backdrop_path} />
-                        <DetailsWrapper>
-                            <Poster bg={details.poster_path} />
-                            <Details>
-                                <UserScore>
-                                    <h3>70</h3>
-                                    <span>%</span>
-
-                                </UserScore>
-                                <Title>{details.title || details.name}</Title>
-                                <RelaseYear>({rDate})</RelaseYear>
-                                <h3>Overview</h3>
-                                <p>{details.overview}</p>
-                                <DirectorWrapper>
-
-                                    {credits != null ? <div>
-                                        <h3>Director</h3>
-                                        <p>{credits}</p>
-                                    </div> : <></>}
+                            </DirectorWrapper>
 
 
-                                </DirectorWrapper>
+                        </Details>
+                    </DetailsWrapper>
 
+                </HeaderDetails>
+                <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
+            </Wrapper>
+        )
 
-                            </Details>
-                        </DetailsWrapper>
-
-                    </HeaderDetails>
-                    <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
-                </Wrapper>
-            )
-        }
 
     }
     else {
@@ -125,14 +95,7 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
-const ActorBackground = styled.div`
-width:100%;
-height:100%;
-background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
-filter:blur(3px);
-position:absolute;
-z-index:-1;
-`;
+
 const DetailsWrapper = styled.div`
 width:100%;
 min-height:100%;
@@ -171,10 +134,7 @@ const RelaseYear = styled.span`
 color:#999;
 font-size:20px;
 `;
-const DoB = styled.span`
-color:#999;
-font-size:20px;
-`;
+
 const UserScore = styled.div`
 height:70px;
 width:70px;
