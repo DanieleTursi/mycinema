@@ -162,7 +162,8 @@ export const TmdbProvider = ({ children }) => {
                     payload: details,
                     id: id,
                     releaseDate: details.release_date.slice(0, 4),
-                    credits: 'N/N'
+                    credits: 'N/N',
+                    cast: credits.cast
                 })
             }
         }

@@ -29,30 +29,35 @@ const DetailsPage = () => {
                     <DetailsWrapper>
                         <Poster bg={details.poster_path} />
                         <Details>
-                            <UserScore rating={details.vote_average}>
-                                <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
-                            </UserScore>
+                            <UserScoreContainer>
+                                <UserScore rating={details.vote_average}>
+                                    <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
+                                </UserScore>
+                                <h4>{details.vote_count} votes</h4>
+                            </UserScoreContainer>
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
-                            <h3>Overview</h3>
+                            <h3>Overview:</h3>
                             <p>{details.overview}</p>
+                            <p>Genre: {details.genres && details.genres[0].name}</p>
+                            {details.number_of_seasons > 0
+                                ? <><p>Seasons: {details.number_of_seasons}</p>
+                                    <p>Episodes: {details.number_of_episodes}</p></>
+                                : <></>}
                             <DirectorWrapper>
-
                                 {credits != null ? <div>
                                     <h3>Director</h3>
                                     <p>{credits}</p>
                                 </div> : <></>}
-
-
                             </DirectorWrapper>
-
-
                         </Details>
                     </DetailsWrapper>
-
                 </HeaderDetails>
                 <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
             </Wrapper>
+
+
+
         )
 
 
@@ -74,6 +79,7 @@ width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
+font-family: 'PT Sans Narrow', sans-serif;
 `;
 
 const HeaderDetails = styled.div`
@@ -120,9 +126,12 @@ flex-direction:column;
 flex-wrap:wrap;
 h3{
     color:white;
+    font-size:22px;
 }
 p{
     color:#fff;
+    font-size:18px;
+    margin:6px 0;
 }
 `;
 const Title = styled.span`
@@ -135,23 +144,27 @@ color:#999;
 font-size:20px;
 `;
 
+const UserScoreContainer = styled.div`
+display:flex;
+flex-direction:row;
+align-items:center;
+h4{
+    color:#fff;
+    font-size:18px;
+}`
+
 const UserScore = styled.div`
 height:70px;
 width:70px;
-border:3px solid red;
+border:3px solid ${props => props.rating >= 6 ? 'green' : 'red'};
 border-radius:50%;
 display:flex;
 align-items:center;
-justify-content:center ;
+justify-content:center;
+margin-right:10px;
 h3{
     color:#fff;
-    font-size:25px;
-}
-span{
-    color:#fff;
-    font-size:10px;
-    margin:0;
-    padding:0;
+    font-size:30px;
 }
 `;
 
