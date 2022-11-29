@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import noImage from '../../noImage.png'
 
@@ -43,12 +43,12 @@ export default Card
 
 
 const Container = styled.div`
-  display:${props => (props.bg === null && props.rating=== 0  ? 'none' : 'flex')};
+  display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
   width: 200px;
   height: 280px;
   border-radius: 10px;
   margin-left: 10px;
-  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})` };
+  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -61,7 +61,7 @@ const Container = styled.div`
 `
 
 const Info = styled.div`
-    display:${props => (props.bg === null && props.rating=== 0  ? 'none' : 'flex')};
+    display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
     justify-content:center;
     align-items:center;
 
