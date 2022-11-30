@@ -49,7 +49,7 @@ export const TmdbProvider = ({ children }) => {
     const setActorDetailsLoading = () => {
         dispatch({ type: 'SET_ACTOR_LOADING' })
     }
-    const creditsLoading = () => {
+    const setCreditsLoading = () => {
         dispatch({ type: 'CREDITS_LOADING' })
     }
     const params = new URLSearchParams({
@@ -113,7 +113,7 @@ export const TmdbProvider = ({ children }) => {
     // get movie and tv credits of an actor
 
     const getActorCredits = async (id) => {
-        creditsLoading()
+        setCreditsLoading()
         const movieCredits = await fetch(`${URL}person/${id}/movie_credits?${params}${lang}`);
         const movieCreditsData = await movieCredits.json()
 
@@ -123,8 +123,8 @@ export const TmdbProvider = ({ children }) => {
 
         dispatch({
             type: 'ACTOR_CREDITS',
-            movieCredits: movieCreditsData,
-            tvCredits: tvCreditsData,
+            movieCredits: movieCreditsData.cast,
+            tvCredits: tvCreditsData.cast,
 
         })
 
@@ -156,6 +156,7 @@ export const TmdbProvider = ({ children }) => {
 
         const airDate = () => { if (details.first_air_date) { return details.first_air_date.slice(0, 4) } else { return '' } }
         const releaseDate = () => { if (details.release_date) { return details.release_date.slice(0, 4) } else { return '' } }
+
         if (channel === 'tv') {
 
             dispatch({
