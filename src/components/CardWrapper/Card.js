@@ -7,14 +7,14 @@ import noImage from '../../assets/images/noImage.png'
 
 const Card = (props) => {
 
-  const { getDetails, details, detailsLoading } = useContext(TmdbContext);
+  const { getDetails } = useContext(TmdbContext);
 
   const [showId, setShowId] = useLocalStorage('id', '');
   const [screenType, setScreenType] = useLocalStorage('st', '');
 
   const navigate = useNavigate();
   const getId = async () => {
-    console.log(props.id)
+
     await getDetails(showId, props.type);
     navigate('/detailspage/')
   }

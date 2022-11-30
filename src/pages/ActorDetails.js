@@ -2,16 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
+import CardWrapper from '../components/CardWrapper/CardWrapper';
 
 
 const ActorDetails = () => {
 
-    const { actorDetails, actorLoading, getActorDetails } = useContext(TmdbContext);
+    const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
-
+    const [loading, setLoading] = useState(true);
 
     const startEffect = async () => {
-        await getActorDetails(actorId)
+        await getActorCredits(actorId);
+        await getActorDetails(actorId);
+        console.log(actorTvCredits);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -20,7 +24,7 @@ const ActorDetails = () => {
     }, [])
 
 
-    if (!actorLoading) {
+    if (!loading) {
         return (
             <Wrapper>
                 <HeaderDetails >
@@ -32,7 +36,7 @@ const ActorDetails = () => {
                             <Title>{actorDetails.name}</Title>
                             <DoB>born: {actorDetails.birthday}</DoB>
                             {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
-
+                            <span>place of birth: {actorDetails.place_of_birth}</span>
                             <h3>Bio</h3>
                             <p>{actorDetails.biography}</p>
 
@@ -42,6 +46,13 @@ const ActorDetails = () => {
                     </DetailsWrapper>
 
                 </HeaderDetails>
+
+                {/* {creditsLoading ? <h1>...Loading</h1> : actorTvCredits.map((role, idx) => (
+                    <h1>{role.name
+                    }</h1>
+                ))} */}
+                {/* <CardWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' />
+                <CardWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} /> */}
             </Wrapper>
 
 
@@ -60,6 +71,7 @@ width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
+font-family: 'PT Sans Narrow', sans-serif;
 `;
 
 const HeaderDetails = styled.div`
