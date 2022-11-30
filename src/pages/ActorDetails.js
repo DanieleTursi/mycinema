@@ -2,16 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
+import CardWrapper from '../components/CardWrapper/CardWrapper';
 
 
 const ActorDetails = () => {
 
-    const { actorDetails, actorLoading, getActorDetails } = useContext(TmdbContext);
+    const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
-
+    const [loading, setLoading] = useState(true);
 
     const startEffect = async () => {
-        await getActorDetails(actorId)
+        await getActorCredits(actorId);
+        await getActorDetails(actorId);
+        console.log(actorTvCredits);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -20,7 +24,7 @@ const ActorDetails = () => {
     }, [])
 
 
-    if (!actorLoading) {
+    if (!loading) {
         return (
             <Wrapper>
                 <HeaderDetails >
@@ -42,6 +46,13 @@ const ActorDetails = () => {
                     </DetailsWrapper>
 
                 </HeaderDetails>
+
+                {/* {creditsLoading ? <h1>...Loading</h1> : actorTvCredits.map((role, idx) => (
+                    <h1>{role.name
+                    }</h1>
+                ))} */}
+                {/* <CardWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' />
+                <CardWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} /> */}
             </Wrapper>
 
 
