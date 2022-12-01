@@ -14,8 +14,9 @@ export const TmdbProvider = ({ children }) => {
         topMovies: [],
         details: [],
         detailsLoading: false,
-
+        videosLoading: false,
         loading: false,
+        loadingLatest: false,
         movieAndTvID: '',
         releaseDate: '2022',
         credits: [],
@@ -30,6 +31,7 @@ export const TmdbProvider = ({ children }) => {
         actorMovieCredits: [],
         creditsLoading: false,
         latestMovies: [],
+        videos: [],
 
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
@@ -54,7 +56,12 @@ export const TmdbProvider = ({ children }) => {
     const setCreditsLoading = () => {
         dispatch({ type: 'CREDITS_LOADING' })
     }
-
+    const setVideosLoading = () => {
+        dispatch({ type: 'VIDEOS_LOADING' })
+    }
+    const setLoadingLatest = () => {
+        dispatch({ type: 'LATEST_LOADING' })
+    }
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
 
@@ -78,6 +85,18 @@ export const TmdbProvider = ({ children }) => {
         }
     }
 
+    // get videos of movies and tv
+
+    const getVideos = async (id) => {
+        setVideosLoading();
+        const movieVideos = await fetch(`${URL}movie/${id}/videos?${params}${lang}`);
+        const movieVideosData = await movieVideos.json();
+        console.log(movieVideosData.results);
+        dispatch({
+            type: 'MOVIE_VIDEOS',
+            payload: movieVideosData.results,
+        })
+    }
 
     // get popular Movies and Shows
     const getPopular = async () => {
@@ -136,7 +155,7 @@ export const TmdbProvider = ({ children }) => {
     // get the latest movie
 
     const getLatestMovies = async () => {
-
+        setLoadingLatest();
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
         console.log(resultLatestMovies)
@@ -218,10 +237,11 @@ export const TmdbProvider = ({ children }) => {
     }
 
     return <TmdbContext.Provider value={{
+        getVideos, videos: state.videos, videosLoading: state.videosLoading,
         getLatestMovies, latestMovies: state.latestMovies,
         getSearch, getTop, getPopular, getDetails, getActorDetails,
         creditsLoading: state.creditsLoading,
-        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
+        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, loadingLatest: state.loadingLatest, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
         rDate: state.releaseDate, credits: state.credits, actorDetails: state.actorDetails, getActorCredits, actorTvCredits: state.actorTvCredits, actorMovieCredits: state.actorMovieCredits,
     }} >{children}</TmdbContext.Provider>
 }

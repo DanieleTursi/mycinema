@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import noImage from '../../assets/images/noImage.png'
 
 const SearchBoxContainer = () => {
-  const { getLatestMovies, latestMovies, } = useContext(TmdbContext);
+  const { getLatestMovies, latestMovies, loadingLatest } = useContext(TmdbContext);
   const startFunction = async () => {
     await getLatestMovies();
   }
@@ -51,7 +51,7 @@ width:100%;
 background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
 background-size: cover;
 background-repeat: no-repeat;
-background-position: center center;
+background-position: center;
 font-family: 'Gochi Hand', cursive;
 
 h1{

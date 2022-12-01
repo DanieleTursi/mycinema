@@ -44,11 +44,20 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 actorLoading: true,
             }
-
+        case 'VIDEOS_LOADING':
+            return {
+                ...state,
+                videosLoading: true,
+            }
         case 'CREDITS_LOADING':
             return {
                 ...state,
                 creditsLoading: true,
+            }
+        case 'LATEST_LOADING':
+            return {
+                ...state,
+                loadingLatest: true,
             }
         case 'GET_DETAILS':
             return {
@@ -75,11 +84,23 @@ const tmdbReducer = (state, action) => {
                 actorDetails: action.payload,
                 actorLoading: false,
             }
+        case 'SET_ACTOR_LOADING':
+            return {
+                ...state,
+                actorLoading: true,
+            }
+        case 'MOVIE_VIDEOS':
+            return {
+                ...state,
+                videos: action.payload,
+                videosLoading: false,
+            }
+
         case 'GET_LATESTMOVIES':
             return {
                 ...state,
                 latestMovies: action.payload,
-
+                loadingLatest: false,
             }
         case 'ACTOR_CREDITS':
             return {
