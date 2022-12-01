@@ -5,11 +5,11 @@ import HorizontalScroll from 'react-horizontal-scrolling'
 import CardPeople from "./CardPeople"
 
 const CardWrapperPeople = (props) => {
-    const { loading } = useContext(TmdbContext);
+    const { detailsLoading } = useContext(TmdbContext);
 
 
-    if (!loading) {
-       
+    if (!detailsLoading) {
+
         return (
             <WrapPeople side={props.side}>
 
@@ -17,9 +17,9 @@ const CardWrapperPeople = (props) => {
                     {props.name}
                 </Title>
                 <Container>
-                    {props.people.map((person, idx) => (
+                    {props.people && props.people.map((person, idx) => (
 
-                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} />
+                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
                     ))}
                 </Container>
 
@@ -61,13 +61,13 @@ font-family: 'PT Sans Narrow', sans-serif;
 &:before {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'left' || props.side === 'other' ?'SHOWS ' :''}";
+    content:"${(props) => props.side === 'left' || props.side === 'other' ? 'SHOWS ' : ''}";
   }
 
 &:after {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'right'  || props.side === 'center' ?' PEOPLE' :''}";
+    content:"${(props) => props.side === 'right' || props.side === 'center' ? ' PEOPLE' : ''}";
   }
 
 @media screen and (max-width: 768px){

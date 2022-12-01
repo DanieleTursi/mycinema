@@ -3,25 +3,26 @@ import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import noImage from '../../noImage.png'
+import noImage from '../../assets/images/noImage.png'
 const CardPeople = (props) => {
 
-  const { getDetails, details, detailsLoading } = useContext(TmdbContext);
+  const { getActorDetails, details, detailsLoading } = useContext(TmdbContext);
 
-  const [showId, setShowId] = useLocalStorage('id', '');
-  const [screenType, setScreenType] = useLocalStorage('st', '');
+  const [actorId, setActorId] = useLocalStorage('actorId', '');
+
 
   const navigate = useNavigate();
-  const getId = () => {
-    console.log(props.id)
-    getDetails(showId, props.type);
-    navigate('/detailspage/')
+  const getId = async () => {
+
+    await getActorDetails(actorId);
+
   }
 
   const idHandler = async () => {
-    await setShowId(props.id);
-    await setScreenType(props.type)
-    getId()
+    await setActorId(props.id);
+
+    await getId()
+    navigate('/actordetails/')
   }
 
 
@@ -30,7 +31,13 @@ const CardPeople = (props) => {
       <ContainerPeople onClick={idHandler} bg={props.bg} id={props.id} >
       </ContainerPeople>
       <Info>
-        <h2>{props.name != null ? props.name.toUpperCase().slice(0,23) : 'N/N'}</h2>
+        <h2>{props.name != null ? props.name.toUpperCase().slice(0, 23) : 'N/N'}</h2>
+        {props.character &&
+          <>
+            <span>as</span>
+            <h6>{props.character}</h6>
+          </>
+        }
       </Info>
     </>
   )
@@ -46,7 +53,7 @@ const ContainerPeople = styled.div`
   border-radius: 10px;
   margin-left: 10px;
 //   background-image:url(${noImage});
-  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})` };
+  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -62,27 +69,17 @@ const Info = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-
+flex-direction:column;
     h2{
-      margin-left:4px;
+      margin:4px 0 0 4px;
       text-align:center;
-      font-size:12px;
+      font-size:14px;
+    }
+    h6{
+      margin:0;
+    }
+    span{
+      font-size:8px ;
     }
 `
 
-const Rating = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background-color:${props => (props.rating >= 6 ? 'green' : 'red')};
-    border-radius:50%;
-    height:30px;
-    width:30px;
-    margin:4px;
-
-    h1{
-      color:white;
-      text-align:center;
-      font-size:12px;
-    }  
-    `;

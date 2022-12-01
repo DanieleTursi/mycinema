@@ -3,18 +3,18 @@ import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import noImage from '../../noImage.png'
+import noImage from '../../assets/images/noImage.png'
 
 const Card = (props) => {
 
-  const { getDetails, details, detailsLoading } = useContext(TmdbContext);
+  const { getDetails } = useContext(TmdbContext);
 
   const [showId, setShowId] = useLocalStorage('id', '');
   const [screenType, setScreenType] = useLocalStorage('st', '');
 
   const navigate = useNavigate();
   const getId = async () => {
-    console.log(props.id)
+
     await getDetails(showId, props.type);
     navigate('/detailspage/')
   }
@@ -29,6 +29,13 @@ const Card = (props) => {
     <>
       <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
       </Container>
+      {props.page === 'detailsPage' && <Character>
+
+        <span>as</span>
+        <h6>{props.character ? props.character : 'N/N'}</h6>
+
+
+      </Character>}
       <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
         <Rating rating={props.rating}>
           <h1>{props.rating}</h1>
@@ -87,4 +94,17 @@ const Rating = styled.div`
       text-align:center;
       font-size:12px;
     }  
+    `;
+
+const Character = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+    h6{
+      margin:0;
+    }
+    span{
+      font-size:8px ;
+    }
     `;

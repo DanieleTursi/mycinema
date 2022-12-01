@@ -9,7 +9,7 @@ const CardWrapper = (props) => {
 
 
     if (!loading) {
-       
+
         return (
             <Wrap side={props.side}>
                 <Title side={props.side} type={props.type} >
@@ -17,9 +17,10 @@ const CardWrapper = (props) => {
                 </Title>
                 <Container>
                     {props.movies.map((movie, idx) => (
-                        <Card key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} release={movie.release_date || movie.first_air_date}/>
+                        <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                     ))}
                 </Container>
+
             </Wrap>
         )
     }
@@ -58,13 +59,13 @@ font-family: 'PT Sans Narrow', sans-serif;
 &:before {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'left' || props.side === 'other' ?'SHOWS ' :''}";
+    content:"${(props) => props.side === 'left' || props.side === 'other' ? 'SHOWS ' : ''}";
   }
 
 &:after {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'right'  || props.side === 'center' ?' MOVIES' :''}";
+    content:"${(props) => props.side === 'right' || props.side === 'center' ? ' MOVIES' : ''}";
   }
 
 @media screen and (max-width: 768px){

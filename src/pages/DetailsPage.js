@@ -6,18 +6,22 @@ import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, getDetails, rDate, credits, actorDetails, cast } = useContext(TmdbContext);
-    const [showId, setShowId] = useLocalStorage('id', '');
-    const [screenType, setScreenType] = useLocalStorage('st', '');
+    const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
+    const [showId] = useLocalStorage('id', '');
+    const [screenType] = useLocalStorage('st', '');
+
 
     const startEffect = async () => {
-        await getDetails(showId, screenType)
+        await getDetails(showId, screenType);
+
+
     }
 
     useEffect(() => {
         startEffect()
 
     }, [])
+
     console.log(credits)
     if (!detailsLoading) {
         if (screenType === 'person') {
@@ -48,46 +52,48 @@ const DetailsPage = () => {
                 </Wrapper>
 
 
+    if (!detailsLoading) {
 
-            )
-        }
-        else {
-            return (
+        return (
 
-                <Wrapper>
-                    <HeaderDetails >
-                        <BackgroundImage bg={details.backdrop_path} />
-                        <DetailsWrapper>
-                            <Poster bg={details.poster_path} />
-                            <Details>
-                                <UserScore>
-                                    <h3>70</h3>
-                                    <span>%</span>
-
+            <Wrapper>
+                <HeaderDetails >
+                    <BackgroundImage bg={details.backdrop_path} />
+                    <DetailsWrapper>
+                        <Poster bg={details.poster_path} />
+                        <Details>
+                            <UserScoreContainer>
+                                <UserScore rating={details.vote_average}>
+                                    <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
                                 </UserScore>
-                                <Title>{details.title || details.name}</Title>
-                                <RelaseYear>({rDate})</RelaseYear>
-                                <h3>Overview</h3>
-                                <p>{details.overview}</p>
-                                <DirectorWrapper>
+                                <h4>{details.vote_count} votes</h4>
+                            </UserScoreContainer>
+                            <Title>{details.title || details.name}</Title>
+                            <RelaseYear>({rDate})</RelaseYear>
+                            <h3>Overview:</h3>
+                            <p>{details.overview}</p>
 
-                                    {credits != null ? <div>
-                                        <h3>Director</h3>
-                                        <p>{credits}</p>
-                                    </div> : <></>}
+                            <p>Genre: {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </p>
+                            {details.number_of_seasons > 0
+                                ? <><p>Seasons: {details.number_of_seasons}</p>
+                                    <p>Episodes: {details.number_of_episodes}</p></>
+                                : <></>}
+                            <DirectorWrapper>
+                                {credits != null ? <div>
+                                    <h3>Director</h3>
+                                    <p>{credits}</p>
+                                </div> : <></>}
+                            </DirectorWrapper>
+                        </Details>
+                    </DetailsWrapper>
+                </HeaderDetails>
+                <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
+            </Wrapper>
 
 
-                                </DirectorWrapper>
 
+        )
 
-                            </Details>
-                        </DetailsWrapper>
-
-                    </HeaderDetails>
-                    <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
-                </Wrapper>
-            )
-        }
 
     }
     else {
@@ -107,6 +113,7 @@ width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
+font-family: 'PT Sans Narrow', sans-serif;
 `;
 
 const HeaderDetails = styled.div`
@@ -128,6 +135,7 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
+
 const ActorBackground = styled.div`
 width:100%;
 height:100%;
@@ -142,6 +150,7 @@ flex-direction:row;`
 const PoB= styled.p`
 color:#999;
 font-size:20px;`
+
 const DetailsWrapper = styled.div`
 width:100%;
 min-height:100%;
@@ -166,9 +175,12 @@ flex-direction:column;
 flex-wrap:wrap;
 h3{
     color:white;
+    font-size:22px;
 }
 p{
     color:#fff;
+    font-size:18px;
+    margin:6px 0;
 }
 `;
 const Title = styled.span`
@@ -180,27 +192,28 @@ const RelaseYear = styled.span`
 color:#999;
 font-size:20px;
 `;
-const DoB = styled.span`
-color:#999;
-font-size:20px;
-`;
+
+const UserScoreContainer = styled.div`
+display:flex;
+flex-direction:row;
+align-items:center;
+h4{
+    color:#fff;
+    font-size:18px;
+}`
+
 const UserScore = styled.div`
 height:70px;
 width:70px;
-border:3px solid red;
+border:3px solid ${props => props.rating >= 6 ? 'green' : 'red'};
 border-radius:50%;
 display:flex;
 align-items:center;
-justify-content:center ;
+justify-content:center;
+margin-right:10px;
 h3{
     color:#fff;
-    font-size:25px;
-}
-span{
-    color:#fff;
-    font-size:10px;
-    margin:0;
-    padding:0;
+    font-size:30px;
 }
 `;
 

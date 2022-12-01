@@ -24,6 +24,11 @@ export const TmdbProvider = ({ children }) => {
         searchLoading: false,
         cast: [],
         actorDetails: [],
+        actorLoading: false,
+        actorTvCredits: [],
+        actorMovieCredits: [],
+        creditsLoading: false,
+
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
@@ -40,6 +45,12 @@ export const TmdbProvider = ({ children }) => {
 
     const setSearchLoading = () => {
         dispatch({ type: 'SET_SEARCH_LOADING' })
+    }
+    const setActorDetailsLoading = () => {
+        dispatch({ type: 'SET_ACTOR_LOADING' })
+    }
+    const setCreditsLoading = () => {
+        dispatch({ type: 'CREDITS_LOADING' })
     }
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
@@ -59,7 +70,7 @@ export const TmdbProvider = ({ children }) => {
             const dataSeries = await resSeries.json()
             const resPeople = await fetch(`${URL}search/person?${params}&language=en-US&query=${value}&page=1`)
             const dataPeople = await resPeople.json()
-            console.log(dataMovies, dataSeries, dataPeople)
+            // console.log(dataMovies, dataSeries, dataPeople)
             dispatch({ type: 'GET_SEARCH', searchMovies: dataMovies.results, searchTV: dataSeries.results, searchPeople: dataPeople.results })
         }
     }
@@ -98,71 +109,102 @@ export const TmdbProvider = ({ children }) => {
             payload: movieData.results,
         })
     }
+
+    // get movie and tv credits of an actor
+
+    const getActorCredits = async (id) => {
+        setCreditsLoading()
+        const movieCredits = await fetch(`${URL}person/${id}/movie_credits?${params}${lang}`);
+        const movieCreditsData = await movieCredits.json()
+
+        const tvCredits = await fetch(`${URL}person/${id}/tv_credits?${params}${lang}`);
+        const tvCreditsData = await tvCredits.json()
+        console.log(tvCreditsData.cast, movieCreditsData.cast);
+
+        dispatch({
+            type: 'ACTOR_CREDITS',
+            movieCredits: movieCreditsData.cast,
+            tvCredits: tvCreditsData.cast,
+
+        })
+
+    }
+
+
+
+    // get the details of the actor
+    const getActorDetails = async (id) => {
+        setActorDetailsLoading();
+        const actorFetch = await fetch(`${URL}person/${id}?${params}${lang}`);
+        const actorDetails = await actorFetch.json();
+
+        dispatch({
+            type: 'GET_ACTOR_DETAILS',
+            payload: actorDetails
+        })
+    }
+
     // get the details of a show, movie or actor
     const getDetails = async (id, channel) => {
         setDetailsLoading();
 
+        const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
+        const details = await response.json();
 
-        if (channel === 'person') {
-            const actorFetch = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
-            const actorDetails = await actorFetch.json();
-            console.log(actorDetails);
+        const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
+        const credits = await creditFetch.json();
+
+        const airDate = () => { if (details.first_air_date) { return details.first_air_date.slice(0, 4) } else { return '' } }
+        const releaseDate = () => { if (details.release_date) { return details.release_date.slice(0, 4) } else { return '' } }
+
+        if (channel === 'tv') {
+
             dispatch({
-                type: 'GET_ACTOR_DETAILS',
-                payload: actorDetails
+                type: 'GET_DETAILS',
+                payload: details,
+                id: id,
+                releaseDate: airDate(),
+                credits: null,
+                cast: credits.cast
             })
         }
+
         else {
-            const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
-            const details = await response.json();
-
-            const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
-            const credits = await creditFetch.json();
-
-            console.log(credits.cast)
-
-            if (channel === 'tv') {
+            if (credits.crew === undefined || credits.crew.length === 0) {
                 dispatch({
                     type: 'GET_DETAILS',
                     payload: details,
                     id: id,
-                    releaseDate: details.first_air_date.slice(0, 4),
-                    credits: null
+                    releaseDate: releaseDate(),
+                    credits: 'N/N',
+                    cast: credits.cast
                 })
             }
-
             else {
-                if (credits.crew.length > 0 || null) {
-                    const dir = credits.crew.find(element => element.job === 'Director').name
-                    dispatch({
-                        type: 'GET_DETAILS',
-                        payload: details,
-                        id: id,
-                        releaseDate: details.release_date.slice(0, 4),
-                        credits: dir,
-                        cast: credits.cast
-                    })
-                }
-                else {
-                    dispatch({
-                        type: 'GET_DETAILS',
-                        payload: details,
-                        id: id,
-                        releaseDate: details.release_date.slice(0, 4),
-                        credits: 'N/N'
-                    })
-                }
+                const dir = credits.crew.find(element => element.job === 'Director').name
+                dispatch({
+                    type: 'GET_DETAILS',
+                    payload: details,
+                    id: id,
+                    releaseDate: releaseDate(),
+                    credits: dir,
+                    cast: credits.cast
+                })
+
             }
-
-
         }
+
+
+
 
 
     }
 
     return <TmdbContext.Provider value={{
-        getSearch, getTop, getPopular, getDetails, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
-        rDate: state.releaseDate, credits: state.credits, actorDetails: state.actorDetails
+        getSearch, getTop, getPopular, getDetails, getActorDetails,
+        creditsLoading: state.creditsLoading,
+        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
+        rDate: state.releaseDate, credits: state.credits, actorDetails: state.actorDetails, getActorCredits, actorTvCredits: state.actorTvCredits, actorMovieCredits: state.actorMovieCredits,
     }} >{children}</TmdbContext.Provider>
 }
 

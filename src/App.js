@@ -5,6 +5,7 @@ import { TmdbProvider } from './context/TmdbContext';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import DetailsPage from './pages/DetailsPage';
+import ActorDetails from './pages/ActorDetails';
 import SearchBox from './components/SearchBox/SearchBox';
 import SearchResultPage from './components/SearchResultPage/SearchResultPage';
 
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/detailspage/" element={<DetailsPage />} />
+            <Route path="/actordetails/" element={<ActorDetails />} />
             <Route path="/searchresult/" element={<SearchResultPage />} />
           </Routes>
         </Router>

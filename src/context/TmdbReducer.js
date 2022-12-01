@@ -39,6 +39,16 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 searchLoading: true,
             }
+        case 'SET_ACTOR_LOADING':
+            return {
+                ...state,
+                actorLoading: true,
+            }
+        case 'CREDITS_LOADING':
+            return {
+                ...state,
+                creditsLoading: true,
+            }
         case 'GET_DETAILS':
             return {
                 ...state,
@@ -64,7 +74,14 @@ const tmdbReducer = (state, action) => {
             return {
                 ...state,
                 actorDetails: action.payload,
-                detailsLoading: false,
+                actorLoading: false,
+            }
+        case 'ACTOR_CREDITS':
+            return {
+                ...state,
+                actorTvCredits: action.tvCredits,
+                actorMovieCredits: action.movieCredits,
+                creditsLoading: false,
             }
         default:
             return state
