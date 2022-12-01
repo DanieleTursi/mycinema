@@ -14,6 +14,7 @@ export const TmdbProvider = ({ children }) => {
         topMovies: [],
         details: [],
         detailsLoading: false,
+        latestLoading:false,
         loading: false,
         movieAndTvID: '',
         releaseDate: '2022',
@@ -52,6 +53,9 @@ export const TmdbProvider = ({ children }) => {
     }
     const setCreditsLoading = () => {
         dispatch({ type: 'CREDITS_LOADING' })
+    }
+    const setLatestLoading = () => {
+        dispatch({ type: 'SET_LATEST_LOADING' })
     }
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
@@ -134,9 +138,11 @@ export const TmdbProvider = ({ children }) => {
     // get the latest movie
 
     const getLatestMovies = async () => {
+        setLatestLoading()
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
         console.log(resultLatestMovies)
+        
         dispatch({
             type: 'GET_LATESTMOVIES',
             payload: resultLatestMovies.results
@@ -217,7 +223,7 @@ export const TmdbProvider = ({ children }) => {
         getLatestMovies, latestMovies: state.latestMovies,
         getSearch, getTop, getPopular, getDetails, getActorDetails,
         creditsLoading: state.creditsLoading,
-        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
+        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, latestLoading: state.latestLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
         rDate: state.releaseDate, credits: state.credits, actorDetails: state.actorDetails, getActorCredits, actorTvCredits: state.actorTvCredits, actorMovieCredits: state.actorMovieCredits,
     }} >{children}</TmdbContext.Provider>
 }
