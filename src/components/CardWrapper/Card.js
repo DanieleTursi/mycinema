@@ -6,12 +6,9 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 import noImage from '../../assets/images/noImage.png'
 
 const Card = (props) => {
-
   const { getDetails } = useContext(TmdbContext);
-
   const [showId, setShowId] = useLocalStorage('id', '');
   const [screenType, setScreenType] = useLocalStorage('st', '');
-
   const navigate = useNavigate();
   const getId = async () => {
 
@@ -30,11 +27,8 @@ const Card = (props) => {
       <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
       </Container>
       {props.page === 'detailsPage' && <Character>
-
         <span>as</span>
         <h6>{props.character ? props.character : 'N/N'}</h6>
-
-
       </Character>}
       <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
         <Rating rating={props.rating}>
@@ -47,7 +41,6 @@ const Card = (props) => {
 }
 
 export default Card
-
 
 const Container = styled.div`
   display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
