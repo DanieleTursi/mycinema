@@ -136,7 +136,7 @@ export const TmdbProvider = ({ children }) => {
     const getLatestMovies = async () => {
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
-        console.log(resultLatestMovies)
+        console.log(resultLatestMovies.results)
         dispatch({
             type: 'GET_LATESTMOVIES',
             payload: resultLatestMovies.results

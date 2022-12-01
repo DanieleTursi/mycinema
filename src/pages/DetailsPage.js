@@ -23,33 +23,6 @@ const DetailsPage = () => {
     }, [])
 
     console.log(credits)
-    if (!detailsLoading) {
-        if (screenType === 'person') {
-            return (
-                <Wrapper>
-                    <HeaderDetails >
-                        <ActorBackground />
-                        <DetailsWrapper>
-                            <Poster bg={actorDetails.profile_path} />
-                            <Details>
-
-                                <Title>{actorDetails.name}</Title>
-                                <BirthDetails>
-                                <DoB>DOB: {actorDetails.birthday.split("-").reverse().join("-")}</DoB>
-                                {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
-                                <PoB>Place of Birth: {actorDetails.place_of_birth}</PoB>
-                                </BirthDetails>
-
-                                <h3>Bio</h3>
-                                <p>{actorDetails.biography}</p>
-
-
-
-                            </Details>
-                        </DetailsWrapper>
-
-                    </HeaderDetails>
-                </Wrapper>
 
 
     if (!detailsLoading) {
@@ -144,10 +117,10 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
-const BirthDetails = styled.div `
+const BirthDetails = styled.div`
 display:flex;
 flex-direction:row;`
-const PoB= styled.p`
+const PoB = styled.p`
 color:#999;
 font-size:20px;`
 

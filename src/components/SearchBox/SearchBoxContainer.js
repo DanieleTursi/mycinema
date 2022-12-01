@@ -12,7 +12,7 @@ const SearchBoxContainer = () => {
   }, [])
 
   return (<>
-    {/* <SearchBoxWrapper bg={latestMovies[0].backdrop_path}><SearchBox /></SearchBoxWrapper> */}
+    <SearchBoxWrapper bg={latestMovies[0].backdrop_path}><SearchBox /></SearchBoxWrapper>
   </>
   )
 }
