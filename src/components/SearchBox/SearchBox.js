@@ -7,7 +7,7 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 const SearchBox = () => {
   const [value, setValue] = useState('');
-  const { getSearch } = useContext(TmdbContext)
+  const { getSearch, getLatestMovies} = useContext(TmdbContext)
   const [showResult, setShowResult] = useLocalStorage('value', '');
   const navigate = useNavigate();
 
