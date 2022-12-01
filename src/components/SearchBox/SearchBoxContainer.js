@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import noImage from '../../assets/images/noImage.png'
 
 const SearchBoxContainer = () => {
-  const { getLatestMovies, latestMovies, } = useContext(TmdbContext);
+  const { getLatestMovies, latestMovies, loadingLatest } = useContext(TmdbContext);
   const startFunction = async () => {
     await getLatestMovies();
   }

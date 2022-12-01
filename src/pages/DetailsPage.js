@@ -3,7 +3,7 @@ import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
-
+import MovieTrailer from '../components/MovieTrailer/MovieTrailer';
 
 const DetailsPage = () => {
     const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
@@ -21,8 +21,6 @@ const DetailsPage = () => {
         startEffect()
 
     }, [])
-
-    console.log(credits)
 
 
 
@@ -61,6 +59,7 @@ const DetailsPage = () => {
                         </Details>
                     </DetailsWrapper>
                 </HeaderDetails>
+                <MovieTrailer />
                 <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
             </Wrapper>
 
