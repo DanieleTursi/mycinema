@@ -10,6 +10,7 @@ const SearchBoxContainer = () => {
   const startFunction = async () => {
     await getLatestMovies();
   }
+
   useEffect(() => {
     startFunction()
   }, [])
@@ -17,10 +18,10 @@ const SearchBoxContainer = () => {
   const genNum = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
   const x = genNum(0, 20)
 
   if (latestMovies.length > 0) {
-
     return (<>
       <SearchBoxWrapper bg={latestMovies[x].backdrop_path}>
         <h1>{latestMovies[x].original_title.toUpperCase()}</h1>
@@ -61,6 +62,7 @@ h1{
     font-size:30px;
 }
 `
+
 const ReleaseDate = styled.h1`
 color:gold;
 text-shadow:1px 1px 1px black;
