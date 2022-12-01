@@ -5,17 +5,18 @@ import styled from 'styled-components';
 import CardWrapper from '../components/CardWrapper/CardWrapper';
 
 
+
 const ActorDetails = () => {
 
     const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
-    const [loading, setLoading] = useState(true);
+
 
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
         console.log(actorTvCredits);
-        setLoading(false);
+
     }
 
     useEffect(() => {
@@ -24,7 +25,7 @@ const ActorDetails = () => {
     }, [])
 
 
-    if (!loading) {
+    if (!creditsLoading && !actorLoading) {
         return (
             <Wrapper>
                 <HeaderDetails >
@@ -47,12 +48,10 @@ const ActorDetails = () => {
 
                 </HeaderDetails>
 
-                {/* {creditsLoading ? <h1>...Loading</h1> : actorTvCredits.map((role, idx) => (
-                    <h1>{role.name
-                    }</h1>
-                ))} */}
-                {/* <CardWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' />
-                <CardWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} /> */}
+                <CardWrapperHolder>
+                    <CardWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                    <CardWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
+                </CardWrapperHolder>
             </Wrapper>
 
 
@@ -131,4 +130,11 @@ font-weight:bold;
 const DoB = styled.span`
 color:#999;
 font-size:20px;
+`;
+
+const CardWrapperHolder = styled.div`
+display:flex;
+width:100%;
+align-items:center;
+justify-content:space-between;
 `;
