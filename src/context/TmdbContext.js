@@ -14,6 +14,7 @@ export const TmdbProvider = ({ children }) => {
         topMovies: [],
         details: [],
         detailsLoading: false,
+
         loading: false,
         movieAndTvID: '',
         releaseDate: '2022',
@@ -53,6 +54,7 @@ export const TmdbProvider = ({ children }) => {
     const setCreditsLoading = () => {
         dispatch({ type: 'CREDITS_LOADING' })
     }
+
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
 
@@ -134,9 +136,11 @@ export const TmdbProvider = ({ children }) => {
     // get the latest movie
 
     const getLatestMovies = async () => {
+
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
-        console.log(resultLatestMovies.results)
+        console.log(resultLatestMovies)
+
         dispatch({
             type: 'GET_LATESTMOVIES',
             payload: resultLatestMovies.results

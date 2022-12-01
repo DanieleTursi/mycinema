@@ -25,6 +25,7 @@ const DetailsPage = () => {
     console.log(credits)
 
 
+
     if (!detailsLoading) {
 
         return (
