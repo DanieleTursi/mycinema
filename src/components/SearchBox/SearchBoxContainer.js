@@ -44,21 +44,21 @@ export default SearchBoxContainer
 const SearchBoxWrapper = styled.div`
 display:flex;
 align-items:flex-end;
-justify-content:center;
+justify-content:space-evenly;
 padding:20px;
 height:300px;
 width:100%;
 background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
 background-size: cover;
 background-repeat: no-repeat;
-background-position: center center;
+background-position: center;
 font-family: 'Gochi Hand', cursive;
+
 
 h1{
     color:gold;
     text-shadow:1px 1px 1px black;
     font-style:italic;
-    margin:100px;
     font-size:30px;
 }
 `
@@ -67,7 +67,6 @@ const ReleaseDate = styled.h1`
 color:gold;
 text-shadow:1px 1px 1px black;
 font-style:italic;
-margin:100px;
 font-family: 'Gochi Hand', cursive;
 
 &:before {
