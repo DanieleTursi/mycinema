@@ -28,6 +28,7 @@ export const TmdbProvider = ({ children }) => {
         actorTvCredits: [],
         actorMovieCredits: [],
         creditsLoading: false,
+        latestMovies: [],
 
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
@@ -130,6 +131,18 @@ export const TmdbProvider = ({ children }) => {
 
     }
 
+    // get the latest movie
+
+    const getLatestMovies = async () => {
+        const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
+        const resultLatestMovies = await latestMovies.json()
+        console.log(resultLatestMovies)
+        dispatch({
+            type: 'GET_LATESTMOVIES',
+            payload: resultLatestMovies.results
+        })
+    }
+
 
 
     // get the details of the actor
@@ -201,6 +214,7 @@ export const TmdbProvider = ({ children }) => {
     }
 
     return <TmdbContext.Provider value={{
+        getLatestMovies, latestMovies: state.latestMovies,
         getSearch, getTop, getPopular, getDetails, getActorDetails,
         creditsLoading: state.creditsLoading,
         actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,

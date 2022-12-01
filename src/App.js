@@ -6,17 +6,18 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import DetailsPage from './pages/DetailsPage';
 import ActorDetails from './pages/ActorDetails';
-import SearchBox from './components/SearchBox/SearchBox';
 import SearchResultPage from './components/SearchResultPage/SearchResultPage';
-
+import SearchBoxContainer from './components/SearchBox/SearchBoxContainer';
 
 function App() {
+
+
   return (
     <TmdbProvider>
       <div className="App">
         <Router>
           <Navbar />
-          <SearchBox />
+          <SearchBoxContainer />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/detailspage/" element={<DetailsPage />} />

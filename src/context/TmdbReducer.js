@@ -68,13 +68,16 @@ const tmdbReducer = (state, action) => {
                 searchPeople: action.searchPeople,
                 searchLoading: false,
             }
-
-
         case 'GET_ACTOR_DETAILS':
             return {
                 ...state,
                 actorDetails: action.payload,
                 actorLoading: false,
+            }
+        case 'GET_LATESTMOVIES':
+            return {
+                ...state,
+                latestMovies: action.payload,
             }
         case 'ACTOR_CREDITS':
             return {
