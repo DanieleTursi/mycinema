@@ -44,11 +44,7 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 actorLoading: true,
             }
-        case 'SET_LATEST_LOADING':
-                return {
-                    ...state,
-                    searchLoading: true,
-                }
+
         case 'CREDITS_LOADING':
             return {
                 ...state,
@@ -83,6 +79,7 @@ const tmdbReducer = (state, action) => {
             return {
                 ...state,
                 latestMovies: action.payload,
+
             }
         case 'ACTOR_CREDITS':
             return {

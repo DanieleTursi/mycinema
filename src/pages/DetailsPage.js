@@ -23,8 +23,8 @@ const DetailsPage = () => {
     }, [])
 
     console.log(credits)
-    
-     
+
+
 
     if (!detailsLoading) {
 
@@ -118,10 +118,10 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
-const BirthDetails = styled.div `
+const BirthDetails = styled.div`
 display:flex;
 flex-direction:row;`
-const PoB= styled.p`
+const PoB = styled.p`
 color:#999;
 font-size:20px;`
 
