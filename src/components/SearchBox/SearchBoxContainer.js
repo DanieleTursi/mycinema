@@ -43,15 +43,14 @@ const SearchBoxContainer = () => {
 
 export default SearchBoxContainer
 
-// const MoveUpDown= keyframes `
-// 0%, 100% {
-//   transform: translateY(0);
-// }
-// 50% {
-//   transform: translateY(-100px);
-// }
-
-//   `
+const MoveUpDown = keyframes `
+from {
+  background-position: 0 0;
+}
+to {
+  background-position: 0% 50%;
+}
+  `
 const SearchBoxWrapper = styled.div`
 display:flex;
 justify-content:space-evenly;
@@ -59,10 +58,11 @@ padding:20px;
 height:300px;
 width:100%;
 background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
+// background-size: cover;
+background-position: 0px 0px;
+  background-repeat: repeat-x;
 font-family: 'Gochi Hand', cursive;
+animation: ${MoveUpDown} 30s linear infinite alternate;
 
 
 
