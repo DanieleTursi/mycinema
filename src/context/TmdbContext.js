@@ -16,7 +16,6 @@ export const TmdbProvider = ({ children }) => {
         detailsLoading: false,
         videosLoading: false,
         loading: false,
-        loadingLatest: false,
         movieAndTvID: '',
         releaseDate: '2022',
         credits: [],
@@ -59,9 +58,7 @@ export const TmdbProvider = ({ children }) => {
     const setVideosLoading = () => {
         dispatch({ type: 'VIDEOS_LOADING' })
     }
-    const setLoadingLatest = () => {
-        dispatch({ type: 'LATEST_LOADING' })
-    }
+
     const params = new URLSearchParams({
         api_key: TMDB_KEY,
 
@@ -87,15 +84,31 @@ export const TmdbProvider = ({ children }) => {
 
     // get videos of movies and tv
 
-    const getVideos = async (id) => {
+    const getVideos = async (id, type) => {
         setVideosLoading();
-        const movieVideos = await fetch(`${URL}movie/${id}/videos?${params}${lang}`);
-        const movieVideosData = await movieVideos.json();
-        console.log(movieVideosData.results);
-        dispatch({
-            type: 'MOVIE_VIDEOS',
-            payload: movieVideosData.results,
-        })
+
+
+        if (type === 'movie') {
+            const movieVideos = await fetch(`${URL}movie/${id}/videos?${params}${lang}`);
+            const movieVideosData = await movieVideos.json();
+
+            console.log(movieVideosData.results);
+            dispatch({
+                type: 'MOVIE_VIDEOS',
+                payload: movieVideosData.results,
+            })
+        }
+        else {
+            const tvVideos = await fetch(`${URL}tv/${id}/videos?${params}${lang}`);
+            const tvVideosData = await tvVideos.json();
+            console.log(tvVideosData.results);
+            dispatch({
+                type: 'MOVIE_VIDEOS',
+                payload: tvVideosData.results,
+            })
+        }
+
+
     }
 
     // get popular Movies and Shows
@@ -155,13 +168,13 @@ export const TmdbProvider = ({ children }) => {
     // get the latest movie
 
     const getLatestMovies = async () => {
-        setLoadingLatest();
+
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
         console.log(resultLatestMovies)
 
         dispatch({
-            type: 'GET_LATESTMOVIES',
+            type: 'GET_LATEST_MOVIES',
             payload: resultLatestMovies.results
         })
     }
@@ -237,12 +250,37 @@ export const TmdbProvider = ({ children }) => {
     }
 
     return <TmdbContext.Provider value={{
-        getVideos, videos: state.videos, videosLoading: state.videosLoading,
-        getLatestMovies, latestMovies: state.latestMovies,
-        getSearch, getTop, getPopular, getDetails, getActorDetails,
+        getVideos,
+        getLatestMovies,
+        getSearch,
+        getTop,
+        getPopular,
+        getDetails,
+        getActorDetails,
+        getActorCredits,
+        videos: state.videos,
+        latestMovies: state.latestMovies,
+        videosLoading: state.videosLoading,
         creditsLoading: state.creditsLoading,
-        actorLoading: state.actorLoading, searchMovies: state.searchMovies, cast: state.cast, searchPeople: state.searchPeople, searchTV: state.searchTV, movies: state.movies, loading: state.loading, searchLoading: state.searchLoading, loadingLatest: state.loadingLatest, detailsLoading: state.detailsLoading, series: state.series, topSeries: state.topSeries, topMovies: state.topMovies, details: state.details, mandtid: state.movieAndTvID,
-        rDate: state.releaseDate, credits: state.credits, actorDetails: state.actorDetails, getActorCredits, actorTvCredits: state.actorTvCredits, actorMovieCredits: state.actorMovieCredits,
+        actorLoading: state.actorLoading,
+        searchMovies: state.searchMovies,
+        cast: state.cast,
+        searchPeople: state.searchPeople,
+        searchTV: state.searchTV,
+        movies: state.movies,
+        loading: state.loading,
+        searchLoading: state.searchLoading,
+        detailsLoading: state.detailsLoading,
+        series: state.series,
+        topSeries: state.topSeries,
+        topMovies: state.topMovies,
+        details: state.details,
+        mandtid: state.movieAndTvID,
+        rDate: state.releaseDate,
+        credits: state.credits,
+        actorDetails: state.actorDetails,
+        actorTvCredits: state.actorTvCredits,
+        actorMovieCredits: state.actorMovieCredits,
     }} >{children}</TmdbContext.Provider>
 }
 

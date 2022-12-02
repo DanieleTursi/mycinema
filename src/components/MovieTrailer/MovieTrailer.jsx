@@ -6,12 +6,13 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 const MovieTrailer = () => {
     const [showId] = useLocalStorage('id', '');
+    const [screenType] = useLocalStorage('st', '');
     const { videosLoading, getVideos, videos } = useContext(TmdbContext)
 
 
 
     useEffect(() => {
-        getVideos(showId)
+        getVideos(showId, screenType)
     }, [])
 
     if (!videosLoading) {
