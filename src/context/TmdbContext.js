@@ -1,4 +1,5 @@
 
+import { array } from "prop-types";
 import { createContext, useReducer, useState } from "react";
 import tmdbReducer from './TmdbReducer'
 const TmdbContext = createContext();
@@ -93,9 +94,11 @@ export const TmdbProvider = ({ children }) => {
             const movieVideosData = await movieVideos.json();
 
             console.log(movieVideosData.results);
+
             dispatch({
                 type: 'MOVIE_VIDEOS',
                 payload: movieVideosData.results,
+
             })
         }
         else {
