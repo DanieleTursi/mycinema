@@ -1,14 +1,15 @@
 import React from 'react'
-import { useEffect, useContext,useState } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import TmdbContext from "../../context/TmdbContext";
 import SearchBox from './SearchBox';
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import noImage from '../../assets/images/noImage.png'
 
 const SearchBoxContainer = () => {
   const { getLatestMovies, latestMovies, loadingLatest } = useContext(TmdbContext);
   const [loading, setLoading] = useState(true)
   const startFunction = async () => {
+
     await getLatestMovies();
     setLoading(false);
   }
@@ -21,7 +22,7 @@ const SearchBoxContainer = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  const x = genNum(0, latestMovies.length -1)
+  const x = genNum(0, latestMovies.length - 1)
 
   if (!loading) {
     return (<>
