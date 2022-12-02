@@ -1,12 +1,12 @@
-
+import React from 'react'
 import { useEffect, useContext, useState } from 'react'
 import TmdbContext from "../../context/TmdbContext";
 import SearchBox from './SearchBox';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import noImage from '../../assets/images/noImage.png'
 
 const SearchBoxContainer = () => {
-  const { getLatestMovies, latestMovies } = useContext(TmdbContext);
+  const { getLatestMovies, latestMovies, loadingLatest } = useContext(TmdbContext);
   const [loading, setLoading] = useState(true)
   const startFunction = async () => {
 
@@ -43,11 +43,18 @@ const SearchBoxContainer = () => {
 
 export default SearchBoxContainer
 
+// const MoveUpDown= keyframes `
+// 0%, 100% {
+//   transform: translateY(0);
+// }
+// 50% {
+//   transform: translateY(-100px);
+// }
 
+//   `
 const SearchBoxWrapper = styled.div`
 display:flex;
-align-items:flex-end;
-justify-content:center;
+justify-content:space-evenly;
 padding:20px;
 height:300px;
 width:100%;
@@ -57,12 +64,14 @@ background-repeat: no-repeat;
 background-position: center;
 font-family: 'Gochi Hand', cursive;
 
+
+
 h1{
     color:gold;
     text-shadow:1px 1px 1px black;
     font-style:italic;
-    margin:100px;
     font-size:30px;
+    align-self:flex-end;
 }
 `
 
@@ -70,7 +79,6 @@ const ReleaseDate = styled.h1`
 color:gold;
 text-shadow:1px 1px 1px black;
 font-style:italic;
-margin:100px;
 font-family: 'Gochi Hand', cursive;
 
 &:before {

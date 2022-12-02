@@ -40,9 +40,12 @@ export default SearchBox
 const Styledform = styled.form`
 text-align:center;
 border-radius:7px;
+position:absolute;
+
 .box{
   color:black;
 }
+
 input{
     height:30px;
     width:200px;
