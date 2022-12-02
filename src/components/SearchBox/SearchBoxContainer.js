@@ -1,14 +1,16 @@
 import React from 'react'
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext,useState } from 'react'
 import TmdbContext from "../../context/TmdbContext";
 import SearchBox from './SearchBox';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import noImage from '../../assets/images/noImage.png'
 
 const SearchBoxContainer = () => {
   const { getLatestMovies, latestMovies, loadingLatest } = useContext(TmdbContext);
+  const [loading, setLoading] = useState(true)
   const startFunction = async () => {
     await getLatestMovies();
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -19,9 +21,9 @@ const SearchBoxContainer = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  const x = genNum(0, 20)
+  const x = genNum(0, latestMovies.length -1)
 
-  if (latestMovies.length > 0) {
+  if (!loading) {
     return (<>
       <SearchBoxWrapper bg={latestMovies[x].backdrop_path}>
         <h1>{latestMovies[x].original_title.toUpperCase()}</h1>
@@ -40,10 +42,17 @@ const SearchBoxContainer = () => {
 
 export default SearchBoxContainer
 
+// const MoveUpDown= keyframes `
+// 0%, 100% {
+//   transform: translateY(0);
+// }
+// 50% {
+//   transform: translateY(-100px);
+// }
 
+//   `
 const SearchBoxWrapper = styled.div`
 display:flex;
-align-items:flex-end;
 justify-content:space-evenly;
 padding:20px;
 height:300px;
@@ -55,11 +64,13 @@ background-position: center;
 font-family: 'Gochi Hand', cursive;
 
 
+
 h1{
     color:gold;
     text-shadow:1px 1px 1px black;
     font-style:italic;
     font-size:30px;
+    align-self:flex-end;
 }
 `
 
