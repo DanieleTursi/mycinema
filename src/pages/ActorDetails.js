@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
-import CardWrapper from '../components/CardWrapper/CardWrapper';
+import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
 
 
 
@@ -30,7 +30,7 @@ const ActorDetails = () => {
             <Wrapper>
                 <HeaderDetails >
                     <ActorBackground />
-                    <DetailsWrapper>
+                    <DetWrapper>
                         <Poster bg={actorDetails.profile_path} />
                         <Details>
 
@@ -44,14 +44,15 @@ const ActorDetails = () => {
 
 
                         </Details>
-                    </DetailsWrapper>
+                    </DetWrapper>
 
                 </HeaderDetails>
-
+               
                 <CardWrapperHolder>
-                    <CardWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                    <CardWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
+                    <DetailsWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                    <DetailsWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
                 </CardWrapperHolder>
+                
             </Wrapper>
 
 
@@ -92,7 +93,7 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
-const DetailsWrapper = styled.div`
+const DetWrapper = styled.div`
 width:100%;
 min-height:100%;
 display:flex;
@@ -132,8 +133,10 @@ color:#999;
 font-size:20px;
 `;
 
+
 const CardWrapperHolder = styled.div`
 display:flex;
+flex-direction:row;
 width:100%;
 align-items:center;
 justify-content:space-between;

@@ -34,6 +34,7 @@ justify-content: center;
 align-items:center;
 background:black;
 color:white;
+margin-top:20px;
 `;
 
 const Socials = styled.div`
