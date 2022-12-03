@@ -1,11 +1,10 @@
-import React from 'react'
+import { useContext } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import styled from "styled-components"
 import CardDetails from './CardDetails';
 
 const DetailsWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
-
 
     if (!loading) {
   return (
@@ -24,8 +23,10 @@ else {
 export default DetailsWrapper
 
 const Container = styled.div`
+width:45%;
 display:flex;
 flex-direction:row;
-width: 300px;
-margin-top:20px;
+flex-wrap:wrap;
+justify-content:space-evenly;
+margin:0 15px;
 `;

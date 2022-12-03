@@ -34,8 +34,7 @@ const CardDetails = (props) => {
       <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
     </Info>
     {props.page === 'detailsPage' && <Character>
-      <span>as</span>
-      <h6>{props.character ? props.character : 'N/N'}</h6>
+      <h4>As: {props.character ? props.character : 'N/N'}</h4>
     </Character>}
     </AllInfo>
   </MainContainer>
@@ -48,16 +47,25 @@ export default CardDetails
 const MainContainer= styled.div`
 display:flex;
 flex-direction:row;
+background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),url(https://www.themoviedb.org/t/p/original${props => props.bg});
+margin-top:10px;
+width:250px;
+text-shadow:1px 1px 1px black;
+border-radius:8px;
+padding:2px;
+color:white;
 `
 
 const AllInfo=styled.div`
 display:flex;
 flex-direction:column;
+justify-content:flex-start;
+margin:0 5px;
 `
 
 const Info = styled.div`
     display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
-    justify-content:center;
+    justify-content:flex-start;
     align-items:center;
 
     h2{
