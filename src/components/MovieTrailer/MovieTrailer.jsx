@@ -111,10 +111,6 @@ margin:20px;
 cursor:pointer;
 
 
-
-
-
-
 &:hover{
   background:#222;
   color:powderblue;
