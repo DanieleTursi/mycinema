@@ -58,9 +58,8 @@ padding:20px;
 height:300px;
 width:100%;
 background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
-// background-size: cover;
 background-position: 0px 0px;
-  background-repeat: repeat-x;
+background-repeat: no-repeat;
 font-family: 'Gochi Hand', cursive;
 animation: ${MoveUpDown} 30s linear infinite alternate;
 
