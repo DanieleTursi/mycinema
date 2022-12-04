@@ -49,8 +49,8 @@ const ActorDetails = () => {
                 </HeaderDetails>
                
                 <CardWrapperHolder>
-                    <DetailsWrapper side='left' name='|| Tv roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                    <DetailsWrapper side='right' name='Movie Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
+                    <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                    <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
                 </CardWrapperHolder>
                 
             </Wrapper>
@@ -138,6 +138,6 @@ const CardWrapperHolder = styled.div`
 display:flex;
 flex-direction:row;
 width:100%;
-align-items:center;
+// align-items:center;
 justify-content:space-between;
 `;
