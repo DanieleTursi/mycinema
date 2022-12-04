@@ -23,19 +23,22 @@ const CardDetails = (props) => {
     }
   return (
     <>
-    <MainContainer bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
-    <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
+    <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating}>
+    <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
     </Container>
     <AllInfo bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
     <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
       <Rating rating={props.rating}>
-        <h1>{props.rating}</h1>
+        <h1>{props.rating.toFixed(1)}</h1>
       </Rating>
       <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
     </Info>
-    {props.page === 'detailsPage' && <Character>
-      <h4>As: {props.character ? props.character : 'N/N'}</h4>
-    </Character>}
+    {props.title | props.original_name != '' && 
+    <h4>Title: {props.title || props.original_name}</h4>
+    }
+    {props.character != '' && 
+      <h4>As: {props.character}</h4>
+    }
     </AllInfo>
   </MainContainer>
   </>
@@ -45,15 +48,26 @@ const CardDetails = (props) => {
 export default CardDetails
 
 const MainContainer= styled.div`
-display:flex;
+display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
 flex-direction:row;
+align-items:center;
 background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),url(https://www.themoviedb.org/t/p/original${props => props.bg});
 margin-top:10px;
-width:250px;
+width:280px;
+height:145px;
 text-shadow:1px 1px 1px black;
 border-radius:8px;
 padding:2px;
 color:white;
+cursor:pointer;
+
+h4{
+  margin:0;,
+}
+
+&:hover{
+  opacity:0.8;
+}
 `
 
 const AllInfo=styled.div`
@@ -73,6 +87,7 @@ const Info = styled.div`
       text-align:center;
       font-size:18px;
     }
+
 `
 
 const Container = styled.div`
@@ -86,10 +101,6 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
-
-  &:hover{
-    opacity:0.8;
-  }
 
 `
 
@@ -110,15 +121,3 @@ const Rating = styled.div`
     }  
     `;
 
-const Character = styled.div`
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-    h6{
-      margin:0;
-    }
-    span{
-      font-size:8px ;
-    }
-    `;
