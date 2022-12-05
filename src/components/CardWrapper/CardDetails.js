@@ -26,7 +26,6 @@ const CardDetails = (props) => {
       <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating}>
         <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
         </Container>
-
         <AllInfo bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
           <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
             <Rating rating={props.rating}>
@@ -34,9 +33,7 @@ const CardDetails = (props) => {
             </Rating>
             <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
           </Info>
-          {props.title | props.original_name != '' &&
-            <h4>Title: {props.title || props.original_name}</h4>
-          }
+          <h4>Title:{props.title}</h4>
           {props.character != '' &&
             <h4>As: {props.character}</h4>
           }
@@ -63,7 +60,7 @@ color:white;
 cursor:pointer;
 
 h4{
-  margin:0;,
+  margin:0;
 }
 
 &:hover{
