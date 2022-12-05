@@ -13,7 +13,7 @@ const DetailsWrapper = (props) => {
                     {props.name}
                 </Title>
      {props.movies.map((movie, idx) => (
-        <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+        <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
    ))}
     </Container>
   )
