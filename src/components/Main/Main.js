@@ -13,7 +13,7 @@ const Main = () => {
   }, [])
 
   return (
-    <MainWrapper>
+    <MainWrapper id='mainWrapper'>
       <CardWrapperHolder>
         {loading ? <p>...Loading</p> : <>
           <CardWrapper side='left' name='|| Most Popular ' movies={series} type='tv' />
@@ -32,16 +32,18 @@ export default Main
 
 
 const MainWrapper = styled.div`
-width:100%;
+max-width:100%;
 height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
+
+
 `;
 
 const CardWrapperHolder = styled.div`
-width:95%;
-height:90%;
+width:90%;
+height:100%;
 display:flex;
 flex-wrap:wrap;
 justify-content:space-between;

@@ -11,7 +11,7 @@ const CardWrapper = (props) => {
     if (!loading) {
 
         return (
-            <Wrap side={props.side}>
+            <Wrap side={props.side} id='cardWrapper'>
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>

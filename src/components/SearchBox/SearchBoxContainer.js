@@ -43,7 +43,7 @@ const SearchBoxContainer = () => {
 
 export default SearchBoxContainer
 
-const MoveUpDown = keyframes `
+const MoveUpDown = keyframes`
 from {
   background-position: 0 0;
 }
@@ -56,7 +56,7 @@ display:flex;
 justify-content:space-evenly;
 padding:20px;
 height:300px;
-width:100%;
+max-width:100%;
 background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
 background-position: 0px 0px;
 background-repeat: no-repeat;

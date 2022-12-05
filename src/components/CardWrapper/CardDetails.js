@@ -33,9 +33,9 @@ const CardDetails = (props) => {
             </Rating>
             <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
           </Info>
-          <h4>Title:{props.title}</h4>
+          <h4>Title: {props.title}</h4>
           {props.character != '' &&
-            <h4>As: {props.character}</h4>
+            <h4>As:   {props.character}</h4>
           }
         </AllInfo>
       </MainContainer>
