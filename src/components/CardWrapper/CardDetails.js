@@ -33,11 +33,9 @@ const CardDetails = (props) => {
       </Rating>
       <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
     </Info>
-    {props.title | props.original_name != '' && 
-    <h4>Title: {props.title || props.original_name}</h4>
-    }
+    <h4>Title:{ props.title }</h4>
     {props.character != '' && 
-      <h4>As: {props.character}</h4>
+      <h4>As: { props.character }</h4>
     }
     </AllInfo>
   </MainContainer>
@@ -62,7 +60,7 @@ color:white;
 cursor:pointer;
 
 h4{
-  margin:0;,
+  margin:0;
 }
 
 &:hover{

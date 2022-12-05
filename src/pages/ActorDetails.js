@@ -50,7 +50,7 @@ const ActorDetails = () => {
                
                 <CardWrapperHolder>
                     <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                    <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' content={"MOVIES"} page='detailsPage' />
+                    <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
                 </CardWrapperHolder>
                 
             </Wrapper>
