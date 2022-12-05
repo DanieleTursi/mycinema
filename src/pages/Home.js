@@ -14,7 +14,7 @@ export default Home
 
 
 const HomeWrapper = styled.div`
-width:100vw;
+max-width:100vw;
 
 background:#999 lightgray; ;
 
