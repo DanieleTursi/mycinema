@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <Copyright>
-        <BiCopyright /> 2022-Created by Nagy and Tursi 
+        <BiCopyright /> 2022-Created by Nagy and Tursi
       </Copyright>
       <Socials>
         <BsInstagram size={'25px'} style={{ margin: 10, cursor: 'pointer' }} />
@@ -60,6 +60,11 @@ a{
   text-decoration:none;
   color:white;
   margin:20px;
+}
+
+
+@media screen and (max-width: 768px){
+    display:flex;
 }
 `;
 

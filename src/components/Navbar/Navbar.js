@@ -32,7 +32,15 @@ margin-bottom:20px;
 
 const ButtonsContainer = styled.div`
    margin-right:20px;
+   display:flex;
    justify-content:flex-end;
+
+
+   @media screen and (max-width: 768px){
+    width:50%;
+    margin:0;
+}
+
 `;
 
 const Logo = styled.h1`
@@ -42,6 +50,11 @@ font-family: 'Gochi Hand', cursive;
 color:white;
 margin-left:20px;
 cursor:pointer;
+
+
+@media screen and (max-width: 768px){
+    font-size:32px ;
+}
 `
 
 export default Navbar

@@ -20,6 +20,7 @@ const CardPeople = (props) => {
   }
 
 
+
   return (
     <>
       <ContainerPeople onClick={idHandler} bg={props.bg} id={props.id} >
@@ -35,6 +36,8 @@ const CardPeople = (props) => {
       </Info>
     </>
   )
+
+
 }
 
 export default CardPeople
