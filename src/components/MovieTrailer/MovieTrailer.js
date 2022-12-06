@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import TmdbContext from '../../context/TmdbContext';
+import SizeContext from '../../context/SizeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 import 'slick-carousel/slick/slick.css';
@@ -14,18 +15,29 @@ const MovieTrailer = () => {
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
     const { videosLoading, getVideos, videos } = useContext(TmdbContext)
+    const { isSmall } = useContext(SizeContext);
     const [videoType, setVideoType] = useState('Trailer');
     const [active, setActive] = useState(false);
     const [count, setCount] = useState(0);
+    const [slides, setSlides] = useState(1);
 
+    useEffect(() => {
+        console.log(isSmall);
+        if (isSmall) {
+            setSlides(1)
+        } else { setSlides(3) }
+    }, [isSmall])
 
     let settings = {
+        // className: "slider variable-width",
         dots: true,
         infinite: count > 3,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: slides,
         slidesToScroll: 1,
         autoplay: false,
+        // centerMode: true,
+        // variableWidth: isSmall,
     };
 
     const checkVideoCount = (type) => {
@@ -80,7 +92,7 @@ const MovieTrailer = () => {
                     ))}
                 </ButtonsWrapper>
                 <YoutubeWrapper>
-                    <Carousel {...settings} >
+                    <Carousel {...settings} id='Carousel'>
 
 
                         {videos.map((video, idx) => (
@@ -118,35 +130,27 @@ height:300px;
 background-color:#000 ;
 position:relative;
 margin-bottom:50px;
-`;
-const YoutubeWrapper = styled.div`
-display:flex;
-margin-bottom:20px;
-justify-content:center ;
-background:#fff ;
+
+@media screen and (max-width: 768px){
+
+min-height:300px;
 width:100%;
-overflow:hidden;
-
-
+}
 `;
 
-const YouFrame = styled.iframe`
-width:500px;
-height:250px;
-margin:0 20px;
-
-/* position:absolute ; */
-
-`;
 
 const ButtonsWrapper = styled.div`
 width:100%;
-height:50px;
+min-height:50px;
 display:flex;
 align-items:center;
 justify-content:center;
 background-color:#fff ;
 
+
+@media screen and (max-width: 768px){
+    flex-wrap:wrap;
+}
 `;
 const Button = styled.button`
 color:${props => props.type === props.videoType ? 'powderblue' : '#000'};
@@ -160,13 +164,16 @@ margin:20px;
 cursor:pointer;
 
 
+
+
 &:hover{
   background:#222;
   color:powderblue;
 }
 
 @media screen and (max-width: 768px){
-  width:80px;
+  min-width:80px;
+  margin:5px;
 &:active{
     background-color:#000 ;
     border:1px solid red;
@@ -181,15 +188,16 @@ padding:0 5%;
 height:100%;
 
 & > button {
-    /* opacity:0; */
+ 
     height:100%;
-    width: 5vw;
+    width: 0;
     
     z-index:1;
-    /* &:hover{
-        opacity: 1;
-        transition: opacity 0.2s ease 0s;
-    } */
+   
+}
+ul{
+    
+    left:0;
 }
 ul li button {
     &:before{
@@ -203,11 +211,21 @@ li.slick-active button:before {
 .slick-list {
     overflow:initial;
 }
-.slick-prev {
+/* .slick-prev {
     left: -75px;
 }
 .slick-next {
     right: -75px;
+} */
+
+@media screen and (max-width: 768px){
+margin:0;
+padding:0;
+width:100vw;
+/* display:flex;
+
+align-items:center;
+justify-content:flex-start; */
 }
 `;
 
@@ -216,6 +234,8 @@ border-radius: 4px;
 cursor: pointer;
 position: relative;
 margin:0 20px;
+width:100%;
+
 a{
     border-radius: 4px;
     box-shadow: rgb(0 0 0 /69%) 0px 26px 30px -10px, rgb(0 0 0  / 73%) 0px 16px 10px -10px;
@@ -232,5 +252,39 @@ a{
         border: 4px solid rgba(249, 249, 249, 0.8);
         transition-duration: 300ms;
     }
+}
+@media screen and (max-width: 768px){
+
+width:100vw;
+margin:0;
+}
+`;
+const YoutubeWrapper = styled.div`
+display:flex;
+margin-bottom:20px;
+justify-content:center ;
+background:#fff ;
+width:100%;
+overflow-x:hidden;
+min-height:300px;
+
+@media screen and (max-width: 768px){
+width:100%;
+margin:0;
+
+}
+`;
+
+const YouFrame = styled.iframe`
+width:500px;
+height:250px;
+margin:0 20px;
+
+
+
+@media screen and (max-width: 768px){
+width:100%;
+margin:0;
+
 }
 `;

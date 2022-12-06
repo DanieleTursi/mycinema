@@ -4,16 +4,18 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 import MovieTrailer from '../components/MovieTrailer/MovieTrailer';
+import SizeContext from '../context/SizeContext';
 
 const DetailsPage = () => {
     const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
+    const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
 
 
     const startEffect = async () => {
         await getDetails(showId, screenType);
-
+        handleResize();
 
     }
 
@@ -82,7 +84,7 @@ export default DetailsPage
 
 
 const Wrapper = styled.div`
-width:100%;
+max-width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
@@ -97,6 +99,8 @@ position:relative;
 display:flex;
 align-items:center;
 justify-content:center;
+
+
 `;
 
 const BackgroundImage = styled.div`
@@ -109,20 +113,6 @@ position:absolute;
 z-index:-1;
 `;
 
-const ActorBackground = styled.div`
-width:100%;
-height:100%;
-background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
-filter:blur(3px);
-position:absolute;
-z-index:-1;
-`;
-const BirthDetails = styled.div`
-display:flex;
-flex-direction:row;`
-const PoB = styled.p`
-color:#999;
-font-size:20px;`
 
 const DetailsWrapper = styled.div`
 width:100%;
@@ -130,6 +120,11 @@ min-height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
+
+@media screen and (max-width: 768px){
+    flex-direction:column;
+    padding:0 5%;
+}
 `;
 const Poster = styled.div`
 width:300px;
@@ -155,6 +150,13 @@ p{
     font-size:18px;
     margin:6px 0;
 }
+
+@media screen and (max-width: 768px){
+    width:100%;
+    padding:0 10px;
+    margin:0;
+}
+
 `;
 const Title = styled.span`
 color:#fff;

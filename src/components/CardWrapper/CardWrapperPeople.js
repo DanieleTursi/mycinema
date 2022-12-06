@@ -19,7 +19,7 @@ const CardWrapperPeople = (props) => {
                 <Container>
                     {props.people && props.people.map((person, idx) => (
 
-                        <CardPeople key={idx} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+                        <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
                     ))}
                 </Container>
 
@@ -45,7 +45,7 @@ flex-direction:column ;
 
 @media screen and (max-width: 768px){
     width:100%;
-    margin:20px 0;
+    
 }
 `;
 
