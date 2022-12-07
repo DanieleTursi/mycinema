@@ -10,7 +10,7 @@ const Button = ({ text }) => {
 const StyledButton = styled.button`
 color:black;
 background:white;
-border:white;
+border:1px solid black;
 width:150px;
 height:25px;
 border-radius: 8px;
