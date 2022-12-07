@@ -18,10 +18,12 @@ const DetailsPage = () => {
         handleResize();
 
     }
+    const currentScrollPosition = window.scrollY;
+
 
     useEffect(() => {
         startEffect()
-
+        console.log(currentScrollPosition);
     }, [])
 
 
@@ -31,7 +33,7 @@ const DetailsPage = () => {
         return (
 
             <Wrapper>
-                <HeaderDetails >
+                <HeaderDetails  >
                     <BackgroundImage bg={details.backdrop_path} />
                     <DetailsWrapper>
                         <Poster bg={details.poster_path} />
@@ -124,6 +126,7 @@ justify-content:center;
 @media screen and (max-width: 768px){
     flex-direction:column;
     padding:0 5%;
+    
 }
 `;
 const Poster = styled.div`
@@ -133,6 +136,7 @@ border:1px solid white;
 border-radius:7px;
 background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
+margin:10px 0;
 `;
 const Details = styled.div`
 width:60%;

@@ -211,21 +211,22 @@ li.slick-active button:before {
 .slick-list {
     overflow:initial;
 }
-/* .slick-prev {
-    left: -75px;
+.slick-prev {
+    left: 5px;
 }
 .slick-next {
-    right: -75px;
-} */
+    right: 25px;
+}
 
 @media screen and (max-width: 768px){
 margin:0;
 padding:0;
 width:100vw;
-/* display:flex;
 
-align-items:center;
-justify-content:flex-start; */
+
+    li.slick-active button:before {
+    color:#fff;
+}
 }
 `;
 
@@ -271,7 +272,9 @@ min-height:300px;
 @media screen and (max-width: 768px){
 width:100%;
 margin:0;
-
+text-align:center;
+background-color:#000 ;
+padding:10px 0 0;
 }
 `;
 
@@ -283,7 +286,7 @@ margin:0 20px;
 
 
 @media screen and (max-width: 768px){
-width:100%;
+width:90%;
 margin:0;
 
 }

@@ -4,23 +4,23 @@ import styled from "styled-components"
 import CardDetails from './CardDetails';
 
 const DetailsWrapper = (props) => {
-    const { loading } = useContext(TmdbContext);
+  const { loading } = useContext(TmdbContext);
 
-    if (!loading) {
-  return (
-    <Container>
-       <Title side={props.side} type={props.type} >
-                    {props.name}
-                </Title>
-     {props.movies.map((movie, idx) => (
-        <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
-   ))}
-    </Container>
-  )
-}
-else {
+  if (!loading) {
+    return (
+      <Container>
+        <Title side={props.side} type={props.type} >
+          {props.name}
+        </Title>
+        {props.movies.map((movie, idx) => (
+          <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
+        ))}
+      </Container>
+    )
+  }
+  else {
     return <h1>Loading</h1>
-}
+  }
 }
 
 export default DetailsWrapper
