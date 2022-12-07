@@ -84,7 +84,7 @@ const Title = styled.h3`
 width:80%;
 margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
-padding:5px 10%;
+padding:5px 90px;
 border-bottom:1px solid #000;
 font-family: 'PT Sans Narrow', sans-serif;
 
