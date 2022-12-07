@@ -5,6 +5,9 @@ import CardWrapperPeople from "../CardWrapper/CardWrapperPeople";
 import TmdbContext from "../../context/TmdbContext";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
+
+
+
 const SearchResultPage = () => {
   const { searchMovies, searchTV, searchPeople, searchLoading, getSearch } = useContext(TmdbContext);
   console.log(searchMovies);
@@ -20,7 +23,9 @@ const SearchResultPage = () => {
         <SearchResultWrapper>
           {searchTV.length > 0 ? <CardWrapper side='other' name='|| Result ' movies={searchTV} type='tv' /> : <></>}
           {searchMovies.length > 0 ? <CardWrapper side='center' name='Result || ' movies={searchMovies} type='movie' /> : <></>}
-          {searchPeople.length > 0 ? <CardWrapperPeople side='center' name='Result in || ' people={searchPeople} type='person' /> : <></>}
+          <People>
+            {searchPeople.length > 0 ? <CardWrapperPeople side='center' name='Result in || ' people={searchPeople} type='person' /> : <></>}
+          </People>
         </SearchResultWrapper>
       }</>
   )
@@ -34,7 +39,16 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
+
+
 `;
+const People = styled.div`
+height:500px;
+width:100%;
+
+
+`;
+
 
 const NoResult = styled.h1`
 text-align:center;

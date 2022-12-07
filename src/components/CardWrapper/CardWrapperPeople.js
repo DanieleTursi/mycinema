@@ -1,30 +1,60 @@
 import { useContext } from 'react';
 import TmdbContext from "../../context/TmdbContext";
+import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import CardPeople from "./CardPeople"
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
+    const { isSmall } = useContext(SizeContext);
+    console.log(isSmall);
+
+    const settings = {
+        className: "center",
+        infinite: false,
+        centerPadding: "60px",
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        swipeToSlide: true,
+
+    };
+
 
 
     if (!detailsLoading) {
+        if (!isSmall) {
+            return (
+                <WrapPeople side={props.side}>
 
-        return (
-            <WrapPeople side={props.side}>
+                    <Title side={props.side} type={props.type} >
+                        {props.name}
+                    </Title>
+                    <Container>
+                        {props.people && props.people.map((person, idx) => (
 
-                <Title side={props.side} type={props.type} >
-                    {props.name}
-                </Title>
-                <Container>
+                            <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+                        ))}
+                    </Container>
+
+                </WrapPeople>
+            )
+        } else {
+            return (
+                <Slick {...settings}>
+
                     {props.people && props.people.map((person, idx) => (
 
                         <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
-                    ))}
-                </Container>
 
-            </WrapPeople>
-        )
+                    ))}
+
+                </Slick>)
+        }
     }
     else {
         return <h1>Loading</h1>
@@ -81,4 +111,10 @@ margin-top:20px;
 `;
 
 
+const Slick = styled(Slider)`
+margin-top:100px;
+height:350px;
 
+/* display:flex; */
+
+`;
