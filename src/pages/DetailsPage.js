@@ -6,6 +6,8 @@ import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 import MovieTrailer from '../components/MovieTrailer/MovieTrailer';
 import SizeContext from '../context/SizeContext';
 
+
+
 const DetailsPage = () => {
     const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
     const { handleResize, isSmall } = useContext(SizeContext);
@@ -23,7 +25,7 @@ const DetailsPage = () => {
 
     useEffect(() => {
         startEffect()
-        console.log(currentScrollPosition);
+
     }, [])
 
 
@@ -65,6 +67,9 @@ const DetailsPage = () => {
                 </HeaderDetails>
                 <MovieTrailer />
                 <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
+
+
+
             </Wrapper>
 
 

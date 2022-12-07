@@ -57,7 +57,9 @@ const ContainerPeople = styled.div`
   &:hover{
     opacity:0.8;
   }
-
+@media (max-width: 768px){
+  width:180px;
+}
 `
 
 const Info = styled.div`
