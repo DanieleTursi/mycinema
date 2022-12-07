@@ -26,7 +26,7 @@ const DetailsWrapper = (props) => {
 export default DetailsWrapper
 
 const Container = styled.div`
-width:45%;
+width:95%;
 display:flex;
 flex-direction:row;
 flex-wrap:wrap;

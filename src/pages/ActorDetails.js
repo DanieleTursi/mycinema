@@ -1,27 +1,27 @@
-import React, { useContext, useEffect, useState, } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
+import Button from '../components/Button/Button.js'
+import { useReducer } from 'react';
 
 
 
 const ActorDetails = () => {
-
     const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
-
-
+    const [details,setDetails]= useState()
+    
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
         console.log(actorTvCredits);
-
+        
     }
 
     useEffect(() => {
         startEffect()
-
     }, [])
 
 
@@ -47,10 +47,15 @@ const ActorDetails = () => {
                     </DetWrapper>
 
                 </HeaderDetails>
-
+                <ButtonsWrapper>
+                 <Button text={'Shows'} onClick={() => {setDetails(false)}}/>
+                 <Button text={'Movies'} onClick={() => {setDetails(true)}}/>
+                </ButtonsWrapper>
                 <CardWrapperHolder>
-                    <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                    <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
+                    { details === false
+                      ?<DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                      :<DetailsWrapper side='right' name='Roles || ' movies={actorTvCredits} type='movie' page='detailsPage' />
+                     }
                 </CardWrapperHolder>
 
             </Wrapper>
@@ -84,7 +89,6 @@ align-items:center;
 justify-content:center;
 `;
 
-
 const ActorBackground = styled.div`
 width:100%;
 height:100%;
@@ -93,6 +97,7 @@ filter:blur(3px);
 position:absolute;
 z-index:-1;
 `;
+
 const DetWrapper = styled.div`
 width:100%;
 min-height:100%;
@@ -100,6 +105,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 `;
+
 const Poster = styled.div`
 width:300px;
 height:500px;
@@ -108,6 +114,7 @@ border-radius:7px;
 background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
 `;
+
 const Details = styled.div`
 width:60%;
 height:80%;
@@ -122,6 +129,7 @@ p{
     color:#fff;
 }
 `;
+
 const Title = styled.span`
 color:#fff;
 font-size:40px;
@@ -133,6 +141,19 @@ color:#999;
 font-size:20px;
 `;
 
+const ButtonsWrapper = styled.div`
+width:100%;
+min-height:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+background-color:#fff ;
+
+
+@media screen and (max-width: 768px){
+    flex-wrap:wrap;
+}
+`;
 
 const CardWrapperHolder = styled.div`
 display:flex;
