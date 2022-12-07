@@ -48,9 +48,9 @@ const CardWrapperPeople = (props) => {
                 <Slick {...settings}>
 
                     {props.people && props.people.map((person, idx) => (
-                        <div>
-                            <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
-                        </div>
+
+                        <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+
                     ))}
 
                 </Slick>)
