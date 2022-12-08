@@ -6,6 +6,7 @@ import CardDetails from './CardDetails';
 const DetailsWrapper = (props) => {
   const { loading } = useContext(TmdbContext);
 
+
   if (!loading) {
     return (
       <Container>

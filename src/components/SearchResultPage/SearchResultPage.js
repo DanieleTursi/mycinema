@@ -12,7 +12,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const SearchResultPage = () => {
   const { searchMovies, searchTV, searchPeople, searchLoading, getSearch } = useContext(TmdbContext);
   const { handleResize } = useContext(SizeContext)
-  console.log(searchMovies);
+
   const [showResult, setShowResult] = useLocalStorage('value', '');
 
   useEffect(() => {

@@ -10,6 +10,12 @@ const sizeReducer = (state, action) => {
                 ...state,
                 cardItems: action.payload,
             }
+
+        case 'SET_TRAILERS_COUNT':
+            return {
+                ...state,
+                trailersCount: action.payload,
+            }
         default:
             return state
     }
