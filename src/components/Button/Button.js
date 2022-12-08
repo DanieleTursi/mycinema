@@ -1,9 +1,17 @@
 import React from 'react'
 import styled from "styled-components"
 
-const Button = ({ text }) => {
+const Button = ({ text, actor }) => {
+
+  const clickHandler = (trueOrFalse) => {
+    // setDetails(trueOrFalse);
+    console.log('working');
+  }
+
+
+
   return (
-    <StyledButton>{text}</StyledButton>
+    <StyledButton onClick={() => { clickHandler(actor) }}>{text}</StyledButton>
   )
 }
 

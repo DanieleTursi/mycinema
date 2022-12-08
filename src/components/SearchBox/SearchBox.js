@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import styled from "styled-components"
 import { FiSearch } from 'react-icons/fi'
 import TmdbContext from "../../context/TmdbContext";
@@ -7,7 +7,7 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 const SearchBox = () => {
   const [value, setValue] = useState('');
-  const { getSearch, getLatestMovies} = useContext(TmdbContext)
+  const { getSearch, getLatestMovies } = useContext(TmdbContext)
   const [showResult, setShowResult] = useLocalStorage('value', '');
   const navigate = useNavigate();
 
@@ -41,6 +41,7 @@ const Styledform = styled.form`
 text-align:center;
 border-radius:7px;
 position:absolute;
+top:10px;
 
 .box{
   color:black;

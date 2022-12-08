@@ -27,8 +27,9 @@ const SearchBoxContainer = () => {
   if (!loading) {
     return (<>
       <SearchBoxWrapper bg={latestMovies[x].backdrop_path}>
-        <h1>{latestMovies[x].original_title.toUpperCase()}</h1>
         <SearchBox />
+        <h1>{latestMovies[x].original_title.toUpperCase()}</h1>
+
         <ReleaseDate>{latestMovies[x].release_date.split("-").reverse().join("-")}</ReleaseDate>
       </SearchBoxWrapper>
     </>
@@ -62,7 +63,7 @@ background-position: 0px 0px;
 background-repeat: no-repeat;
 font-family: 'Gochi Hand', cursive;
 animation: ${MoveUpDown} 30s linear infinite alternate;
-
+position:relative;
 
 
 h1{
@@ -72,6 +73,21 @@ h1{
     font-size:30px;
     align-self:flex-end;
 }
+
+@media (max-width:768px){
+  height:200px;
+  background-size:cover;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+
+  h1{
+    font-size:20px ;
+    align-self:center ;
+    margin:0;
+  }
+}
+
 `
 
 const ReleaseDate = styled.h1`
@@ -86,4 +102,12 @@ font-family: 'Gochi Hand', cursive;
     content:"Release: ";
   }
 
+
+@media (max-width:768px){
+
+
+  &:before {
+      font-size:18px;
+      }
+}
 `

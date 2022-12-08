@@ -51,11 +51,7 @@ const MovieTrailer = () => {
     const buttonHandler = (type) => {
         setVideoType(type)
         setActive(!active);
-
         checkVideoCount(type);
-
-
-
 
     }
 
@@ -69,7 +65,7 @@ const MovieTrailer = () => {
 
 
     const checkIfTrailerAvailable = async () => {
-        const available = videos.filter((obj) => obj.type === 'Trailer').length;
+        const available = await videos.filter((obj) => obj.type === 'Trailer').length;
         const newType = await videos.filter((obj) => obj.type != '');
         console.log(newType)
         if (available === 0) {
