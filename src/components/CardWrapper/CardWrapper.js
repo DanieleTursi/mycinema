@@ -1,29 +1,63 @@
 import { useContext } from 'react';
 import TmdbContext from "../../context/TmdbContext";
+import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import Card from "./Card"
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+
 const CardWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
+    const { isSmall, cardItems } = useContext(SizeContext);
 
+
+    const settings = {
+        className: "center",
+        infinite: false,
+        centerPadding: "60px",
+        slidesToShow: cardItems,
+        slidesToScroll: 1,
+        swipeToSlide: true,
+        arrows: false,
+    };
 
 
     if (!loading) {
+        if (!isSmall) {
+            return (
+                <Wrap side={props.side} id='cardWrapper'>
+                    <Title side={props.side} type={props.type} >
+                        {props.name}
+                    </Title>
+                    <Container  >
+                        {props.movies.map((movie, idx) => (
+                            <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                        ))}
+                    </Container>
 
-        return (
-            <Wrap side={props.side} id='cardWrapper'>
+                </Wrap>
+            )
+        }
+        else {
+            return (<>
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
-                <Container  >
+
+                <Slick {...settings}>
+
                     {props.movies.map((movie, idx) => (
                         <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                     ))}
-                </Container>
 
-            </Wrap>
-        )
+                </Slick>
+            </>)
+
+
+        }
     }
     else {
         return <h1>Loading</h1>
@@ -45,6 +79,7 @@ flex-direction:column ;
 @media screen and (max-width: 768px){
     width:100%;
     margin:20px 0;
+    
 }
 `;
 
@@ -71,7 +106,10 @@ font-family: 'PT Sans Narrow', sans-serif;
 
 @media screen and (max-width: 768px){
     text-align:center ;
+    width:180px;
+    margin-bottom:20px;
 }
+
 `;
 
 const Container = styled(HorizontalScroll)`
@@ -81,3 +119,12 @@ margin-top:20px;
 
 
 
+const Slick = styled(Slider)`
+width:100%;
+height:350px;
+overflow:hidden;
+
+
+
+
+`;

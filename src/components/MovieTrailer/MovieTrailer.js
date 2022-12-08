@@ -22,7 +22,7 @@ const MovieTrailer = () => {
     const [slides, setSlides] = useState(1);
 
     useEffect(() => {
-        console.log(isSmall);
+
         if (isSmall) {
             setSlides(1)
         } else { setSlides(3) }
@@ -67,7 +67,7 @@ const MovieTrailer = () => {
     const checkIfTrailerAvailable = async () => {
         const available = await videos.filter((obj) => obj.type === 'Trailer').length;
         const newType = await videos.filter((obj) => obj.type != '');
-        console.log(newType)
+
         if (available === 0) {
             setVideoType(newType[0].type)
         }
@@ -131,6 +131,7 @@ margin-bottom:50px;
 
 min-height:300px;
 width:100%;
+margin-bottom:100px ;
 }
 `;
 

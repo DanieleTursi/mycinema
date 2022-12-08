@@ -3,6 +3,7 @@ import styled from "styled-components"
 import CardWrapper from "../CardWrapper/CardWrapper";
 import CardWrapperPeople from "../CardWrapper/CardWrapperPeople";
 import TmdbContext from "../../context/TmdbContext";
+import SizeContext from "../../context/SizeContext";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 
@@ -10,11 +11,13 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 
 const SearchResultPage = () => {
   const { searchMovies, searchTV, searchPeople, searchLoading, getSearch } = useContext(TmdbContext);
+  const { handleResize } = useContext(SizeContext)
   console.log(searchMovies);
   const [showResult, setShowResult] = useLocalStorage('value', '');
 
   useEffect(() => {
-    getSearch(showResult)
+    getSearch(showResult);
+    handleResize();
   }, [])
 
   return (
@@ -40,13 +43,17 @@ align-items:center;
 justify-content:center;
 flex-direction:column;
 
-
 `;
 const People = styled.div`
 height:500px;
 width:100%;
+display:flex;
+flex-direction:column ;
+align-items:center;
 
-
+@media (max-width:768px){
+  flex-direction:row ;
+}
 `;
 
 

@@ -23,7 +23,7 @@ const CardDetails = (props) => {
   }
   return (
     <>
-      <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating}>
+      <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating} id='cardDetails'>
         <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
         </Container>
         <AllInfo bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
@@ -45,11 +45,16 @@ const CardDetails = (props) => {
 
 export default CardDetails
 
-const MainContainer = styled.div`
-display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
+const MainContainer = styled.div.attrs(props => ({
+  style: {
+    display: (props.bg === null && props.rating === 0 ? 'none' : 'flex'),
+    background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),url(https://www.themoviedb.org/t/p/original${props.bg})`,
+  }
+}))`
+
 flex-direction:row;
 align-items:center;
-background:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),url(https://www.themoviedb.org/t/p/original${props => props.bg});
+
 margin-top:10px;
 width:280px;
 height:145px;
@@ -75,8 +80,12 @@ justify-content:flex-start;
 margin:0 5px;
 `
 
-const Info = styled.div`
-    display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
+const Info = styled.div.attrs(props => ({
+  style: {
+    display: (props.bg === null && props.rating === 0 ? 'none' : 'flex')
+  }
+}))`
+   
     justify-content:flex-start;
     align-items:center;
 
@@ -88,13 +97,18 @@ const Info = styled.div`
 
 `
 
-const Container = styled.div`
-  display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
+const Container = styled.div.attrs(props => ({
+  style: {
+    display: (props.bg === null && props.rating === 0 ? 'none' : 'flex'),
+    backgroundImage: props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`
+  }
+}))`
+  
   width: 100px;
   height: 140px;
   border-radius: 10px;
   margin-left: 10px;
-  background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
+  
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

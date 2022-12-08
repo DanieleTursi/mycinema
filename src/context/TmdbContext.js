@@ -93,7 +93,7 @@ export const TmdbProvider = ({ children }) => {
             const movieVideos = await fetch(`${URL}movie/${id}/videos?${params}${lang}`);
             const movieVideosData = await movieVideos.json();
 
-            console.log(movieVideosData.results);
+            // console.log(movieVideosData.results);
 
             dispatch({
                 type: 'MOVIE_VIDEOS',
@@ -157,7 +157,7 @@ export const TmdbProvider = ({ children }) => {
 
         const tvCredits = await fetch(`${URL}person/${id}/tv_credits?${params}${lang}`);
         const tvCreditsData = await tvCredits.json()
-        console.log(tvCreditsData.cast, movieCreditsData.cast);
+        // console.log(tvCreditsData.cast, movieCreditsData.cast);
 
         dispatch({
             type: 'ACTOR_CREDITS',
@@ -174,7 +174,7 @@ export const TmdbProvider = ({ children }) => {
 
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
-        console.log(resultLatestMovies)
+        // console.log(resultLatestMovies)
 
         dispatch({
             type: 'GET_LATEST_MOVIES',

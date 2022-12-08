@@ -12,7 +12,7 @@ export const SizeProvider = ({ children }) => {
 
         isSmall: false,
         handleResize: handleResize,
-
+        cardItems: 2,
     }
     const [state, dispatch] = useReducer(sizeReducer, initialState);
 
@@ -33,7 +33,17 @@ export const SizeProvider = ({ children }) => {
                 payload: false,
             })
         }
-
+        if (window.innerWidth > 500 && window.innerWidth < 768) {
+            dispatch({
+                type: 'SET_CARD_ITEMS',
+                payload: 3,
+            })
+        } else {
+            dispatch({
+                type: 'SET_CARD_ITEMS',
+                payload: 2,
+            })
+        }
 
     }
     React.useEffect(() => {
@@ -44,7 +54,7 @@ export const SizeProvider = ({ children }) => {
 
 
 
-    return <SizeContext.Provider value={{ isSmall: state.isSmall, handleResize: state.handleResize }}>{children}</SizeContext.Provider>
+    return <SizeContext.Provider value={{ isSmall: state.isSmall, handleResize: state.handleResize, cardItems: state.cardItems }}>{children}</SizeContext.Provider>
 
 }
 

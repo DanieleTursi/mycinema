@@ -5,6 +5,11 @@ const sizeReducer = (state, action) => {
                 ...state,
                 isSmall: action.payload,
             }
+        case 'SET_CARD_ITEMS':
+            return {
+                ...state,
+                cardItems: action.payload,
+            }
         default:
             return state
     }
