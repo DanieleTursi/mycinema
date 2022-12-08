@@ -4,10 +4,6 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
 
-import { useReducer } from 'react';
-
-
-
 const ActorDetails = () => {
     const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
@@ -17,7 +13,6 @@ const ActorDetails = () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
         // console.log(actorTvCredits);
-
     }
 
     useEffect(() => {
@@ -36,16 +31,12 @@ const ActorDetails = () => {
                     <DetWrapper>
                         <Poster bg={actorDetails.profile_path} />
                         <Details>
-
                             <Title>{actorDetails.name}</Title>
                             <DoB>born: {actorDetails.birthday}</DoB>
                             {actorDetails.deathday != null && <DoB>died: {actorDetails.deathday}</DoB>}
                             <span>place of birth: {actorDetails.place_of_birth}</span>
                             <h3>Bio</h3>
                             <p>{actorDetails.biography}</p>
-
-
-
                         </Details>
                     </DetWrapper>
 
@@ -53,19 +44,22 @@ const ActorDetails = () => {
                 <ButtonsWrapper>
                     <Button focus={!details} onClick={() => { setDetails(false) }}>Shows</Button>
                     <Button focus={details} onClick={() => { setDetails(true) }}>Movies</Button>
-
-
                 </ButtonsWrapper>
+                <SortValues>
+                <label htmlFor="orderby">Order by</label>
+                  <select name="orderby" id="orderby">
+                        <option value="Newest">Newest</option>
+                        <option value="Oldest">Oldest</option>
+                        <option value="Rating">Highest Rating</option>
+                  </select>
+                  </SortValues>
                 <CardWrapperHolder>
                     {details === false
                         ? <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
                         : <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
                     }
                 </CardWrapperHolder>
-
             </Wrapper>
-
-
         )
     }
     else {
@@ -74,7 +68,6 @@ const ActorDetails = () => {
 }
 
 export default ActorDetails
-
 
 const Wrapper = styled.div`
 width:100%;
@@ -110,6 +103,15 @@ display:flex;
 align-items:center;
 justify-content:center;
 `;
+
+const SortValues= styled.div`
+width:400px;
+margin:20px;
+
+label{
+    margin-right:10px;
+}
+`
 
 const Poster = styled.div`
 width:300px;
