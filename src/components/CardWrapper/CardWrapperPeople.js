@@ -19,7 +19,7 @@ const CardWrapperPeople = (props) => {
         infinite: false,
         centerPadding: "60px",
         slidesToShow: 2,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         swipeToSlide: true,
 
     };

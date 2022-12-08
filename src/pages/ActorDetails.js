@@ -3,7 +3,7 @@ import TmdbContext from '../context/TmdbContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
-import Button from '../components/Button/Button.js'
+
 import { useReducer } from 'react';
 
 
@@ -11,17 +11,20 @@ import { useReducer } from 'react';
 const ActorDetails = () => {
     const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
-    const [details,setDetails]= useState()
-    
+    const [details, setDetails] = useState(false)
+
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
         console.log(actorTvCredits);
-        
+
     }
 
     useEffect(() => {
-        startEffect()
+        startEffect();
+        if (actorMovieCredits.length >= actorTvCredits.length) {
+            setDetails(true)
+        }
     }, [])
 
 
@@ -48,14 +51,16 @@ const ActorDetails = () => {
 
                 </HeaderDetails>
                 <ButtonsWrapper>
-                 <Button text={'Shows'} onClick={() => {setDetails(false)}}/>
-                 <Button text={'Movies'} onClick={() => {setDetails(true)}}/>
+                    <Button focus={!details} onClick={() => { setDetails(false) }}>Shows</Button>
+                    <Button focus={details} onClick={() => { setDetails(true) }}>Movies</Button>
+
+
                 </ButtonsWrapper>
                 <CardWrapperHolder>
-                    { details === false
-                      ?<DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                      :<DetailsWrapper side='right' name='Roles || ' movies={actorTvCredits} type='movie' page='detailsPage' />
-                     }
+                    {details === false
+                        ? <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                        : <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
+                    }
                 </CardWrapperHolder>
 
             </Wrapper>
@@ -161,4 +166,29 @@ flex-direction:row;
 width:100%;
 // align-items:center;
 justify-content:space-between;
+`;
+
+const Button = styled.button`
+
+color:${props => (props.focus ? 'powderblue' : '#000')};
+background-color:${props => (props.focus ? '#000' : '#fff')};
+border:1px solid black;
+width:150px;
+height:25px;
+border-radius: 8px;
+font-family: 'Kaushan Script', cursive;
+margin:10px;
+cursor:pointer;
+
+&:hover{
+  background:lightgray;
+}
+&:active{
+    background-color:#000 ;
+    border:1px solid red;
+    color:#fff;
+}
+@media screen and (max-width: 768px){
+  width:80px;
+
 `;
