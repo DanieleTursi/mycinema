@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
@@ -11,20 +11,22 @@ import Slider from 'react-slick';
 
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
-    const { isSmall } = useContext(SizeContext);
-    console.log(isSmall);
+    const { isSmall, cardItems, handleResize } = useContext(SizeContext);
+
 
     const settings = {
         className: "center",
         infinite: false,
         centerPadding: "60px",
-        slidesToShow: 2,
+        slidesToShow: cardItems,
         slidesToScroll: 2,
         swipeToSlide: true,
 
     };
 
-
+    useEffect(() => {
+        handleResize();
+    }, [])
 
     if (!detailsLoading) {
         if (!isSmall) {
@@ -44,7 +46,13 @@ const CardWrapperPeople = (props) => {
                 </WrapPeople>
             )
         } else {
-            return (
+            return (<SlickWrapper>
+                <TitleWrapper>
+                    <Title side={props.side} type={props.type} >
+                        {props.name}
+                    </Title>
+                </TitleWrapper>
+
                 <Slick {...settings}>
 
                     {props.people && props.people.map((person, idx) => (
@@ -53,7 +61,9 @@ const CardWrapperPeople = (props) => {
 
                     ))}
 
-                </Slick>)
+                </Slick>
+            </SlickWrapper>
+            )
         }
     }
     else {
@@ -79,7 +89,11 @@ flex-direction:column ;
 }
 `;
 
-
+const TitleWrapper = styled.div`
+width:100%;
+display:flex;
+justify-content:center;
+`;
 const Title = styled.h3`
 width:80%;
 margin:0;
@@ -102,6 +116,10 @@ font-family: 'PT Sans Narrow', sans-serif;
 
 @media screen and (max-width: 768px){
     text-align:center ;
+    width:85%;
+    
+    padding:0;
+    margin:0 0 20px;
 }
 `;
 
@@ -110,11 +128,19 @@ width: 90%;
 margin-top:20px;
 `;
 
-
+const SlickWrapper = styled.div`
+display:flex;
+width:100%;
+flex-direction:column
+`;
 const Slick = styled(Slider)`
-margin-top:100px;
+margin-top:50px;
 height:350px;
+overflow:hidden;
+display:flex;
 
-/* display:flex; */
+
+
+
 
 `;

@@ -3,13 +3,16 @@ import { useEffect, useContext } from "react";
 import styled from "styled-components"
 import CardWrapper from "../CardWrapper/CardWrapper";
 import TmdbContext from "../../context/TmdbContext";
+import SizeContext from "../../context/SizeContext";
 const Main = () => {
 
   const { getPopular, getTop, topMovies, topSeries, series, loading, movies } = useContext(TmdbContext)
+  const { handleResize } = useContext(SizeContext)
 
   useEffect(() => {
     getPopular()
     getTop();
+    handleResize();
   }, [])
 
   return (

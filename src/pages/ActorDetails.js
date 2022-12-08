@@ -16,7 +16,7 @@ const ActorDetails = () => {
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
-        console.log(actorTvCredits);
+        // console.log(actorTvCredits);
 
     }
 
