@@ -21,6 +21,7 @@ const CardDetails = (props) => {
     await setScreenType(props.type)
     getId()
   }
+
   return (
     <>
       <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating} id='cardDetails'>

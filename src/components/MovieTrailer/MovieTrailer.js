@@ -15,29 +15,25 @@ const MovieTrailer = () => {
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
     const { videosLoading, getVideos, videos } = useContext(TmdbContext)
-    const { isSmall } = useContext(SizeContext);
+    const { isSmall, trailersCount } = useContext(SizeContext);
     const [videoType, setVideoType] = useState('Trailer');
     const [active, setActive] = useState(false);
     const [count, setCount] = useState(0);
-    const [slides, setSlides] = useState(1);
+
 
     useEffect(() => {
 
-        if (isSmall) {
-            setSlides(1)
-        } else { setSlides(3) }
-    }, [isSmall])
+
+    }, [trailersCount])
 
     let settings = {
-        // className: "slider variable-width",
+
         dots: true,
         infinite: count > 3,
         speed: 500,
-        slidesToShow: slides,
+        slidesToShow: trailersCount,
         slidesToScroll: 1,
         autoplay: false,
-        // centerMode: true,
-        // variableWidth: isSmall,
     };
 
     const checkVideoCount = (type) => {
@@ -183,7 +179,13 @@ margin-bottom:40px;
 width:100%;
 padding:0 5%;
 height:100%;
-
+overflow:hidden;
+.slick-slide > div {
+  margin: 0 20px;
+}
+.slick-list {
+  margin: 0 -20px;
+}
 & > button {
  
     height:100%;
@@ -215,7 +217,7 @@ li.slick-active button:before {
     right: 25px;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1100px){
 margin:0;
 padding:0;
 width:100vw;
@@ -251,7 +253,7 @@ a{
         transition-duration: 300ms;
     }
 }
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1100px){
 
 width:100vw;
 margin:0;
@@ -259,14 +261,14 @@ margin:0;
 `;
 const YoutubeWrapper = styled.div`
 display:flex;
-margin-bottom:20px;
+margin:0 10px 20px;
 justify-content:center ;
 background:#fff ;
 width:100%;
 overflow-x:hidden;
 min-height:300px;
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1100px){
 width:100%;
 margin:0;
 text-align:center;
@@ -282,7 +284,7 @@ margin:0 20px;
 
 
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1100px){
 width:90%;
 margin:0;
 

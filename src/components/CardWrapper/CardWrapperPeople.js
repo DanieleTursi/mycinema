@@ -31,9 +31,9 @@ const CardWrapperPeople = (props) => {
     if (!detailsLoading) {
         if (!isSmall) {
             return (
-                <WrapPeople side={props.side}>
+                <WrapPeople side={props.side} >
 
-                    <Title side={props.side} type={props.type} >
+                    <Title side={props.side} type={props.type} actors={props.actors} >
                         {props.name}
                     </Title>
                     <Container>
@@ -48,7 +48,7 @@ const CardWrapperPeople = (props) => {
         } else {
             return (<SlickWrapper>
                 <TitleWrapper>
-                    <Title side={props.side} type={props.type} >
+                    <Title side={props.side} type={props.type} actors={props.actors} >
                         {props.name}
                     </Title>
                 </TitleWrapper>
@@ -111,7 +111,7 @@ font-family: 'PT Sans Narrow', sans-serif;
 &:after {
     color: red;
     font-size:24px;
-    content:"${(props) => props.side === 'right' || props.side === 'center' ? ' PEOPLE' : ''}";
+    content:"${(props) => props.side === 'right' || props.side === 'center' ? props.actors === 'ACTORS' ? 'CAST' : 'PEOPLE' : ''}";
   }
 
 @media screen and (max-width: 768px){
@@ -119,7 +119,7 @@ font-family: 'PT Sans Narrow', sans-serif;
     width:85%;
     
     padding:0;
-    margin:0 0 20px;
+    margin:40px 0 0;
 }
 `;
 

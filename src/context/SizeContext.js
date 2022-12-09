@@ -13,6 +13,7 @@ export const SizeProvider = ({ children }) => {
         isSmall: false,
         handleResize: handleResize,
         cardItems: 2,
+        trailersCount: 3
     }
     const [state, dispatch] = useReducer(sizeReducer, initialState);
 
@@ -44,7 +45,22 @@ export const SizeProvider = ({ children }) => {
                 payload: 2,
             })
         }
-
+        if (window.innerWidth < 1700 && window.innerWidth > 1100) {
+            dispatch({
+                type: 'SET_TRAILERS_COUNT',
+                payload: 2
+            })
+        } else if (window.innerWidth > 1700) {
+            dispatch({
+                type: 'SET_TRAILERS_COUNT',
+                payload: 3
+            })
+        } else if (window.innerWidth < 1100) {
+            dispatch({
+                type: 'SET_TRAILERS_COUNT',
+                payload: 1
+            })
+        }
     }
     React.useEffect(() => {
 
@@ -54,7 +70,7 @@ export const SizeProvider = ({ children }) => {
 
 
 
-    return <SizeContext.Provider value={{ isSmall: state.isSmall, handleResize: state.handleResize, cardItems: state.cardItems }}>{children}</SizeContext.Provider>
+    return <SizeContext.Provider value={{ isSmall: state.isSmall, handleResize: state.handleResize, cardItems: state.cardItems, trailersCount: state.trailersCount }}>{children}</SizeContext.Provider>
 
 }
 

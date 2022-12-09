@@ -66,8 +66,9 @@ const DetailsPage = () => {
                     </DetailsWrapper>
                 </HeaderDetails>
                 <MovieTrailer />
-                <CardWrapperPeople side='center' name='Result in || ' people={cast} type='person' />
-
+                <CardHolder>
+                    <CardWrapperPeople side='center' actors='ACTORS' people={cast} type='person' />
+                </CardHolder>
 
 
             </Wrapper>
@@ -95,6 +96,7 @@ max-width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
+
 font-family: 'PT Sans Narrow', sans-serif;
 `;
 
@@ -215,4 +217,11 @@ div{
         color:red;
     }
 }
+`;
+
+const CardHolder = styled.div`
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
 `;
