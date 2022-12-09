@@ -8,12 +8,29 @@ const ActorDetails = () => {
     const { actorDetails, actorLoading, getActorDetails, getActorCredits, actorMovieCredits, actorTvCredits, creditsLoading } = useContext(TmdbContext);
     const [actorId, setActorId] = useLocalStorage('actorId', '');
     const [details, setDetails] = useState(false)
+    const [value, setValue] = useState('Newest');
+    const [movies, setMovies] = useState([]);
+    const [tv, setTv] = useState([]);
 
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
         // console.log(actorTvCredits);
     }
+
+    const handleChange = (value) => {
+        console.log(value)
+        if (value === 'Newest') {
+           actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b))
+           actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b))
+        } else if (value === 'Oldest'){
+           actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b))
+           actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b))
+        }  else {
+            actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
+            actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
+        }
+      };
 
     useEffect(() => {
         startEffect();
@@ -47,7 +64,7 @@ const ActorDetails = () => {
                 </ButtonsWrapper>
                 <SortValues>
                 <label htmlFor="orderby">Order by</label>
-                  <select name="orderby" id="orderby">
+                  <select onChange={(event) => {setValue(event.target.value); handleChange(value)}} name="orderby" id="orderby">
                         <option value="Newest">Newest</option>
                         <option value="Oldest">Oldest</option>
                         <option value="Rating">Highest Rating</option>
