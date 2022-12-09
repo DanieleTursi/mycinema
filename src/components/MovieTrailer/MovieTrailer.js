@@ -27,7 +27,6 @@ const MovieTrailer = () => {
     }, [trailersCount])
 
     let settings = {
-
         dots: true,
         infinite: count > 3,
         speed: 500,
