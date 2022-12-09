@@ -14,26 +14,18 @@ const DetailsPage = () => {
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
 
-
     const startEffect = async () => {
         await getDetails(showId, screenType);
         handleResize();
-
     }
     const currentScrollPosition = window.scrollY;
 
-
     useEffect(() => {
         startEffect()
-
     }, [])
 
-
-
     if (!detailsLoading) {
-
         return (
-
             <Wrapper>
                 <HeaderDetails  >
                     <BackgroundImage bg={details.backdrop_path} />
@@ -49,19 +41,19 @@ const DetailsPage = () => {
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview:</h3>
-                            <p>{details.overview}</p>
-
-                            <p>Genre: {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </p>
-                            {details.number_of_seasons > 0
-                                ? <><p>Seasons: {details.number_of_seasons}</p>
-                                    <p>Episodes: {details.number_of_episodes}</p></>
-                                : <></>}
+                            <h4>{details.overview}</h4>
                             <DirectorWrapper>
                                 {credits != null ? <div>
                                     <h3>Director</h3>
-                                    <p>{credits}</p>
+                                    <h4>{credits}</h4>
                                 </div> : <></>}
                             </DirectorWrapper>
+                            <p>Genre: <span>  {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </span></p>
+                            {details.number_of_seasons > 0
+                                ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
+                                    <p>Episodes: <span>{details.number_of_episodes}</span></p></>
+                                : <></>}
+                            
                         </Details>
                     </DetailsWrapper>
                 </HeaderDetails>
@@ -69,35 +61,23 @@ const DetailsPage = () => {
                 <CardHolder>
                     <CardWrapperPeople side='center' actors='ACTORS' people={cast} type='person' />
                 </CardHolder>
-
-
             </Wrapper>
-
-
-
         )
-
-
     }
     else {
         <h1>...Loading</h1>
     }
 }
 
-
-
-
-
 export default DetailsPage
-
 
 const Wrapper = styled.div`
 max-width:100%;
 min-height:600px;
 display:flex;
 flex-direction:column ;
-
 font-family: 'PT Sans Narrow', sans-serif;
+
 `;
 
 const HeaderDetails = styled.div`
@@ -108,8 +88,6 @@ position:relative;
 display:flex;
 align-items:center;
 justify-content:center;
-
-
 `;
 
 const BackgroundImage = styled.div`
@@ -136,6 +114,7 @@ justify-content:center;
     
 }
 `;
+
 const Poster = styled.div`
 width:300px;
 height:500px;
@@ -145,6 +124,7 @@ background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
 margin:10px 0;
 `;
+
 const Details = styled.div`
 width:60%;
 height:80%;
@@ -153,11 +133,19 @@ display:flex;
 flex-direction:column;
 flex-wrap:wrap;
 h3{
-    color:white;
+    color:red;
     font-size:22px;
+    margin:4px 0 2px 0;
 }
+
+h4,span{
+    color:white;
+    font-size:18px;
+    margin:2px 0 12px 0;
+}
+
 p{
-    color:#fff;
+    color:red;
     font-size:18px;
     margin:6px 0;
 }
@@ -169,11 +157,7 @@ p{
 }
 
 `;
-const Title = styled.span`
-color:#fff;
-font-size:40px;
-font-weight:bold;
-`;
+
 const RelaseYear = styled.span`
 color:#999;
 font-size:20px;
@@ -203,6 +187,14 @@ h3{
 }
 `;
 
+const Title = styled.h1`
+color:#fff;
+font-size:30px;
+font-weight:bold;
+text-transform:uppercase;
+margin:10px 0;
+`;
+
 const DirectorWrapper = styled.div`
 display:flex;
 width:100%;
@@ -210,14 +202,21 @@ min-height:100px;
 div{
     display:flex;
     flex-direction:column;
-    
     justify-content:center;
+
     h3{
         margin:0;
         color:red;
     }
+
+    h4{
+        color:white;
+        font-size:18px;
+    }
 }
 `;
+
+
 
 const CardHolder = styled.div`
 width:100%;
