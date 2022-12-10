@@ -1,22 +1,29 @@
-import { useContext } from 'react';
+import { useContext,useState} from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import styled from "styled-components"
 import CardDetails from './CardDetails';
 
 const DetailsWrapper = (props) => {
   const { loading } = useContext(TmdbContext);
+  const [show,setShow]=useState(15)
+  const [ text,setText]=useState('SHOW ALL')
 
 
   if (!loading) {
     return (
+    <MainContainer>
       <Container>
         <Title side={props.side} type={props.type} >
           {props.name} 
         </Title>
-        {props.movies.map((movie, idx) => (
+        {props.movies.slice(0, show).map((movie, idx) => (
           <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
         ))}
       </Container>
+      <Button onClick={()=>{
+        if(show===15){setShow(props.length); setText('SHOW LESS')}
+        else {setShow(15); setText('SHOW MORE')}} }>{text}</Button>
+     </MainContainer>
     )
   }
   else {
@@ -25,6 +32,12 @@ const DetailsWrapper = (props) => {
 }
 
 export default DetailsWrapper
+
+const MainContainer= styled.div`
+  width:95%;
+  display:flex;
+  flex-direction:column;
+`
 
 const Container = styled.div`
 width:95%;
@@ -60,3 +73,23 @@ font-family: 'PT Sans Narrow', sans-serif;
     text-align:center ;
 }
 `;
+
+const Button=styled.button`
+color:black;
+background:white;
+border:1px solid black;
+width:150px;
+height:25px;
+border-radius: 8px;
+font-family: 'Kaushan Script', cursive;
+margin:50px;
+cursor:pointer;
+align-self:center;
+
+&:hover{
+  background:lightgray;
+}
+
+@media screen and (max-width: 768px){
+  width:80px;
+`
