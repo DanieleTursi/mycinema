@@ -34,9 +34,9 @@ const CardDetails = (props) => {
             </Rating>
             <h2>{props.release != null ? props.release.slice(0, 4) : ''}</h2>
           </Info>
-          <h4>Title: {props.title}</h4>
+          <h4>Title: <span>{props.title}</span></h4>
           {props.character != '' &&
-            <h4>As:   {props.character}</h4>
+            <h4>As:   <span>{props.character}</span></h4>
           }
         </AllInfo>
       </MainContainer>
@@ -57,7 +57,7 @@ flex-direction:row;
 align-items:center;
 
 margin-top:10px;
-width:280px;
+width:320px;
 height:145px;
 text-shadow:1px 1px 1px black;
 border-radius:8px;
@@ -66,7 +66,12 @@ color:white;
 cursor:pointer;
 
 h4{
-  margin:0;
+  margin:5px 0;
+  color:red
+}
+
+span{
+  color:white;
 }
 
 &:hover{
@@ -97,6 +102,8 @@ const Info = styled.div.attrs(props => ({
     }
 
 `
+
+
 
 const Container = styled.div.attrs(props => ({
   style: {
