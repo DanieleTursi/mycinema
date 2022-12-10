@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 import MovieTrailer from '../components/MovieTrailer/MovieTrailer';
 import SizeContext from '../context/SizeContext';
+import ReactShowMoreText from 'react-show-more-text';
 
 
 
@@ -41,7 +42,9 @@ const DetailsPage = () => {
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview:</h3>
+                            <ReactShowMoreText lines={3}>
                             <h4>{details.overview}</h4>
+                            </ReactShowMoreText>
                             <DirectorWrapper>
                                 {credits != null ? <div>
                                     <h3>Director</h3>
