@@ -42,6 +42,7 @@ text-align:center;
 border-radius:7px;
 position:absolute;
 top:10px;
+border:1px solid #fff;
 
 .box{
   color:black;
@@ -50,7 +51,7 @@ top:10px;
 input{
     height:30px;
     width:200px;
-    border:2.2px solid black;
+    border:1px solid black;
     border-radius:7px 0 0 7px;
     font-family: 'PT Sans Narrow', sans-serif;
     font-size:18px;
@@ -60,9 +61,10 @@ input:hover{
     
 }
 button{
-    height:39px;
+    height:34px;
     border-radius:0 7px 7px 0;
-    border:1.5px solid white;
+    border:none;
+    // border:1.5px solid white;
     color:white;
     background:black;
     cursor:pointer;

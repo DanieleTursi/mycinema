@@ -78,8 +78,7 @@ const ActorDetails = () => {
                 <ButtonsWrapper>
                     <Button focus={!details} onClick={(e) => { setDetails(false) }}>Shows</Button>
                     <Button focus={details} onClick={() => { setDetails(true) }}>Movies</Button>
-                </ButtonsWrapper>
-                <SortValues>
+                    <SortValues>
                 <label htmlFor="orderby">Order by</label>
                   <select onChange={(e) => {
                 if (value === 'Newest') {
@@ -100,6 +99,7 @@ const ActorDetails = () => {
                         <option value="Rating">Best Rating</option>
                   </select>
                   </SortValues>
+                </ButtonsWrapper>
                 <CardWrapperHolder>
                     {details === false
                         ? <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
@@ -153,17 +153,30 @@ justify-content:center;
 
 @media screen and (max-width: 768px){
     flex-direction:column;
-    padding:5px 0;
-   
+    padding:5px 0;  
 `;
 
 const SortValues= styled.div`
-width:400px;
+display: flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+width:150px;
+height:25px;
 margin:20px;
+border:1px solid black;
+border-radius:8px;
+font-family: 'Kaushan Script', cursive;
+font-size:13px;
 
 label{
-    margin-right:10px;
+    margin-right:5px;
 }
+
+select{
+    border:none;
+}
+
 `
 
 const Poster = styled.div`
@@ -232,12 +245,11 @@ justify-content:center;
 `;
 
 const Button = styled.button`
-
 color:${props => (props.focus ? 'powderblue' : '#000')};
 background-color:${props => (props.focus ? '#000' : '#fff')};
 border:1px solid black;
 width:150px;
-height:25px;
+height:28px;
 border-radius: 8px;
 font-family: 'Kaushan Script', cursive;
 margin:10px;
