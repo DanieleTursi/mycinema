@@ -67,7 +67,7 @@ position:relative;
 margin-bottom:20px;
 
 h1{
-    color:gold;
+    color:#F5C030;
     text-shadow:1px 1px 1px black;
     font-style:italic;
     font-size:30px;

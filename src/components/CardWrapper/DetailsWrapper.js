@@ -20,9 +20,10 @@ const DetailsWrapper = (props) => {
           <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
         ))}
       </Container>
-      <Button onClick={()=>{
+      {props.movies.length >15 &&
+        <Button onClick={()=>{
         if(show===15){setShow(props.length); setText('SHOW LESS')}
-        else {setShow(15); setText('SHOW MORE')}} }>{text}</Button>
+        else {setShow(15); setText('SHOW ALL')}} }>{text}</Button>}
      </MainContainer>
     )
   }
