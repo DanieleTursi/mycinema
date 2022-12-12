@@ -4,7 +4,7 @@ import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import Card from "./Card"
-
+import {  BiRightArrow, BiLeftArrow} from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -12,6 +12,7 @@ import Slider from 'react-slick';
 const CardWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
     const { isSmall, cardItems } = useContext(SizeContext);
+    const style = { color: "black", margin: "5px",fontSize: "30px"}
 
 
     const settings = {
@@ -32,12 +33,15 @@ const CardWrapper = (props) => {
                     <Title side={props.side} type={props.type} >
                         {props.name}
                     </Title>
-                    <Container  >
+                    <Scrolling>
+                    {props.movies.length > 5 && <BiLeftArrow style={style}/>}
+                    <Container >
                         {props.movies.map((movie, idx) => (
                             <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
-                        ))}
+                        ))} 
                     </Container>
-
+                   { props.movies.length > 5 && <BiRightArrow style={style}/>}
+                    </Scrolling>
                 </Wrap>
             )
         }
@@ -111,6 +115,12 @@ font-family: 'PT Sans Narrow', sans-serif;
 }
 
 `;
+
+const Scrolling= styled.div`
+display:flex;
+width: 95%;
+align-items:center;
+`
 
 const Container = styled(HorizontalScroll)`
 width: 90%;
