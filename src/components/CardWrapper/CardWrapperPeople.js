@@ -4,7 +4,7 @@ import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import CardPeople from "./CardPeople"
-
+import {  BiRightArrow, BiLeftArrow} from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -12,7 +12,7 @@ import Slider from 'react-slick';
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
     const { isSmall, cardItems, handleResize } = useContext(SizeContext);
-
+    const style = { color: "black", margin: "5px",fontSize: "30px"}
 
     const settings = {
         className: "center",
@@ -21,7 +21,6 @@ const CardWrapperPeople = (props) => {
         slidesToShow: cardItems,
         slidesToScroll: 2,
         swipeToSlide: true,
-
     };
 
     useEffect(() => {
@@ -36,13 +35,16 @@ const CardWrapperPeople = (props) => {
                     <Title side={props.side} type={props.type} actors={props.actors} >
                         {props.name}
                     </Title>
+                    <Scrolling>
+                        {props.people.length > 5 && <BiLeftArrow style={style}/>}
                     <Container>
                         {props.people && props.people.map((person, idx) => (
 
                             <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
                         ))}
                     </Container>
-
+                    {props.people.length > 5 && <BiRightArrow style={style}/>}
+                    </Scrolling>
                 </WrapPeople>
             )
         } else {
@@ -123,6 +125,12 @@ font-family: 'PT Sans Narrow', sans-serif;
 }
 `;
 
+const Scrolling= styled.div`
+display:flex;
+width: 95%;
+align-items:center;
+`
+
 const Container = styled(HorizontalScroll)`
 width: 90%;
 margin-top:20px;
@@ -138,9 +146,4 @@ margin-top:50px;
 height:350px;
 overflow:hidden;
 display:flex;
-
-
-
-
-
 `;
