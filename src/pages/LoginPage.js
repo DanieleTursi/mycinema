@@ -12,7 +12,6 @@ const LoginPage = () => {
     }
     function handleSignOut(event) {
         setUser({});
-
     }
     useEffect(() => {
         /* global google */
