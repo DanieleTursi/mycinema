@@ -5,6 +5,11 @@ const userReducer = (state, action) => {
                 ...state,
                 register: action.payload,
             }
+        case 'REGISTER_USER':
+            return {
+                ...state,
+                user: action.payload,
+            }
         default:
             return state
     }
