@@ -27,6 +27,7 @@ const SearchBox = () => {
         name="search"
         onChange={(event) => setValue(event.target.value)}
         value={value}
+        placeholder="Search"
       />
       <button type="submit">
         <span><FiSearch /></span>
