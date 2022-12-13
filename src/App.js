@@ -11,7 +11,7 @@ import SearchResultPage from './components/SearchResultPage/SearchResultPage';
 import SearchBoxContainer from './components/SearchBox/SearchBoxContainer';
 import { SizeProvider } from './context/SizeContext';
 import LoginPage from './pages/LoginPage';
-import UserProvider from './context/User/UserContext';
+import { UserProvider } from './context/User/UserContext';
 
 function App() {
 
