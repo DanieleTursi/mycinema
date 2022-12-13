@@ -17,21 +17,20 @@ const ActorDetails = () => {
         // console.log(actorTvCredits);
     }
 
-    // const handleChange = (value) => {
-        
-    //     if (value === 'Newest') {
-    //         setMovies(actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b)))
-    //         setTv(actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b)))
-    //      } else if (value === 'Oldest'){
-    //         setMovies(actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b)))
-    //         setTv(actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b)))
-    //      }  else {
-    //         setMovies(actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b))
-    //         setTv(actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b))
-    //      }
-    //     console.log(value)
+    const handleChange = (value) => {
+        if (value === 'Newest') {
+            actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b))
+            actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b))
+         } else if (value === 'Oldest'){
+            actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b))
+            actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b))
+         }  else {
+            actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
+            actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
+         }
        
-    //   };
+        return actorMovieCredits,actorTvCredits
+      };
 
     useEffect(() => {
         startEffect();
@@ -39,21 +38,6 @@ const ActorDetails = () => {
             setDetails(true)
         }
     }, [])
-
-    //   useEffect(() => {
-    //     if (value === 'Newest') {
-    //         actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b))
-    //         actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b))
-    //      } else if (value === 'Oldest'){
-    //         actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b))
-    //         actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b))
-    //      }  else {
-    //         actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-    //         actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-    //      }
-    //     console.log(value)
-    // }, [value,actorMovieCredits,actorTvCredits])
-
 
     if (!creditsLoading && !actorLoading) {
         return (
@@ -81,17 +65,9 @@ const ActorDetails = () => {
                     <SortValues>
                 <label htmlFor="orderby">Order by</label>
                   <select onChange={(e) => {
-                if (value === 'Newest') {
-                    actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b))
-                    actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b))
-                 } else if (value === 'Oldest'){
-                    actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b))
-                    actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b))
-                 }  else {
-                    actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-                    actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-                 };
-                 setValue(e.target.value);
+                    setValue(e.target.value);
+                    handleChange(e.target.value);
+                 console.log(value)
                  }} name="orderby" id="orderby">
                         <option value="Select">Select</option>
                         <option value="Newest">Newest</option>
@@ -122,7 +98,6 @@ min-height:600px;
 display:flex;
 flex-direction:column ;
 font-family: 'PT Sans Narrow', sans-serif;
-
 `;
 
 const HeaderDetails = styled.div`
