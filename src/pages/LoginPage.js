@@ -1,29 +1,27 @@
 import { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 import LoginButton from '../components/Button/LoginButton';
 import UserContext from '../context/User/UserContext';
 import { StyledButton } from '../components/Button/Button'
 
 const LoginPage = () => {
 
-    const { register, handleRegister } = useContext(UserContext)
+    const { register, handleRegister, handleLogin, handleGoogleLogin, showNavButtons } = useContext(UserContext)
+    const navigate = useNavigate();
 
-    const [user, setUser] = useState({});
-    function handleCallbackResponse(response) {
-        console.log("Encodede JWT ID token: " + response.credential);
-        var userObject = jwt_decode(response.credential);
-        console.log(userObject)
-        setUser(userObject)
-    }
-    function handleSignOut(event) {
-        setUser({});
-    }
+
+
     useEffect(() => {
         /* global google */
+
+        if (!showNavButtons) {
+            navigate('/');
+        }
+
         google.accounts.id.initialize({
             client_id: process.env.REACT_APP_CLIENT_ID,
-            callback: handleCallbackResponse
+            callback: handleGoogleLogin
         });
 
         google.accounts.id.renderButton(document.getElementById("signInDiv"),
