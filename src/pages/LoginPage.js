@@ -38,7 +38,9 @@ const LoginPage = () => {
     return (
         <MainWrapper>
             {!register ? <LoginButton name='Login with email'></LoginButton> :
-                <LoginButton name='Register'></LoginButton>
+                <RegisterForm>
+
+                </RegisterForm>
             }
 
             <div>Or</div>
@@ -64,4 +66,9 @@ align-items:center;
 justify-content:center;
 
 `;
+const RegisterForm = styled.form`
+width:350px;
+height:500px;
+border:1px dotted red;
 
+`;
