@@ -8,19 +8,33 @@ import UserContext from '../../context/User/UserContext';
 const Navbar = (props) => {
 
 
-  const { handleRegisterClick } = useContext(UserContext);
+  const { handleRegisterClick, showNavButtons, handleLogout, user } = useContext(UserContext);
+
+
 
   const navigate = useNavigate();
   return (
     <NavbarContainer>
       <Logo onClick={() => { navigate('/') }}>MYCINEMA</Logo>
       <ButtonsContainer>
-        <ButtonStyle to='/login' onClick={() => { handleRegisterClick('login') }} >Login</ButtonStyle>
-        <ButtonStyle to='/login' onClick={() => { handleRegisterClick('register') }} >Register</ButtonStyle>
+        {showNavButtons === true ? <>
+          <ButtonStyle to='/login' onClick={() => { handleRegisterClick('login') }} >Login</ButtonStyle>
+          <ButtonStyle to='/login' onClick={() => { handleRegisterClick('register') }} >Register</ButtonStyle>
+        </>
+          : <LoggedContainer>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+            <UserImage image={user.picture} />
+          </LoggedContainer>
+        }
+
+
       </ButtonsContainer>
+
     </NavbarContainer>
   )
 }
+export default Navbar
+
 
 const NavbarContainer = styled.div`
 width:100%;
@@ -59,4 +73,38 @@ cursor:pointer;
 }
 `
 
-export default Navbar
+const LoggedContainer = styled.div`
+display:flex;
+margin-right:20px;
+`;
+
+
+const LogoutButton = styled.button`
+color:black;
+background:white;
+border:1px solid black;
+width:150px;
+height:25px;
+border-radius: 8px;
+font-family: 'Kaushan Script', cursive;
+margin:10px;
+cursor:pointer;
+text-decoration:none;
+text-align:center;
+
+&:hover{
+  background:lightgray;
+}
+
+@media screen and (max-width: 768px){
+  width:80px;
+
+
+`;
+const UserImage = styled.div`
+width:50px;
+height:50px;
+border-radius:50%;
+background-image:url(${props => props.image});
+background-size:cover;
+`;

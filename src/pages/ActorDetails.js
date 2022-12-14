@@ -14,23 +14,23 @@ const ActorDetails = () => {
     const startEffect = async () => {
         await getActorCredits(actorId);
         await getActorDetails(actorId);
-        // console.log(actorTvCredits);
+
     }
 
     const handleChange = (value) => {
         if (value === 'Newest') {
-            actorMovieCredits.sort(({release_date: b}, {release_date: a}) => a.localeCompare(b))
-            actorTvCredits.sort(({first_air_date:b}, {first_air_date: a}) => a.localeCompare(b))
-         } else if (value === 'Oldest'){
-            actorMovieCredits.sort(({release_date: a}, {release_date: b}) => a.localeCompare(b))
-            actorTvCredits.sort(({first_air_date: a}, {first_air_date: b}) => a.localeCompare(b))
-         }  else {
-            actorMovieCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-            actorTvCredits.sort(({vote_average: b}, {vote_average: a}) => a-b)
-         }
-       
-        return actorMovieCredits,actorTvCredits
-      };
+            actorMovieCredits.sort(({ release_date: b }, { release_date: a }) => a.localeCompare(b))
+            actorTvCredits.sort(({ first_air_date: b }, { first_air_date: a }) => a.localeCompare(b))
+        } else if (value === 'Oldest') {
+            actorMovieCredits.sort(({ release_date: a }, { release_date: b }) => a.localeCompare(b))
+            actorTvCredits.sort(({ first_air_date: a }, { first_air_date: b }) => a.localeCompare(b))
+        } else {
+            actorMovieCredits.sort(({ vote_average: b }, { vote_average: a }) => a - b)
+            actorTvCredits.sort(({ vote_average: b }, { vote_average: a }) => a - b)
+        }
+
+        return actorMovieCredits, actorTvCredits
+    };
 
     useEffect(() => {
         startEffect();
@@ -48,12 +48,12 @@ const ActorDetails = () => {
                         <Poster bg={actorDetails.profile_path} />
                         <Details>
                             <Title>{actorDetails.name}</Title>
-                            {actorDetails.birthday != null &&<DoB>Date of Birth: <span>{actorDetails.birthday.split("-").reverse().join("-")}</span></DoB>}
-                            {actorDetails.deathday != null &&<DoB>Died: <span>{actorDetails.deathday}</span></DoB>}
+                            {actorDetails.birthday != null && <DoB>Date of Birth: <span>{actorDetails.birthday.split("-").reverse().join("-")}</span></DoB>}
+                            {actorDetails.deathday != null && <DoB>Died: <span>{actorDetails.deathday}</span></DoB>}
                             <DoB>Place of Birth: <span>{actorDetails.place_of_birth}</span></DoB>
                             <h3>Bio:</h3>
                             <ReactShowMoreText lines={4}>
-                            <p>{actorDetails.biography}</p>
+                                <p>{actorDetails.biography}</p>
                             </ReactShowMoreText>
                         </Details>
                     </DetWrapper>
@@ -63,23 +63,23 @@ const ActorDetails = () => {
                     <Button focus={!details} onClick={(e) => { setDetails(false) }}>Shows</Button>
                     <Button focus={details} onClick={() => { setDetails(true) }}>Movies</Button>
                     <SortValues>
-                <label htmlFor="orderby">Order by</label>
-                  <select onChange={(e) => {
-                    setValue(e.target.value);
-                    handleChange(e.target.value);
-                 console.log(value)
-                 }} name="orderby" id="orderby">
-                        <option value="Select">Select</option>
-                        <option value="Newest">Newest</option>
-                        <option value="Oldest">Oldest</option>
-                        <option value="Rating">Best Rating</option>
-                  </select>
-                  </SortValues>
+                        <label htmlFor="orderby">Order by</label>
+                        <select onChange={(e) => {
+                            setValue(e.target.value);
+                            handleChange(e.target.value);
+                            console.log(value)
+                        }} name="orderby" id="orderby">
+                            <option value="Select">Select</option>
+                            <option value="Newest">Newest</option>
+                            <option value="Oldest">Oldest</option>
+                            <option value="Rating">Best Rating</option>
+                        </select>
+                    </SortValues>
                 </ButtonsWrapper>
                 <CardWrapperHolder>
                     {details === false
-                        ? <DetailsWrapper side='left' name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
-                        : <DetailsWrapper side='right' name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
+                        ? <DetailsWrapper side='left' value={value} name='|| Roles ' movies={actorTvCredits} type='tv' page='detailsPage' />
+                        : <DetailsWrapper side='right' value={value} name='Roles || ' movies={actorMovieCredits} type='movie' page='detailsPage' />
                     }
                 </CardWrapperHolder>
             </Wrapper>
@@ -131,7 +131,7 @@ justify-content:center;
     padding:5px 0;  
 `;
 
-const SortValues= styled.div`
+const SortValues = styled.div`
 display: flex;
 flex-direction:row;
 justify-content:center;
