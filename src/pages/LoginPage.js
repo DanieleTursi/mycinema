@@ -1,13 +1,14 @@
 import { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import LoginButton from '../components/Button/LoginButton';
+import { ButtonStyle } from '../components/Button/LoginButton';
 import UserContext from '../context/User/UserContext';
 import { StyledButton } from '../components/Button/Button'
 
 const LoginPage = () => {
 
-    const { register, handleRegister, handleLogin, handleGoogleLogin, showNavButtons } = useContext(UserContext)
+    const { register, handleRegister, handleLogin, handleGoogleLogin, showNavButtons } = useContext(UserContext);
+
     const navigate = useNavigate();
 
 
@@ -38,7 +39,7 @@ const LoginPage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-
+    const [emailLogin, setEmailLogin] = useState(false)
 
     const resetForm = () => {
         setFirstName('');
@@ -89,10 +90,27 @@ const LoginPage = () => {
 
         }
     }
+    const handleEmailLogin = () => {
+        setEmailLogin(!emailLogin);
+
+    }
+
 
     return (
         <MainWrapper>
-            {!register ? <LoginButton name='Login with email'></LoginButton> :
+            {!register ?
+                <>
+                    <LoginButton name='Login with email' onClick={handleEmailLogin}>Login with email</LoginButton>
+                    {emailLogin === true &&
+                        <LoginForm>
+                            <input type="email" />
+                            <input type="password" />
+                            <button type='submit'>LOGIN</button>
+
+                        </LoginForm>
+                    }
+                </>
+                :
                 <RegisterForm onSubmit={handleSubmit}>
                     <input type='text' onChange={(e) => { setFirstName(e.target.value) }} value={firstName} placeholder='First name' required />
                     <input type='text' onChange={(e) => { setSirName(e.target.value) }} value={sirName} placeholder='Sir name' required />
@@ -113,11 +131,11 @@ const LoginPage = () => {
                 </RegisterForm>
             }
 
-            <div>Or</div>
+            <h5>Or</h5>
             <div id='signInDiv'></div>
 
 
-        </MainWrapper>
+        </MainWrapper >
     )
 }
 
@@ -135,14 +153,9 @@ flex-direction:column ;
 align-items:center;
 justify-content:center;
 
-`;
-const RegisterForm = styled.form`
-width:350px;
-height:500px;
-/* border:1px dotted red; */
-display:flex;
-flex-direction:column;
-align-items:center;
+h5{
+    margin: 10px 0;
+}
 
 input{
     width:80%;
@@ -151,8 +164,9 @@ input{
     border-radius:7px ;
     border:1px solid grey;
 }
-button{
-    color:black;
+`;
+const ButtonCss = css`
+color:black;
 background:white;
 border:1px solid black;
 width:150px;
@@ -167,6 +181,19 @@ text-align:center;
 &:hover{
   background:lightgray;
 }
+`;
+
+const RegisterForm = styled.form`
+width:350px;
+height:500px;
+/* border:1px dotted red; */
+display:flex;
+flex-direction:column;
+align-items:center;
+
+
+button{
+   ${ButtonCss}
 }
 span{
 margin-top:10px;    
@@ -175,7 +202,18 @@ font-size:12px;
 text-align:center;
 }
 `;
+const LoginForm = styled.div`
+width:350px;
+height:150px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
 
+button{
+   ${ButtonCss}
+}
+`;
 const ErrorColors = css`
 color:red;
 border:1px solid red;
@@ -195,4 +233,9 @@ width:80%;
     margin-top:5px;
 
     ${props => props.er && ErrorColors}
+`;
+
+const LoginButton = styled.div`
+${ButtonStyle}
+
 `;

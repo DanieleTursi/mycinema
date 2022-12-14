@@ -27,16 +27,18 @@ export const UserProvider = ({ children }) => {
             firstName: firstName,
             sirName: sirName,
             email: email,
-            password: password
+            password: password,
+            initials: firstName.charAt(0) + sirName.charAt(0)
         }
         dispatch({
             type: 'REGISTER_USER',
             payload: user
         })
         console.log(user);
+        handleLogin(user);
     }
     // Login
-    const handleLogin = (data) => {
+    function handleLogin(data) {
         dispatch({
             type: 'LOGIN',
             payload: data
@@ -54,6 +56,7 @@ export const UserProvider = ({ children }) => {
             type: 'LOGIN',
             payload: userObject
         })
+
 
     }
 
