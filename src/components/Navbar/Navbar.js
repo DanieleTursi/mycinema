@@ -1,6 +1,5 @@
-import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 import React, { useContext } from 'react'
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import Button, { ButtonStyle } from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/User/UserContext';
@@ -23,7 +22,7 @@ const Navbar = (props) => {
         </>
           : <LoggedContainer>
             <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-            <UserImage image={user.picture} />
+            <UserImage image={user?.picture}>{user?.initials}</UserImage>
           </LoggedContainer>
         }
 
@@ -101,10 +100,20 @@ text-align:center;
 
 
 `;
+const ImageCss = css`
+background-image:url(${props => props.image});
+background-size:cover;
+`
+
 const UserImage = styled.div`
 width:50px;
 height:50px;
 border-radius:50%;
-background-image:url(${props => props.image});
-background-size:cover;
+${props => props.image && ImageCss}
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid #fff;
+cursor:pointer;
 `;

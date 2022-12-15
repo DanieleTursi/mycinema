@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import './App.css';
@@ -13,7 +13,10 @@ import { SizeProvider } from './context/SizeContext';
 import LoginPage from './pages/LoginPage';
 import { UserProvider } from './context/User/UserContext';
 
+
+
 function App() {
+
 
 
   return (
