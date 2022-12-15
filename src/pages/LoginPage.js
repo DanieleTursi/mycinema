@@ -1,36 +1,19 @@
 import { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ButtonStyle } from '../components/Button/LoginButton';
 import UserContext from '../context/User/UserContext';
-import { StyledButton } from '../components/Button/Button'
+
 
 const LoginPage = () => {
 
-    const { register, handleRegister, handleLogin, handleGoogleLogin, showNavButtons } = useContext(UserContext);
-
-    const navigate = useNavigate();
-
-
-
+    const { register, handleGoogleLogin, login, registerFunc, user, loginError, registerError } = useContext(UserContext);
+    const navigate = useNavigate()
     useEffect(() => {
-        /* global google */
 
-        if (!showNavButtons) {
-            navigate('/');
+        if (user != null) {
+            navigate('/')
         }
-
-        google.accounts.id.initialize({
-            client_id: process.env.REACT_APP_CLIENT_ID,
-            callback: handleGoogleLogin
-        });
-
-        google.accounts.id.renderButton(document.getElementById("signInDiv"),
-            { theme: "outline", size: "large", }
-        )
-        google.accounts.id.prompt();
-    }, [])
-
+    }, [user])
     const [firstName, setFirstName] = useState('');
     const [sirName, setSirName] = useState('');
     const [email, setEmail] = useState('');
@@ -39,23 +22,21 @@ const LoginPage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const [emailLogin, setEmailLogin] = useState(false)
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const [errorSpan, setErrorSpan] = useState('');
 
-    const resetForm = () => {
-        setFirstName('');
-        setSirName('');
-        setPassword('');
-        setConfirmPassword('');
-        setEmail('');
-        setConfirmEmail('');
-    }
 
-    const handleSubmit = (e) => {
+
+
+
+    const handleRegister = (e) => {
         e.preventDefault();
+        const name = `${firstName} ${sirName}`
         var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if (email != confirmEmail || password != confirmPassword) {
             if (email != confirmEmail) {
-                setConfirmEmail('Email doesn`t match')
+                setConfirmEmail('')
                 setEmailError(true)
             }
             if (password != confirmPassword) {
@@ -65,77 +46,58 @@ const LoginPage = () => {
         } else {
             if (password.match(passw)) {
 
-                console.log('registered');
-                handleRegister(firstName, sirName, email, password);
-                resetForm();
 
+                registerFunc(email, password, setErrorSpan, name);
+
+
+                console.log(registerError)
             }
             else {
                 alert('Password must include 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter')
-                console.log('Wrong')
+                console.log(email, password)
             }
 
         }
-
-
     }
-    const handleErrorFix = (e) => {
-        if (e.target.type === 'email' && emailError === true) {
-            setConfirmEmail('');
-            setEmailError(false);
-        }
-        if (e.target.type === 'password' && passwordError === true) {
-            setConfirmPassword('');
-            setPasswordError(false);
 
-        }
+    const handleLogin = (e) => {
+        e.preventDefault();
+        login(loginEmail, loginPassword, setLoginPassword, setLoginEmail);
     }
-    const handleEmailLogin = () => {
-        setEmailLogin(!emailLogin);
 
-    }
+
 
 
     return (
         <MainWrapper>
-            {!register ?
+            {register ?
+                <RegisterForm onSubmit={handleRegister}>
+                    <input type="text" placeholder='First name' onChange={(e) => { setFirstName(e.target.value) }} required value={firstName} />
+                    <input type="text" placeholder='Sir name' onChange={(e) => { setSirName(e.target.value) }} required value={sirName} />
+                    <input type="email" placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} required value={email} />
+                    <input onClick={() => { setEmailError(false) }} type="email" placeholder='Confirm Email' required onChange={(e) => { setConfirmEmail(e.target.value) }} value={confirmEmail} />
+                    {emailError && <span>*Email doesn`t match*</span>}
+                    <input type="password" placeholder='Password' required onChange={(e) => { setPassword(e.target.value) }} value={password} />
+                    <input onClick={() => { setPasswordError(false) }} type="password" placeholder='Confirm Password' required onChange={(e) => { setConfirmPassword(e.target.value) }} value={confirmPassword} />
+                    {passwordError && <span>*Password doesn`t match*</span>}
+                    <button type='submit'>Register</button>
+                    <span>{errorSpan}</span>
+                </RegisterForm> :
                 <>
-                    <LoginButton name='Login with email' onClick={handleEmailLogin}>Login with email</LoginButton>
-                    {emailLogin === true &&
-                        <LoginForm>
-                            <input type="email" />
-                            <input type="password" />
-                            <button type='submit'>LOGIN</button>
-
-                        </LoginForm>
-                    }
+                    <LoginForm onSubmit={handleLogin}>
+                        <input type="email" value={loginEmail} onChange={(e) => { setLoginEmail(e.target.value) }} placeholder='Email' />
+                        <input type="password" value={loginPassword} onChange={(e) => { setLoginPassword(e.target.value) }} placeholder='Password' />
+                        <button type='submit'>Login</button>
+                        <span>{loginError}</span>
+                    </LoginForm>
+                    <button onClick={handleGoogleLogin} >Sign in with Google</button>
                 </>
-                :
-                <RegisterForm onSubmit={handleSubmit}>
-                    <input type='text' onChange={(e) => { setFirstName(e.target.value) }} value={firstName} placeholder='First name' required />
-                    <input type='text' onChange={(e) => { setSirName(e.target.value) }} value={sirName} placeholder='Sir name' required />
-                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder='Email' required />
-                    <ConfirmEmail onClick={(e) => {
-                        handleErrorFix(e)
-                    }}
-                        type="email" er={emailError} onChange={(e) => { setConfirmEmail(e.target.value) }} value={confirmEmail} placeholder='Confirm Email' />
-                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder='Password' />
-                    <ConfirmPassword
-                        onClick={(e) => {
-                            handleErrorFix(e)
-                        }}
-                        type="password" er={passwordError} onChange={(e) => { setConfirmPassword(e.target.value) }} value={confirmPassword} placeholder='Confirm Password' />
-                    <button type="submit">Register</button>
-
-                    <span>Password must include 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter</span>
-                </RegisterForm>
             }
 
-            <h5>Or</h5>
-            <div id='signInDiv'></div>
 
 
-        </MainWrapper >
+
+        </MainWrapper>
     )
 }
 
@@ -196,13 +158,15 @@ button{
    ${ButtonCss}
 }
 span{
-margin-top:10px;    
+margin-top:5px;    
 width:80%;
 font-size:12px;
 text-align:center;
+color:red;
+font-weight:bold;
 }
 `;
-const LoginForm = styled.div`
+const LoginForm = styled.form`
 width:350px;
 height:150px;
 display:flex;
@@ -213,29 +177,7 @@ justify-content:center;
 button{
    ${ButtonCss}
 }
-`;
-const ErrorColors = css`
-color:red;
-border:1px solid red;
-
-`;
-
-
-const ConfirmEmail = styled.input`
-width:80%;
-    margin-top:5px;
-    ${props => props.er && ErrorColors}
-    
-`;
-
-const ConfirmPassword = styled.input`
-width:80%;
-    margin-top:5px;
-
-    ${props => props.er && ErrorColors}
-`;
-
-const LoginButton = styled.div`
-${ButtonStyle}
-
+span{
+    color:red;
+}
 `;
