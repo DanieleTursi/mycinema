@@ -22,7 +22,7 @@ const Navbar = (props) => {
         </>
           : <LoggedContainer>
             <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-            <UserImage image={user?.picture}>{user?.initials}</UserImage>
+            <UserImage image={user?.profilePic}>{user?.initials}</UserImage>
           </LoggedContainer>
         }
 
