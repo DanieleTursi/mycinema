@@ -57,6 +57,7 @@ const Container = styled.div`
   &:hover{
     opacity:0.8;
   }
+  
   @media (max-width: 768px){
   width:160px;
 }

@@ -57,6 +57,7 @@ const ContainerPeople = styled.div`
   &:hover{
     opacity:0.8;
   }
+  
 @media (max-width: 768px){
   width:180px;
 }
@@ -69,13 +70,14 @@ const Info = styled.div`
     flex-direction:column;
 
     h2{
-      margin:4px 0 0 4px;
+      margin:10px 0 0 4px;
       text-align:center;
       font-size:14px;
     }
     
     span{
       font-size:8px ;
+      margin-top:10px;
     }
 `
 
