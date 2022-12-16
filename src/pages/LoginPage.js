@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/User/UserContext';
-
+import { FcGoogle } from 'react-icons/fc'
 
 const LoginPage = () => {
 
@@ -90,7 +90,10 @@ const LoginPage = () => {
                         <button type='submit'>Login</button>
                         <span>{loginError}</span>
                     </LoginForm>
-                    <button onClick={handleGoogleLogin} >Sign in with Google</button>
+                    <GoogleLoginButton onClick={handleGoogleLogin} >
+                        <GoogleIcon />
+                        <span>Sign in with Google</span>
+                    </GoogleLoginButton>
                 </>
             }
 
@@ -180,4 +183,31 @@ button{
 span{
     color:red;
 }
+`;
+
+const GoogleLoginButton = styled.div`
+height:35px;
+width:200px;
+border-radius:4px;
+
+display:flex;
+align-items:center;
+cursor:pointer;
+justify-content:space-around;
+box-shadow:0 1px  1px grey ;
+&:hover{
+    background:#ECF0F4;
+}
+span{
+    font-weight:bold ;
+    color:grey;
+    font-size:14px;
+    margin-right:10px;
+}
+`;
+
+const GoogleIcon = styled(FcGoogle)`
+width:20%;
+height:70%;
+
 `;

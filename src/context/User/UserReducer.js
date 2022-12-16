@@ -13,7 +13,7 @@ const userReducer = (state, action) => {
         case 'LOGIN':
             return {
                 ...state,
-                // user: action.payload,
+                user: action.payload,
                 showNavButtons: false,
                 loginError: action.error,
             }

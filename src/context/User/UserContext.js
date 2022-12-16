@@ -2,9 +2,18 @@ import React, { createContext, useReducer, useEffect } from "react";
 import userReducer from "./UserReducer";
 import jwt_decode from 'jwt-decode';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from 'firebase/auth';
-import { signInWithGoogle, db } from '../../firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { db } from '../../firebase';
+import {
+    getFirestore,
+    query,
+    getDocs,
+    doc, getDoc,
+    collection,
+    where,
+    addDoc,
+    onSnapshot,
+} from "firebase/firestore";
 
 
 const UserContext = createContext('')
@@ -88,6 +97,7 @@ export const UserProvider = ({ children }) => {
         try {
             const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
             console.log(user);
+
             dispatch({
                 type: 'LOGIN',
                 error: null
@@ -119,23 +129,43 @@ export const UserProvider = ({ children }) => {
         }
     }
     // Google login
+    const googleProvider = new GoogleAuthProvider();
+    const signInWithGoogle = async () => {
+        try {
+            const res = await signInWithPopup(auth, googleProvider);
+            const user = res.user;
 
-    const handleGoogleLogin = async () => {
-        signInWithGoogle().then((result) => {
             const userObject = {
-                name: result.user.displayName,
-                email: result.user.email,
-                profilePic: result.user.photoURL,
+                name: res.user.displayName,
+                email: res.user.email,
+                profilePic: res.user.photoURL,
             }
             console.log(userObject)
             dispatch({
                 type: 'LOGIN',
                 payload: userObject
             })
-        })
-            .catch((error) => {
-                console.log(error)
-            })
+            const q = query(collection(db, "users"), where("uid", "==", user.uid));
+            const docs = await getDocs(q);
+            if (docs.docs.length === 0) {
+                await addDoc(collection(db, "users"), {
+                    uid: user.uid,
+                    name: user.displayName,
+                    authProvider: "google",
+                    email: user.email,
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            alert(err.message);
+        }
+    };
+
+
+
+
+    const handleGoogleLogin = async () => {
+        signInWithGoogle()
 
 
 
