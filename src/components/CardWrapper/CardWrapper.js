@@ -1,10 +1,10 @@
-import React, { useContext,useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import Card from "./Card"
-import {  BiRightArrow, BiLeftArrow} from 'react-icons/bi';
+import { BiRightArrow, BiLeftArrow } from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -12,7 +12,7 @@ import Slider from 'react-slick';
 const CardWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
     const { isSmall, cardItems } = useContext(SizeContext);
-    const style = { color: "black", margin: "4px",fontSize: "20px"}
+    const style = { color: "black", margin: "4px", fontSize: "20px" }
     const contentWrapper = React.useRef(null);
 
 
@@ -21,16 +21,16 @@ const CardWrapper = (props) => {
         speed: number,
         distance: number,
         step: number
-      ) => {
+    ) => {
         let scrollAmount = 0;
         const slideTimer = setInterval(() => {
-          element.scrollLeft += step;
-          scrollAmount += Math.abs(step);
-          if (scrollAmount >= distance) {
-            clearInterval(slideTimer);
-          }
+            element.scrollLeft += step;
+            scrollAmount += Math.abs(step);
+            if (scrollAmount >= distance) {
+                clearInterval(slideTimer);
+            }
         }, speed);
-      };
+    };
 
     const settings = {
         className: "center",
@@ -40,7 +40,7 @@ const CardWrapper = (props) => {
         slidesToScroll: 1,
         swipeToSlide: true,
         arrows: false,
-        
+
     };
 
 
@@ -52,17 +52,17 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                    {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
-                    <Container ref={contentWrapper} >
-                        
-                        {props.movies.map((movie, idx) => (
-                            <Box>
-                            <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
-                            </Box>
-                        ))} 
-                        
-                    </Container>
-                   { props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style} /></button>}
+                        <Container ref={contentWrapper} >
+
+                            {props.movies.map((movie, idx) => (
+                                <Box key={idx}>
+                                    <Card page={props.page} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                                </Box>
+                            ))}
+
+                        </Container>
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style} /></button>}
                     </Scrolling>
                 </Wrap>
             )
@@ -73,15 +73,15 @@ const CardWrapper = (props) => {
                     {props.name}
                 </Title>
                 <Scrolling>
-                {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
-                <Slick {...settings} ref={contentWrapper}>
-                    
-                    {props.movies.map((movie, idx) => (
-                        <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
-                    ))}
+                    {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style} /></button>}
+                    <Slick {...settings} ref={contentWrapper}>
 
-                </Slick>
-                { props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
+                        {props.movies.map((movie, idx) => (
+                            <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                        ))}
+
+                    </Slick>
+                    {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style} /></button>}
                 </Scrolling>
             </>)
 
@@ -140,7 +140,7 @@ font-family: 'PT Sans Narrow', sans-serif;
 
 `;
 
-const Scrolling= styled.div`
+const Scrolling = styled.div`
 display:flex;
 width: 95%;
 align-items:center;
