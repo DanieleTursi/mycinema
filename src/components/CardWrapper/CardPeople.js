@@ -30,7 +30,7 @@ const CardPeople = (props) => {
         {props.character &&
           <>
             <span>as</span>
-            <h6>{props.character}</h6>
+            <Name>{props.character}</Name>
           </>
         }
       </Info>
@@ -44,8 +44,8 @@ export default CardPeople
 
 const ContainerPeople = styled.div`
   display:flex;
-  width: 200px;
-  height: 280px;
+  width: 180px;
+  height: 250px;
   border-radius: 10px;
   margin-left: 10px;
   background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
@@ -73,13 +73,13 @@ const Info = styled.div`
       text-align:center;
       font-size:14px;
     }
-
-    h6{
-      margin:0;
-    }
     
     span{
       font-size:8px ;
     }
+`
+
+const Name= styled.h6`
+margin-top:10px;
 `
 

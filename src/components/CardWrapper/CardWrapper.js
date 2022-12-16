@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext,useRef } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
@@ -12,8 +12,25 @@ import Slider from 'react-slick';
 const CardWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
     const { isSmall, cardItems } = useContext(SizeContext);
-    const style = { color: "black", margin: "5px",fontSize: "30px"}
+    const style = { color: "black", margin: "4px",fontSize: "20px"}
+    const contentWrapper = React.useRef(null);
 
+
+    const sideScroll = (
+        element: HTMLDivElement,
+        speed: number,
+        distance: number,
+        step: number
+      ) => {
+        let scrollAmount = 0;
+        const slideTimer = setInterval(() => {
+          element.scrollLeft += step;
+          scrollAmount += Math.abs(step);
+          if (scrollAmount >= distance) {
+            clearInterval(slideTimer);
+          }
+        }, speed);
+      };
 
     const settings = {
         className: "center",
@@ -23,6 +40,7 @@ const CardWrapper = (props) => {
         slidesToScroll: 1,
         swipeToSlide: true,
         arrows: false,
+        
     };
 
 
@@ -34,13 +52,17 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                    {props.movies.length > 5 && <BiLeftArrow style={style}/>}
-                    <Container >
+                    {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
+                    <Container ref={contentWrapper} >
+                        
                         {props.movies.map((movie, idx) => (
+                            <Box>
                             <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                            </Box>
                         ))} 
+                        
                     </Container>
-                   { props.movies.length > 5 && <BiRightArrow style={style}/>}
+                   { props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
                     </Scrolling>
                 </Wrap>
             )
@@ -50,16 +72,18 @@ const CardWrapper = (props) => {
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
-
-                <Slick {...settings}>
-
+                <Scrolling>
+                {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
+                <Slick {...settings} ref={contentWrapper}>
+                    
                     {props.movies.map((movie, idx) => (
                         <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                     ))}
 
                 </Slick>
+                { props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
+                </Scrolling>
             </>)
-
 
         }
     }
@@ -92,7 +116,7 @@ const Title = styled.h3`
 width:80%;
 margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
-padding:5px 80px;
+padding:5px 120px;
 border-bottom:1px solid #000;
 font-family: 'PT Sans Narrow', sans-serif;
 
@@ -120,21 +144,31 @@ const Scrolling= styled.div`
 display:flex;
 width: 95%;
 align-items:center;
+
+button{
+    background:transparent;
+    border-radius:8px;
+    margin: 0 10px;
+}
 `
 
-const Container = styled(HorizontalScroll)`
-width: 90%;
-margin-top:20px;
+const Container = styled.div`
+  min-width:95%;
+  margin-top:10px;
+  overflow: auto;
+  white-space: nowrap;
+  text-align: center;
+  line-height:0;       /* make bottom padding same as top padding by removing line-height */
+  vertical-align:middle;
 `;
 
-
+const Box = styled.div`
+    display: inline-block;
+    padding: 0.5vh;
+  `
 
 const Slick = styled(Slider)`
 width:100%;
 height:350px;
 overflow:hidden;
-
-
-
-
 `;

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import React,{ useContext, useEffect } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
@@ -12,7 +12,25 @@ import Slider from 'react-slick';
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
     const { isSmall, cardItems, handleResize } = useContext(SizeContext);
-    const style = { color: "black", margin: "5px",fontSize: "30px"}
+    const style = { color: "black", margin: "5px",fontSize: "20px"}
+    const contentWrapper = React.useRef(null);
+
+
+    const sideScroll = (
+        element: HTMLDivElement,
+        speed: number,
+        distance: number,
+        step: number
+      ) => {
+        let scrollAmount = 0;
+        const slideTimer = setInterval(() => {
+          element.scrollLeft += step;
+          scrollAmount += Math.abs(step);
+          if (scrollAmount >= distance) {
+            clearInterval(slideTimer);
+          }
+        }, speed);
+      };
 
     const settings = {
         className: "center",
@@ -36,14 +54,15 @@ const CardWrapperPeople = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                        {props.people.length > 5 && <BiLeftArrow style={style}/>}
-                    <Container>
+                    {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
+                    <Container ref={contentWrapper}>
                         {props.people && props.people.map((person, idx) => (
-
+                             <Box>
                             <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+                            </Box>
                         ))}
                     </Container>
-                    {props.people.length > 5 && <BiRightArrow style={style}/>}
+                    { props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
                     </Scrolling>
                 </WrapPeople>
             )
@@ -78,7 +97,7 @@ export default CardWrapperPeople
 
 const WrapPeople = styled.div`
 width:${props => (props.side === 'center' || props.side === 'other' ? '90%' : '45%')};
-height:300px;
+height:280px;
 margin:80px 0;
 display:flex ;
 justify-content:center ;
@@ -96,11 +115,12 @@ width:100%;
 display:flex;
 justify-content:center;
 `;
+
 const Title = styled.h3`
 width:80%;
 margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
-padding:5px 90px;
+padding:5px 120px;
 border-bottom:1px solid #000;
 font-family: 'PT Sans Narrow', sans-serif;
 
@@ -129,12 +149,29 @@ const Scrolling= styled.div`
 display:flex;
 width: 95%;
 align-items:center;
+
+button{
+    background:transparent;
+    border-radius:8px;
+    margin: 0 10px;
+}
 `
 
-const Container = styled(HorizontalScroll)`
-width: 90%;
-margin-top:20px;
+
+const Container = styled.div`
+  min-width:95%;
+  margin-top:10px;
+  overflow: auto;
+  white-space: nowrap;
+  text-align: center;
+  line-height:0;       /* make bottom padding same as top padding by removing line-height */
+  vertical-align:middle;
 `;
+
+const Box = styled.div`
+    display: inline-block;
+    padding: 0.5vh;
+  `
 
 const SlickWrapper = styled.div`
 display:flex;
