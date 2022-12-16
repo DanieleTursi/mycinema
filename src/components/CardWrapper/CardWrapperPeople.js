@@ -151,9 +151,10 @@ width: 95%;
 align-items:center;
 
 button{
-    background:transparent;
+    z-index:1;
+    background:lightgray;
     border-radius:8px;
-    margin: 0 10px;
+    margin: 0 -20px;
 }
 `
 
