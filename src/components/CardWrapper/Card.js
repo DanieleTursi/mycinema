@@ -44,8 +44,8 @@ export default Card
 
 const Container = styled.div`
   display:${props => (props.bg === null && props.rating === 0 ? 'none' : 'flex')};
-  width: 200px;
-  height: 280px;
+  width: 180px;
+  height: 250px;
   border-radius: 10px;
   margin-left: 10px;
   background-image:${props => props.bg == null ? `url(${noImage})` : `url(https://www.themoviedb.org/t/p/original${props.bg})`};
