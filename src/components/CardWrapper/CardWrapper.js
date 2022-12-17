@@ -72,6 +72,7 @@ const CardWrapper = (props) => {
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
+<<<<<<< HEAD
                 <Scrolling>
                     {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style} /></button>}
                     <Slick {...settings} ref={contentWrapper}>
@@ -83,6 +84,17 @@ const CardWrapper = (props) => {
                     </Slick>
                     {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style} /></button>}
                 </Scrolling>
+=======
+               
+                <Slick {...settings} ref={contentWrapper}>
+                    
+                    {props.movies.map((movie, idx) => (
+                        <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                    ))}
+
+                </Slick>
+                
+>>>>>>> 29ea17d36ecc53e713136fdef49afb2348732292
             </>)
 
         }
@@ -107,7 +119,7 @@ flex-direction:column ;
 @media screen and (max-width: 768px){
     width:100%;
     margin:20px 0;
-    
+  
 }
 `;
 
@@ -116,7 +128,7 @@ const Title = styled.h3`
 width:80%;
 margin:0;
 text-align:${props => (props.side === 'left' ? 'left' : 'right')};
-padding:5px 120px;
+padding:5px 100px ;
 border-bottom:1px solid #000;
 font-family: 'PT Sans Narrow', sans-serif;
 
@@ -146,20 +158,23 @@ width: 95%;
 align-items:center;
 
 button{
-    background:transparent;
+    z-index:1;
+    background:lightgray;
     border-radius:8px;
-    margin: 0 10px;
+    margin: 0 -20px;
+    cursor:pointer;
 }
 `
 
 const Container = styled.div`
   min-width:95%;
-  margin-top:10px;
+  padding-top:10px;
   overflow: auto;
   white-space: nowrap;
   text-align: center;
   line-height:0;       /* make bottom padding same as top padding by removing line-height */
   vertical-align:middle;
+  
 `;
 
 const Box = styled.div`
