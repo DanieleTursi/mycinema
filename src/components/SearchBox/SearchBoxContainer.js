@@ -64,7 +64,7 @@ background-repeat: no-repeat;
 font-family: 'Gochi Hand', cursive;
 animation: ${MoveUpDown} 30s linear infinite alternate;
 position:relative;
-margin-bottom:20px;
+
 
 h1{
     color:#F5C030;

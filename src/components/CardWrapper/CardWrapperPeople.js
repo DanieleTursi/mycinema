@@ -54,7 +54,7 @@ const CardWrapperPeople = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                    {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style}/></button> }
+                    {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style}/></button> }
                     <Container ref={contentWrapper}>
                         {props.people && props.people.map((person, idx) => (
                              <Box>
@@ -62,7 +62,7 @@ const CardWrapperPeople = (props) => {
                             </Box>
                         ))}
                     </Container>
-                    { props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style}/></button> }
+                    { props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style}/></button> }
                     </Scrolling>
                 </WrapPeople>
             )
