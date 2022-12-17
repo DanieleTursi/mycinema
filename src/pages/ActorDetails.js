@@ -108,6 +108,10 @@ position:relative;
 display:flex;
 align-items:center;
 justify-content:center;
+
+@media screen and (max-width: 768px){
+    padding:30px 0;
+  }
 `;
 
 const ActorBackground = styled.div`
