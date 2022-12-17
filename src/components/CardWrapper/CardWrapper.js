@@ -72,29 +72,15 @@ const CardWrapper = (props) => {
                 <Title side={props.side} type={props.type} >
                     {props.name}
                 </Title>
-<<<<<<< HEAD
-                <Scrolling>
-                    {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style} /></button>}
-                    <Slick {...settings} ref={contentWrapper}>
 
-                        {props.movies.map((movie, idx) => (
-                            <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
-                        ))}
-
-                    </Slick>
-                    {props.movies.length > 5 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style} /></button>}
-                </Scrolling>
-=======
-               
                 <Slick {...settings} ref={contentWrapper}>
-                    
+
                     {props.movies.map((movie, idx) => (
                         <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                     ))}
 
                 </Slick>
-                
->>>>>>> 29ea17d36ecc53e713136fdef49afb2348732292
+
             </>)
 
         }
