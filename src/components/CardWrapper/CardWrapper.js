@@ -52,17 +52,17 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -10)}><BiLeftArrow style={style} /></button>}
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper} >
 
                             {props.movies.map((movie, idx) => (
-                                <Box key={idx}>
-                                    <Card page={props.page} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                                <Box>
+                                    <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                                 </Box>
                             ))}
 
                         </Container>
-                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 10)}><BiRightArrow style={style} /></button>}
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling>
                 </Wrap>
             )

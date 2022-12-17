@@ -42,7 +42,7 @@ display:flex ;
 justify-content: space-between;
 align-items:center;
 background:black;
-margin-bottom:20px;
+margin-bottom:0;
 `;
 
 const ButtonsContainer = styled.div`

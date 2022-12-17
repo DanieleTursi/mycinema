@@ -6,6 +6,7 @@ import CardWrapperPeople from '../components/CardWrapper/CardWrapperPeople';
 import MovieTrailer from '../components/MovieTrailer/MovieTrailer';
 import SizeContext from '../context/SizeContext';
 import ReactShowMoreText from 'react-show-more-text';
+import FavWishAdd from '../components/FavWishAdd/FavWishAdd';
 
 
 
@@ -38,6 +39,7 @@ const DetailsPage = () => {
                                     <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
                                 </UserScore>
                                 <h4>{details.vote_count} votes</h4>
+                                <FavWishAdd/>
                             </UserScoreContainer>
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
@@ -80,7 +82,6 @@ min-height:600px;
 display:flex;
 flex-direction:column ;
 font-family: 'PT Sans Narrow', sans-serif;
-
 `;
 
 const HeaderDetails = styled.div`
@@ -91,6 +92,10 @@ position:relative;
 display:flex;
 align-items:center;
 justify-content:center;
+
+@media screen and (max-width: 768px){
+    padding:30px 0;
+  }
 `;
 
 const BackgroundImage = styled.div`
