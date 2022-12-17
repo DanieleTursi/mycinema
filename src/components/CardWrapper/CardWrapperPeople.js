@@ -80,7 +80,6 @@ const CardWrapperPeople = (props) => {
                         <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
 
                     ))}
-
                 </Slick>
             </SlickWrapper>
             )
