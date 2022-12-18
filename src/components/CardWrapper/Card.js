@@ -24,7 +24,7 @@ const Card = (props) => {
 
   return (
     <>
-      <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
+      <Container onClick={idHandler} bg={props.bg} id={props.id} rating={props.rating} release={props.release} >
       </Container>
       {props.page === 'detailsPage' && <Character>
         <span>as</span>
