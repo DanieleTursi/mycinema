@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 
 const FavWishAdd = () => {
-    const style = { color: "black", margin: "5px",fontSize: "20px"};
+    const style = { color: "black",fontSize: "20px",color:"white"};
     const [favClicked,setFavClicked]= useState (false);
     const [addClicked,setAddClicked]= useState (false);
     const [watClicked,setWatClicked]= useState (false);
@@ -29,17 +29,26 @@ const FavWishAdd = () => {
 
 return(
     <MainBar>
+       <ButtonContainer>
         <FavButton favClicked={favClicked} onClick={handleFav}><AiOutlineHeart style={style}/></FavButton>
+        <p>to favourite</p>
+       </ButtonContainer>
+       <ButtonContainer>
         <AddButton  addClicked={addClicked} onClick={handleAdd}><AiOutlineUnorderedList style={style}/></AddButton>
+        <p>to a list</p>
+       </ButtonContainer>
+       <ButtonContainer>
         <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style}/></WatButton>
-    </MainBar>
+        <p>to watchlist</p>
+       </ButtonContainer>
+     </MainBar>
   )
 }
 
 export default FavWishAdd
 
 const MainBar=styled.div`
-  width:400px;
+  width:300px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -50,12 +59,12 @@ const MainBar=styled.div`
 `
 
 const FavButton=styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background:${props => (props.favClicked === true ? 'green' : 'lightgray')};
-  margin:0 20px;
-  border:1px solid #000;
+  background:${props => (props.favClicked === true ? 'red' : 'black')};
+  margin:0 10px;
+  border:1px solid #fff;
   color:black;
 
   @media screen and (max-width: 768px){
@@ -64,12 +73,12 @@ const FavButton=styled.button`
 `
 
 const AddButton=styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background:${props => (props.addClicked === true ? 'green' : 'lightgray')};
-  margin:0 20px;
-  border:1px solid #000;
+  background:${props => (props.addClicked === true ? 'green' : 'black')};
+  margin:0 10px;
+  border:1px solid #fff;
   color:black;
 
 
@@ -79,12 +88,12 @@ const AddButton=styled.button`
 `
 
 const WatButton=styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background:${props => (props.watClicked === true ? 'green' : 'lightgray')};
-  margin:0 20px;
-  border:1px solid #000;
+  background:${props => (props.watClicked === true ? 'green' : 'black')};
+  margin:0 10px;
+  border:1px solid #fff;
   color:black;
 
 
@@ -93,4 +102,15 @@ const WatButton=styled.button`
   }
 `
 
+const ButtonContainer= styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 
+p{
+  font-size:12px;
+  color:white;
+}
+
+`
