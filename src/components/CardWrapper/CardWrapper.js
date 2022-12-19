@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
@@ -53,18 +53,18 @@ const CardWrapper = (props) => {
                     </Title>
                     <Scrolling>
                         {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
-                        <Container ref={contentWrapper} >
+                        <Container ref={contentWrapper}>
 
                             {props.movies.map((movie, idx) => (
-                                <Box>
-                                    <Card page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
+                                <Box key={idx}>
+                                    <Card page={props.page} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} />
                                 </Box>
                             ))}
 
                         </Container>
                         {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
-                    </Scrolling>
-                </Wrap>
+                    </Scrolling >
+                </Wrap >
             )
         }
         else {

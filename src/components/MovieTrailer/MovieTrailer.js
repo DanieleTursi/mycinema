@@ -33,6 +33,7 @@ const MovieTrailer = () => {
         slidesToShow: trailersCount,
         slidesToScroll: 1,
         autoplay: false,
+
     };
 
     const checkVideoCount = (type) => {

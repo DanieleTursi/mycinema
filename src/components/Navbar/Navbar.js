@@ -3,13 +3,18 @@ import styled, { css } from "styled-components"
 import Button, { ButtonStyle } from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/User/UserContext';
+import Sidebar from './Sidebar';
+import { useState } from 'react';
 
 const Navbar = (props) => {
 
-
+  const [open, setOpen] = useState(false);
   const { handleRegisterClick, showNavButtons, handleLogout, user } = useContext(UserContext);
 
+  const handleSidebarOpen = () => {
+    setOpen(!open);
 
+  }
 
   const navigate = useNavigate();
   return (
@@ -21,8 +26,9 @@ const Navbar = (props) => {
           <ButtonStyle to='/login' onClick={() => { handleRegisterClick('register') }} >Register</ButtonStyle>
         </>
           : <LoggedContainer>
-            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-            <UserImage image={user?.profilePic}>{user?.initials}</UserImage>
+            {/* <LogoutButton onClick={handleLogout}>Logout</LogoutButton> */}
+            <UserImage onClick={handleSidebarOpen} image={user?.profilePic}>{user?.initials}</UserImage>
+            <Sidebar open={open} />
           </LoggedContainer>
         }
 
@@ -43,6 +49,7 @@ justify-content: space-between;
 align-items:center;
 background:black;
 margin-bottom:0;
+z-index:150 ;
 `;
 
 const ButtonsContainer = styled.div`
