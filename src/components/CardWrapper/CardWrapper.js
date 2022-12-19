@@ -12,7 +12,7 @@ import Slider from 'react-slick';
 const CardWrapper = (props) => {
     const { loading } = useContext(TmdbContext);
     const { isSmall, cardItems } = useContext(SizeContext);
-    const style = { color: "black", margin: "4px", fontSize: "20px" }
+    const style = { color: "white", margin: "4px", fontSize: "20px" }
     const contentWrapper = React.useRef(null);
 
 
@@ -145,7 +145,8 @@ align-items:center;
 
 button{
     z-index:1;
-    background:lightgray;
+    border:1px solid white;
+    background:black;
     border-radius:8px;
     margin: 0 -20px;
     cursor:pointer;
