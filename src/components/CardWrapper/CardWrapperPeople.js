@@ -1,10 +1,10 @@
-import React,{ useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
 import HorizontalScroll from 'react-horizontal-scrolling'
 import CardPeople from "./CardPeople"
-import {  BiRightArrow, BiLeftArrow} from 'react-icons/bi';
+import { BiRightArrow, BiLeftArrow } from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -12,7 +12,7 @@ import Slider from 'react-slick';
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
     const { isSmall, cardItems, handleResize } = useContext(SizeContext);
-    const style = { color: "black", margin: "5px",fontSize: "20px"}
+    const style = { color: "black", margin: "5px", fontSize: "20px" }
     const contentWrapper = React.useRef(null);
 
 
@@ -21,16 +21,16 @@ const CardWrapperPeople = (props) => {
         speed: number,
         distance: number,
         step: number
-      ) => {
+    ) => {
         let scrollAmount = 0;
         const slideTimer = setInterval(() => {
-          element.scrollLeft += step;
-          scrollAmount += Math.abs(step);
-          if (scrollAmount >= distance) {
-            clearInterval(slideTimer);
-          }
+            element.scrollLeft += step;
+            scrollAmount += Math.abs(step);
+            if (scrollAmount >= distance) {
+                clearInterval(slideTimer);
+            }
         }, speed);
-      };
+    };
 
     const settings = {
         className: "center",
@@ -54,15 +54,15 @@ const CardWrapperPeople = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                    {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style}/></button> }
-                    <Container ref={contentWrapper}>
-                        {props.people && props.people.map((person, idx) => (
-                             <Box>
-                            <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
-                            </Box>
-                        ))}
-                    </Container>
-                    { props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style}/></button> }
+                        {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
+                        <Container ref={contentWrapper}>
+                            {props.people && props.people.map((person, idx) => (
+                                <Box>
+                                    <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+                                </Box>
+                            ))}
+                        </Container>
+                        {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling>
                 </WrapPeople>
             )
@@ -73,7 +73,6 @@ const CardWrapperPeople = (props) => {
                         {props.name}
                     </Title>
                 </TitleWrapper>
-
                 <Slick {...settings}>
 
                     {props.people && props.people.map((person, idx) => (
@@ -81,7 +80,6 @@ const CardWrapperPeople = (props) => {
                         <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
 
                     ))}
-
                 </Slick>
             </SlickWrapper>
             )
@@ -145,7 +143,7 @@ font-family: 'PT Sans Narrow', sans-serif;
 }
 `;
 
-const Scrolling= styled.div`
+const Scrolling = styled.div`
 display:flex;
 width: 95%;
 align-items:center;

@@ -100,7 +100,8 @@ export const UserProvider = ({ children }) => {
 
             dispatch({
                 type: 'LOGIN',
-                error: null
+                error: null,
+                payload: user,
             })
             setLoginPassword('');
             setLoginEmail('');

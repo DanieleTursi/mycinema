@@ -82,6 +82,7 @@ const LoginPage = () => {
                     {passwordError && <span>*Password doesn`t match*</span>}
                     <button type='submit'>Register</button>
                     <span>{errorSpan}</span>
+                    <p>Password must include 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter</p>
                 </RegisterForm> :
                 <>
                     <LoginForm onSubmit={handleLogin}>
@@ -155,7 +156,7 @@ height:500px;
 display:flex;
 flex-direction:column;
 align-items:center;
-
+justify-content:center;
 
 button{
    ${ButtonCss}
@@ -167,6 +168,11 @@ font-size:12px;
 text-align:center;
 color:red;
 font-weight:bold;
+}
+p{
+    font-size:10px;
+    max-width:280px;
+    text-align:center;
 }
 `;
 const LoginForm = styled.form`

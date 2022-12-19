@@ -12,6 +12,7 @@ import SearchBoxContainer from './components/SearchBox/SearchBoxContainer';
 import { SizeProvider } from './context/SizeContext';
 import LoginPage from './pages/LoginPage';
 import { UserProvider } from './context/User/UserContext';
+import UserPage from './pages/UserPage';
 
 
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/actordetails/" element={<ActorDetails />} />
                 <Route path="/searchresult/" element={<SearchResultPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/user" element={<UserPage />} />
               </Routes>
             </Router>
             <Footer />
