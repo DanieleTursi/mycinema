@@ -52,7 +52,7 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling>
-                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper}>
 
                             {props.movies.map((movie, idx) => (
@@ -62,7 +62,7 @@ const CardWrapper = (props) => {
                             ))}
 
                         </Container>
-                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
+                        {props.movies.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling >
                 </Wrap >
             )
@@ -159,7 +159,7 @@ const Container = styled.div`
   overflow: auto;
   white-space: nowrap;
   text-align: center;
-  line-height:0;       /* make bottom padding same as top padding by removing line-height */
+  line-height:1;       /* make bottom padding same as top padding by removing line-height */
   vertical-align:middle;
   
 `;
