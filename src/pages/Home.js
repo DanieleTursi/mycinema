@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Main from '../components/Main/Main'
 import styled from 'styled-components'
+import UserContext from '../context/User/UserContext'
+
 
 const Home = () => {
+
+  const { closeSidebar } = useContext(UserContext)
   return (
-    <HomeWrapper>
+    <HomeWrapper onClick={closeSidebar}>
       <Main />
     </HomeWrapper>
   )

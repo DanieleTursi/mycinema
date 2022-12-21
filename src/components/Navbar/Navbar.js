@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled, { css } from "styled-components"
 import Button, { ButtonStyle } from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -8,15 +8,17 @@ import { useState } from 'react';
 
 const Navbar = (props) => {
 
-  const [open, setOpen] = useState(false);
-  const { handleRegisterClick, showNavButtons, handleLogout, user } = useContext(UserContext);
 
-  const handleSidebarOpen = () => {
-    setOpen(!open);
+  const { handleRegisterClick, showNavButtons, handleSidebarOpen, sidebarOpen, user, } = useContext(UserContext);
 
-  }
+  useEffect(() => {
+
+  }, [user])
 
   const navigate = useNavigate();
+
+
+
   return (
     <NavbarContainer>
       <Logo onClick={() => { navigate('/') }}>MYCINEMA</Logo>
@@ -28,7 +30,7 @@ const Navbar = (props) => {
           : <LoggedContainer>
             {/* <LogoutButton onClick={handleLogout}>Logout</LogoutButton> */}
             <UserImage onClick={handleSidebarOpen} image={user?.profilePic}>{user?.initials}</UserImage>
-            <Sidebar open={open} />
+            <Sidebar open={sidebarOpen} />
           </LoggedContainer>
         }
 
@@ -37,6 +39,7 @@ const Navbar = (props) => {
 
     </NavbarContainer>
   )
+
 }
 export default Navbar
 

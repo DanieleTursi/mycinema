@@ -34,12 +34,12 @@ const LoginPage = () => {
         e.preventDefault();
         const name = `${firstName} ${sirName}`
         var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-        if (email != confirmEmail || password != confirmPassword) {
-            if (email != confirmEmail) {
+        if (email !== confirmEmail || password !== confirmPassword) {
+            if (email !== confirmEmail) {
                 setConfirmEmail('')
                 setEmailError(true)
             }
-            if (password != confirmPassword) {
+            if (password !== confirmPassword) {
                 setConfirmPassword('');
                 setPasswordError(true)
             }

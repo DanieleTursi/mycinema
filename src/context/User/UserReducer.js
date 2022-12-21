@@ -41,6 +41,16 @@ const userReducer = (state, action) => {
                 ...state,
                 registerError: action.error,
             }
+        case 'SIDEBAR_OPEN':
+            return {
+                ...state,
+                sidebarOpen: action.payload,
+            }
+        case 'GET_DOC_ID':
+            return {
+                ...state,
+                id: action.id,
+            }
         default:
             return state
     }
