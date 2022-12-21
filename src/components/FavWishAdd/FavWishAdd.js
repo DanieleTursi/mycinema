@@ -4,25 +4,28 @@ import styled from "styled-components"
 
 
 const FavWishAdd = () => {
-    const style = { color: "black",fontSize: "20px",color:"white"};
+    const style = { fontSize: "20px",color:"white"};
+    const styledButton = { color: "white",fontSize: "12px", };
     const [favClicked,setFavClicked]= useState (false);
     const [addClicked,setAddClicked]= useState (false);
     const [watClicked,setWatClicked]= useState (false);
   
     const handleFav = () => {
-        favClicked === true
+        favClicked 
             ? setFavClicked(false)
-            : setFavClicked(true);
+              
+            : setFavClicked(true)
+            ;
     };
 
     const handleAdd = () => {
-        addClicked === true
+        addClicked 
             ? setAddClicked(false)
             : setAddClicked(true);
     };
 
     const handleWat = () => {
-        watClicked === true
+        watClicked 
             ? setWatClicked(false)
             : setWatClicked(true);
     };
@@ -31,15 +34,15 @@ return(
     <MainBar>
        <ButtonContainer>
         <FavButton favClicked={favClicked} onClick={handleFav}><AiOutlineHeart style={style}/></FavButton>
-        <p>to favourite</p>
+        <p style={styledButton}>to favourite</p>
        </ButtonContainer>
        <ButtonContainer>
         <AddButton  addClicked={addClicked} onClick={handleAdd}><AiOutlineUnorderedList style={style}/></AddButton>
-        <p>to a list</p>
+        <p style={styledButton}>to a list</p>
        </ButtonContainer>
        <ButtonContainer>
         <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style}/></WatButton>
-        <p>to watchlist</p>
+        <p style={styledButton}>to watchlist</p>
        </ButtonContainer>
      </MainBar>
   )
@@ -58,6 +61,13 @@ const MainBar=styled.div`
   }
 `
 
+const ButtonContainer= styled.div`
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+`
+
 const FavButton=styled.button`
   width: 40px;
   height: 40px;
@@ -66,6 +76,7 @@ const FavButton=styled.button`
   margin:0 10px;
   border:1px solid #fff;
   color:black;
+  cursor:pointer;
 
   @media screen and (max-width: 768px){
     margin:0 10px;
@@ -80,6 +91,7 @@ const AddButton=styled.button`
   margin:0 10px;
   border:1px solid #fff;
   color:black;
+  cursor:pointer;
 
 
   @media screen and (max-width: 768px){
@@ -95,6 +107,7 @@ const WatButton=styled.button`
   margin:0 10px;
   border:1px solid #fff;
   color:black;
+  cursor:pointer;
 
 
   @media screen and (max-width: 768px){
@@ -102,15 +115,4 @@ const WatButton=styled.button`
   }
 `
 
-const ButtonContainer= styled.div`
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
 
-p{
-  font-size:12px;
-  color:white;
-}
-
-`
