@@ -13,6 +13,7 @@ import {
     where,
     addDoc,
     onSnapshot,
+    setDoc,
 
 } from "firebase/firestore";
 
@@ -77,10 +78,9 @@ export const UserProvider = ({ children }) => {
     }
     // add new subcollection
 
-    const newSubcollection = async (id) => {
-        const newCollectionRef = await addDoc(collection(db, "users", id, 'Watchlist'), {
-            content: 'hello'
-        })
+    const newSubcollection = async (id, data) => {
+        await setDoc(collection(db, "users", id), data
+        )
     }
     // Opening and closing the sidebar
 
@@ -126,6 +126,17 @@ export const UserProvider = ({ children }) => {
                 name,
                 authProvider: "local",
                 email,
+                watchlist: {
+                    shows: [],
+                    movies: []
+                },
+                favourites: {
+                    shows: [],
+                    movies: []
+                },
+                lists: {
+
+                }
             });
 
             dispatch({
@@ -156,7 +167,9 @@ export const UserProvider = ({ children }) => {
                 uid: user.user.uid,
 
             }
+
             console.log(userObject);
+
             dispatch({
                 type: 'LOGIN',
                 error: null,
@@ -198,7 +211,7 @@ export const UserProvider = ({ children }) => {
             const user = res.user;
             console.log(user)
             getDocId(res.user.uid)
-            newSubcollection(res.user.id);
+
             const userObject = {
                 name: res.user.displayName,
                 email: res.user.email,
@@ -218,6 +231,17 @@ export const UserProvider = ({ children }) => {
                     name: user.displayName,
                     authProvider: "google",
                     email: user.email,
+                    watchlist: {
+                        shows: [],
+                        movies: []
+                    },
+                    favourites: {
+                        shows: [],
+                        movies: []
+                    },
+                    lists: {
+
+                    }
                 });
             }
         } catch (err) {
