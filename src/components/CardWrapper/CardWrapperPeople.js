@@ -57,8 +57,8 @@ const CardWrapperPeople = (props) => {
                         {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper}>
                             {props.people && props.people.map((person, idx) => (
-                                <Box>
-                                    <CardPeople key={idx} bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
+                                <Box key={idx}>
+                                    <CardPeople bio={person.biograpy} bg={person.profile_path} id={person.id} type={props.type} name={person.name} character={person.character} />
                                 </Box>
                             ))}
                         </Container>

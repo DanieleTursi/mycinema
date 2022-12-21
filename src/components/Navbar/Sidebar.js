@@ -6,14 +6,17 @@ import { NavLink } from 'react-router-dom'
 
 const Sidebar = (props) => {
 
-    const { handleLogout } = useContext(UserContext);
+    const { handleLogout, closeSidebar } = useContext(UserContext);
 
-
+    const handleClick = () => {
+        handleLogout();
+        closeSidebar();
+    }
 
     return (
         <SidebarWrapper open={props.open}>
-            <PageLink to='user'>My Page</PageLink>
-            <Button onClick={handleLogout}>logout</Button>
+            <PageLink onClick={closeSidebar} to='user'>My Page</PageLink>
+            <Button onClick={handleClick}>logout</Button>
         </SidebarWrapper>
     )
 }
