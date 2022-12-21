@@ -60,7 +60,7 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, -300)}><BiLeftArrow style={style} /></button>}
+                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 1, 1, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper}>
 
                             {props.movies.map((movie, idx) => (
@@ -70,7 +70,7 @@ const CardWrapper = (props) => {
                             ))}
 
                         </Container>
-                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, 300)}><BiRightArrow style={style} /></button>}
+                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 1, 1, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling >
                 </Wrap >
             )
