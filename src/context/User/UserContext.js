@@ -92,7 +92,6 @@ export const UserProvider = ({ children }) => {
             payload: !state.sidebarOpen,
         })
     }
-
     const closeSidebar = () => {
         dispatch({
             type: 'SIDEBAR_OPEN',
