@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
 import styled from "styled-components"
@@ -12,9 +12,17 @@ import Slider from 'react-slick';
 const CardWrapperPeople = (props) => {
     const { detailsLoading } = useContext(TmdbContext);
     const { isSmall, cardItems, handleResize } = useContext(SizeContext);
+    const [isHovering,setIsHovering]= useState(false)
     const style = { color: "white", margin: "5px", fontSize: "20px" }
     const contentWrapper = React.useRef(null);
-
+    
+    const handleMouseOver = () => {
+        setIsHovering(true);
+      };
+  
+    const handleMouseOut = () => {
+        setIsHovering(false);
+      };
 
     const sideScroll = (
         element: HTMLDivElement,
@@ -53,8 +61,8 @@ const CardWrapperPeople = (props) => {
                     <Title side={props.side} type={props.type} actors={props.actors} >
                         {props.name}
                     </Title>
-                    <Scrolling>
-                        {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
+                    <Scrolling onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        {isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper}>
                             {props.people && props.people.map((person, idx) => (
                                 <Box>
@@ -62,7 +70,7 @@ const CardWrapperPeople = (props) => {
                                 </Box>
                             ))}
                         </Container>
-                        {props.people.length > 0 && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
+                        {isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 25, 100, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling>
                 </WrapPeople>
             )
@@ -150,10 +158,13 @@ align-items:center;
 
 button{
     z-index:1;
-    border:1px solid white;
-    background:black;
-    border-radius:8px;
+    border:none;
+    width:40px;
+    height:40px;
+    background:rgba(0, 0, 0 , 0.8);
+    border-radius:50%;
     margin: 0 -20px;
+    cursor:pointer;
 }
 `
 
