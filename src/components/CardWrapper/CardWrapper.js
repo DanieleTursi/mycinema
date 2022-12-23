@@ -1,9 +1,8 @@
 import React, { useContext,useState } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
-import styled from "styled-components"
-import HorizontalScroll from 'react-horizontal-scrolling'
-import Card from "./Card"
+import styled from "styled-components";
+import Card from "./Card";
 import { BiRightArrow, BiLeftArrow } from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
