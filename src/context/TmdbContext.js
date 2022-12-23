@@ -16,6 +16,7 @@ export const TmdbProvider = ({ children }) => {
         details: [],
         detailsLoading: false,
         videosLoading: false,
+        providerLoading:false,
         loading: false,
         movieAndTvID: '',
         releaseDate: '2022',
@@ -32,7 +33,8 @@ export const TmdbProvider = ({ children }) => {
         creditsLoading: false,
         latestMovies: [],
         videos: [],
-
+        movieProvider: [],
+        tvProvider: []
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
@@ -58,6 +60,10 @@ export const TmdbProvider = ({ children }) => {
     }
     const setVideosLoading = () => {
         dispatch({ type: 'VIDEOS_LOADING' })
+    }
+
+    const setProviderLoading = () => {
+        dispatch({ type: 'SET_PROVIDER_LOADING' })
     }
 
     const params = new URLSearchParams({
@@ -131,6 +137,7 @@ export const TmdbProvider = ({ children }) => {
             payload: movieData.results
         })
     }
+
     // get the top movies and shows
     const getTop = async () => {
         setLoading();
@@ -148,6 +155,26 @@ export const TmdbProvider = ({ children }) => {
         })
     }
 
+    //get provider for a movie or shows
+
+    const getProvider = async (id) => {
+        setProviderLoading();
+        const providerMovieResponse = await fetch(`${URL}movie/${id}/watch/providers?${params}`);
+        const providerMovieData = await providerMovieResponse.json();
+        const providerTvResponse = await fetch(`${URL}tv/${id}/watch/providers?${params}`);
+        const providerTvData = await providerTvResponse.json();
+
+            dispatch({
+                type: 'PROVIDER_TV',
+                payload: providerTvData.results,
+            })
+       
+            dispatch({
+                type: 'PROVIDER_MOVIES',
+                payload: providerMovieData.results,
+            })
+    }
+
     // get movie and tv credits of an actor
 
     const getActorCredits = async (id) => {
@@ -163,15 +190,11 @@ export const TmdbProvider = ({ children }) => {
             type: 'ACTOR_CREDITS',
             movieCredits: movieCreditsData.cast,
             tvCredits: tvCreditsData.cast,
-
         })
-
     }
 
     // get the latest movie
-
     const getLatestMovies = async () => {
-
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
         // console.log(resultLatestMovies)
@@ -181,8 +204,6 @@ export const TmdbProvider = ({ children }) => {
             payload: resultLatestMovies.results
         })
     }
-
-
 
     // get the details of the actor
     const getActorDetails = async (id) => {
@@ -245,11 +266,6 @@ export const TmdbProvider = ({ children }) => {
 
             }
         }
-
-
-
-
-
     }
 
     return <TmdbContext.Provider value={{
@@ -261,11 +277,13 @@ export const TmdbProvider = ({ children }) => {
         getDetails,
         getActorDetails,
         getActorCredits,
+        getProvider,
         videos: state.videos,
         latestMovies: state.latestMovies,
         videosLoading: state.videosLoading,
         creditsLoading: state.creditsLoading,
         actorLoading: state.actorLoading,
+        providerLoading:state.providerLoading,
         searchMovies: state.searchMovies,
         cast: state.cast,
         searchPeople: state.searchPeople,
@@ -277,6 +295,8 @@ export const TmdbProvider = ({ children }) => {
         series: state.series,
         topSeries: state.topSeries,
         topMovies: state.topMovies,
+        movieProvider:state.movieProvider,
+        tvProvider:state.tvProvider,
         details: state.details,
         mandtid: state.movieAndTvID,
         rDate: state.releaseDate,

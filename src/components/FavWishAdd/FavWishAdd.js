@@ -77,10 +77,6 @@ const FavButton=styled.button`
   border:1px solid #fff;
   color:black;
   cursor:pointer;
-
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
 `
 
 const AddButton=styled.button`
@@ -92,11 +88,6 @@ const AddButton=styled.button`
   border:1px solid #fff;
   color:black;
   cursor:pointer;
-
-
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
 `
 
 const WatButton=styled.button`
@@ -108,11 +99,6 @@ const WatButton=styled.button`
   border:1px solid #fff;
   color:black;
   cursor:pointer;
-
-
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
 `
 
 
