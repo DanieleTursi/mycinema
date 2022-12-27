@@ -103,7 +103,7 @@ export default CardWrapper
 const Wrap = styled.div`
 width:${props => (props.side === 'center' || props.side === 'other' ? '90%' : '45%')};
 height:300px;
-margin:80px 0;
+margin:80px 30px;
 display:flex ;
 justify-content:center ;
 align-items:center;
