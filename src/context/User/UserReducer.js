@@ -51,6 +51,17 @@ const userReducer = (state, action) => {
                 ...state,
                 id: action.id,
             }
+        case 'ADD_DATA_TO_WATCHLIST':
+            return {
+                ...state,
+                watchlist: action.payload,
+            }
+
+        case 'UPDATE_MOVIE_STATE':
+            return {
+                ...state,
+                watchlist: action.payload,
+            }
         default:
             return state
     }

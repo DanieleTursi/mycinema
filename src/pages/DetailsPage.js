@@ -39,13 +39,13 @@ const DetailsPage = () => {
                                     <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
                                 </UserScore>
                                 <h4>{details.vote_count} votes</h4>
-                                <FavWishAdd/>
+                                <FavWishAdd />
                             </UserScoreContainer>
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview:</h3>
                             <ReactShowMoreText lines={3}>
-                            <h4>{details.overview}</h4>
+                                <h4>{details.overview}</h4>
                             </ReactShowMoreText>
                             <DirectorWrapper>
                                 {credits != null ? <div>
@@ -53,12 +53,12 @@ const DetailsPage = () => {
                                     <h4>{credits}</h4>
                                 </div> : <></>}
                             </DirectorWrapper>
-                            <p>Genre: <span>  {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </span></p>
+                            <p>Genre: </p><span>  {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </span>
                             {details.number_of_seasons > 0
                                 ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
                                     <p>Episodes: <span>{details.number_of_episodes}</span></p></>
                                 : <></>}
-                            
+
                         </Details>
                     </DetailsWrapper>
                 </HeaderDetails>

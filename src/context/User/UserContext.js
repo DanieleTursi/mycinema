@@ -14,8 +14,10 @@ import {
     addDoc,
     onSnapshot,
     setDoc,
+    updateDoc
 
 } from "firebase/firestore";
+import { useState } from "react";
 
 
 const UserContext = createContext('')
@@ -31,6 +33,7 @@ export const UserProvider = ({ children }) => {
         registerError: null,
         sidebarOpen: false,
         id: null,
+        watchlist: {},
 
 
     }
@@ -61,31 +64,73 @@ export const UserProvider = ({ children }) => {
             type: 'GET_DOC_ID',
             id: data[0].id,
         })
+        return data[0].id
     }
 
 
 
     // get the watchlist of the user
+    const [watchlistMovieData, setWatchlistMovieData] = useState({});
+    const getWatchlist = async (id) => {
+        const q = query(doc(db, "users", id));
+        const snapshot = await getDoc(q);
+        const data = snapshot.data();
+        console.log(data.watchlist)
+        setWatchlistMovieData(data.watchlist.movies)
+        dispatch({
+            type: 'ADD_DATA_TO_WATCHLIST',
+            payload: data.watchlist,
+        })
+    }
+    const removeDataFromWatchlist = (id) => {
+        // const remove = state.watchlist.movies.filter((name) => name != id)
+        // console.log(remove);
+        // const newData = {
+        //     shows: state.watchlist.shows,
+        //     movies: remove,
+        // }
+        // dispatch({
+        //     type: 'UPDATE_MOVIE_STATE',
+        //     payload: newData,
+        // })
+        // console.log(state.watchlist);
+    }
+    const addDataToWatchlist = async (newData) => {
+        console.log(state.id);
+        const q = query(doc(db, "users", state.id));
 
-    const getWatchlist = async () => {
-        const watchlist = query(collection(db, `users/${state.id}/watchlist`))
-        const watchlistDetails = await getDocs(watchlist);
-        const watchlistData = watchlistDetails.docs.map((doc) => ({
-            ...doc.data(), id: doc.id
-        }))
-        console.log(watchlistData)
 
+        console.log(watchlistMovieData);
+        setWatchlistMovieData(prev => (
+            [...prev, newData]
+        )
+        )
+        console.log(watchlistMovieData);
+        // await updateDoc(q, {
+        //     watchlist: { wData }
+
+        // })
     }
     // add new subcollection
 
-    const newSubcollection = async (id, data) => {
-        await setDoc(collection(db, "users", id), data
+    const updateWatchlist = async () => {
+        const watchlist = collection(db, 'users',)
+
+        const watchlistDetails = await getDocs(watchlist);
+        const watchlistData = watchlistDetails.docs.map((doc) =>
+            doc.data()
         )
+        console.log(watchlistData)
+        // await setDoc(collection(db, "users", id), data
+        // )
     }
     // Opening and closing the sidebar
 
     const handleSidebarOpen = async () => {
-        getWatchlist()
+
+        // await addDataToWatchlist('transformers')
+        removeDataFromWatchlist('nothing')
+        // updateWatchlist()
         console.log(state.id)
         dispatch({
             type: 'SIDEBAR_OPEN',
@@ -210,8 +255,9 @@ export const UserProvider = ({ children }) => {
             const res = await signInWithPopup(auth, googleProvider);
             const user = res.user;
             console.log(user)
-            getDocId(res.user.uid)
+            const id = await getDocId(res.user.uid);
 
+            getWatchlist(id)
             const userObject = {
                 name: res.user.displayName,
                 email: res.user.email,
