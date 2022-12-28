@@ -41,10 +41,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             if (currentUser != null) {
-                dispatch({
-                    type: 'USER_LOGGED_IN',
-                    payload: currentUser,
-                })
+                handleUserData(currentUser.uid)
             }
 
 
@@ -59,7 +56,8 @@ export const UserProvider = ({ children }) => {
 
             ...doc.data(), id: doc.id
         }))
-        console.log(data)
+        console.log(data
+        )
         dispatch({
             type: 'GET_DOC_ID',
             id: data[0].id,
@@ -81,6 +79,40 @@ export const UserProvider = ({ children }) => {
             type: 'ADD_DATA_TO_WATCHLIST',
             payload: data.watchlist,
         })
+    }
+
+    // get all data of user from firebase
+
+    const getDataOfUser = async (id) => {
+        const q = query(doc(db, "users", id));
+        const snapshot = await getDoc(q);
+        const data = snapshot.data();
+
+        return data
+
+    }
+    // handling the user data after login or state change
+    const handleUserData = async (uid) => {
+        const docId = await getDocId(uid);
+        const userData = await getDataOfUser(docId)
+        console.log(userData)
+        const userObject = {
+            name: userData.name,
+            email: userData.email,
+            photoURL: userData.photoUrl,
+            uid: userData.uid,
+            lists: userData.lists,
+            watchlists: userData.watchlist,
+            favourites: userData.favourites,
+
+        }
+        console.log(userObject)
+        dispatch({
+            type: 'LOGIN',
+            payload: userData,
+        })
+
+
     }
     const removeDataFromWatchlist = (id) => {
         // const remove = state.watchlist.movies.filter((name) => name != id)
@@ -181,7 +213,9 @@ export const UserProvider = ({ children }) => {
                 },
                 lists: {
 
-                }
+                },
+                photoUrl: 'https://cdn.pixabay.com/photo/2017/07/10/11/28/bulldog-2489829_1280.jpg',
+
             });
 
             dispatch({
@@ -206,19 +240,16 @@ export const UserProvider = ({ children }) => {
         try {
             const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
             console.log(user)
-            await getDocId(user.user.uid);
-            const userObject = {
-                email: user.user.email,
-                uid: user.user.uid,
+            const docId = await getDocId(user.user.uid);
 
-            }
 
-            console.log(userObject);
+
+            const userData = await getDataOfUser(docId)
 
             dispatch({
                 type: 'LOGIN',
                 error: null,
-                payload: userObject,
+                payload: userData,
 
             })
 
@@ -255,26 +286,16 @@ export const UserProvider = ({ children }) => {
             const res = await signInWithPopup(auth, googleProvider);
             const user = res.user;
             console.log(user)
-            const id = await getDocId(res.user.uid);
 
-            getWatchlist(id)
-            const userObject = {
-                name: res.user.displayName,
-                email: res.user.email,
-                profilePic: res.user.photoURL,
-                uid: res.user.uid,
-            }
-            console.log(userObject)
-            dispatch({
-                type: 'LOGIN',
-                payload: userObject,
-            })
+            // getWatchlist(id)
+
             const q = query(collection(db, "users"), where("uid", "==", user.uid));
             const docs = await getDocs(q);
             if (docs.docs.length === 0) {
                 await addDoc(collection(db, "users"), {
                     uid: user.uid,
                     name: user.displayName,
+                    photoUrl: user.photoURL,
                     authProvider: "google",
                     email: user.email,
                     watchlist: {
@@ -289,21 +310,24 @@ export const UserProvider = ({ children }) => {
 
                     }
                 });
+                return user.uid
+            } else {
+                return user.uid
             }
         } catch (err) {
             console.error(err);
             alert(err.message);
         }
+
     };
 
 
 
 
     const handleGoogleLogin = async () => {
-        signInWithGoogle()
-
-
-
+        const uid = await signInWithGoogle()
+        console.log(uid)
+        handleUserData(uid)
     }
 
 

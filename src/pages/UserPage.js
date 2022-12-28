@@ -1,43 +1,48 @@
-import React, { useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
 import TmdbContext from '../context/TmdbContext';
+import UserContext from '../context/User/UserContext';
 
 
-const UserPage = ({name,surname,email}) => {
-    const { searchMovies, movies, searchPeople, searchLoading, getPopular } = useContext(TmdbContext);
-    
+const UserPage = ({ name, surname, email }) => {
+  const { searchMovies, movies, searchPeople, searchLoading, getPopular } = useContext(TmdbContext);
+  const { user } = useContext(UserContext);
+
 
   useEffect(() => {
     getPopular()
-   
-  }, [])
-    
-    return (
-        <UserPageContainer>
-           <Details>
-            <h4>User Details:</h4>
-             <h3>Name: <span>{name}</span></h3>
-             <h3>Surname: <span>{surname}</span></h3>
-             <h3>Email: <span>{email}</span></h3>
-           </Details>
-           <DetailsWrapper side='right'  name='Wishlist || ' movies={movies} type='movie' page='detailsPage' />
+    console.log(user);
+    if (!user) {
+      window.location.replace('/')
+    }
+  }, [user])
+
+  return (
+    <UserPageContainer>
+      <Details>
+        <h4>User Details:</h4>
+        <h3>Name: <span>{user?.name || user?.displayName}</span></h3>
+        <h3>Surname: <span></span></h3>
+        <h3>Email: <span>{user?.email}</span></h3>
+      </Details>
+      <DetailsWrapper side='right' name='Wishlist || ' movies={movies} type='movie' page='detailsPage' />
 
 
-        </UserPageContainer>
-    )
+    </UserPageContainer>
+  )
 }
 
 export default UserPage
 
-const UserPageContainer=styled.div`
+const UserPageContainer = styled.div`
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 `
 
-const Details=styled.div`
+const Details = styled.div`
   width:500px;
   display:flex;
   flex-direction:column;

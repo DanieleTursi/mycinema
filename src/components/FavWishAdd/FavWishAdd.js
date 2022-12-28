@@ -64,12 +64,12 @@ const MainBar = styled.div`
   }
 `
 
-  `
+
 const FavButton = styled.button`
 width: 40px;
 height: 40px;
 border - radius: 50 %;
-background:${ props => (props.favClicked === true ? 'red' : 'black') };
+background:${props => (props.favClicked === true ? 'red' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
 color: black;
@@ -80,7 +80,7 @@ const AddButton = styled.button`
 width: 40px;
 height: 40px;
 border - radius: 50 %;
-background:${ props => (props.addClicked === true ? 'green' : 'black') };
+background:${props => (props.addClicked === true ? 'green' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
 color: black;
@@ -91,14 +91,14 @@ const WatButton = styled.button`
 width: 40px;
 height: 40px;
 border - radius: 50 %;
-background:${ props => (props.watClicked === true ? 'green' : 'black') };
+background:${props => (props.watClicked === true ? 'green' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
 color: black;
 cursor: pointer;
 `
 
-const ButtonContainer= styled.div`
+const ButtonContainer = styled.div`
 display: flex;
 flex - direction: column;
 justify - content: center;
