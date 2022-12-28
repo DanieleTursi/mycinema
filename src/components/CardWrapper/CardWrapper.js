@@ -1,9 +1,8 @@
 import React, { useContext,useState } from 'react';
 import TmdbContext from "../../context/TmdbContext";
 import SizeContext from "../../context/SizeContext";
-import styled from "styled-components"
-import HorizontalScroll from 'react-horizontal-scrolling'
-import Card from "./Card"
+import styled from "styled-components";
+import Card from "./Card";
 import { BiRightArrow, BiLeftArrow } from 'react-icons/bi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -60,7 +59,7 @@ const CardWrapper = (props) => {
                         {props.name}
                     </Title>
                     <Scrolling onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, -300)}><BiLeftArrow style={style} /></button>}
+                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 1, 1, -300)}><BiLeftArrow style={style} /></button>}
                         <Container ref={contentWrapper}>
 
                             {props.movies.map((movie, idx) => (
@@ -70,7 +69,7 @@ const CardWrapper = (props) => {
                             ))}
 
                         </Container>
-                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 10, 100, 300)}><BiRightArrow style={style} /></button>}
+                        { isHovering == true && contentWrapper.current.clientWidth < contentWrapper.current.scrollWidth && <button onClick={() => sideScroll(contentWrapper.current, 1, 1, 300)}><BiRightArrow style={style} /></button>}
                     </Scrolling >
                 </Wrap >
             )
@@ -104,7 +103,7 @@ export default CardWrapper
 const Wrap = styled.div`
 width:${props => (props.side === 'center' || props.side === 'other' ? '90%' : '45%')};
 height:300px;
-margin:80px 0;
+margin:80px 30px;
 display:flex ;
 justify-content:center ;
 align-items:center;

@@ -16,6 +16,7 @@ export const TmdbProvider = ({ children }) => {
         details: [],
         detailsLoading: false,
         videosLoading: false,
+        providerLoading:false,
         loading: false,
         movieAndTvID: '',
         releaseDate: '2022',
@@ -32,7 +33,9 @@ export const TmdbProvider = ({ children }) => {
         creditsLoading: false,
         latestMovies: [],
         videos: [],
-
+        movieProvider: [],
+        tvProvider: [],
+        bestLast20:[]
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
 
@@ -58,6 +61,10 @@ export const TmdbProvider = ({ children }) => {
     }
     const setVideosLoading = () => {
         dispatch({ type: 'VIDEOS_LOADING' })
+    }
+
+    const setProviderLoading = () => {
+        dispatch({ type: 'SET_PROVIDER_LOADING' })
     }
 
     const params = new URLSearchParams({
@@ -114,6 +121,20 @@ export const TmdbProvider = ({ children }) => {
 
     }
 
+    // get bestLast20 movies
+
+    const getBestLast20Years = async ()=>{
+        setLoading();
+        const bestLast20Response = await fetch(`${URL}discover/movie?${params}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&primary_release_year=2002%2C2022&vote_count.gte=3000&vote_count.lte=100000&with_original_language=en`);
+        const bestLast20Data = await bestLast20Response.json();
+
+        dispatch({
+            type: 'GETBESTLAST20_MOVIES',
+            payload: bestLast20Data.results
+        })
+        
+    }
+
     // get popular Movies and Shows
     const getPopular = async () => {
         setLoading();
@@ -131,6 +152,7 @@ export const TmdbProvider = ({ children }) => {
             payload: movieData.results
         })
     }
+
     // get the top movies and shows
     const getTop = async () => {
         setLoading();
@@ -148,6 +170,26 @@ export const TmdbProvider = ({ children }) => {
         })
     }
 
+    //get provider for a movie or shows
+
+    const getProvider = async (id) => {
+        setProviderLoading();
+        const providerMovieResponse = await fetch(`${URL}movie/${id}/watch/providers?${params}`);
+        const providerMovieData = await providerMovieResponse.json();
+        const providerTvResponse = await fetch(`${URL}tv/${id}/watch/providers?${params}`);
+        const providerTvData = await providerTvResponse.json();
+
+            dispatch({
+                type: 'PROVIDER_TV',
+                payload: providerTvData.results,
+            })
+       
+            dispatch({
+                type: 'PROVIDER_MOVIES',
+                payload: providerMovieData.results,
+            })
+    }
+
     // get movie and tv credits of an actor
 
     const getActorCredits = async (id) => {
@@ -163,15 +205,11 @@ export const TmdbProvider = ({ children }) => {
             type: 'ACTOR_CREDITS',
             movieCredits: movieCreditsData.cast,
             tvCredits: tvCreditsData.cast,
-
         })
-
     }
 
     // get the latest movie
-
     const getLatestMovies = async () => {
-
         const latestMovies = await fetch(`${URL}movie/now_playing?${params}${lang}`);
         const resultLatestMovies = await latestMovies.json()
         // console.log(resultLatestMovies)
@@ -181,8 +219,6 @@ export const TmdbProvider = ({ children }) => {
             payload: resultLatestMovies.results
         })
     }
-
-
 
     // get the details of the actor
     const getActorDetails = async (id) => {
@@ -245,11 +281,6 @@ export const TmdbProvider = ({ children }) => {
 
             }
         }
-
-
-
-
-
     }
 
     return <TmdbContext.Provider value={{
@@ -261,11 +292,14 @@ export const TmdbProvider = ({ children }) => {
         getDetails,
         getActorDetails,
         getActorCredits,
+        getProvider,
+        getBestLast20Years,
         videos: state.videos,
         latestMovies: state.latestMovies,
         videosLoading: state.videosLoading,
         creditsLoading: state.creditsLoading,
         actorLoading: state.actorLoading,
+        providerLoading:state.providerLoading,
         searchMovies: state.searchMovies,
         cast: state.cast,
         searchPeople: state.searchPeople,
@@ -277,10 +311,13 @@ export const TmdbProvider = ({ children }) => {
         series: state.series,
         topSeries: state.topSeries,
         topMovies: state.topMovies,
+        movieProvider:state.movieProvider,
+        tvProvider:state.tvProvider,
         details: state.details,
         mandtid: state.movieAndTvID,
         rDate: state.releaseDate,
         credits: state.credits,
+        bestLast20:state.bestLast20,
         actorDetails: state.actorDetails,
         actorTvCredits: state.actorTvCredits,
         actorMovieCredits: state.actorMovieCredits,

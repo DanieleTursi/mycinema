@@ -6,6 +6,12 @@ const tmdbReducer = (state, action) => {
                 movies: action.payload,
                 loading: false
             }
+        case 'GETBESTLAST20_MOVIES':
+            return {
+                ...state,
+                bestLast20: action.payload,
+                loading: false
+            }
         case 'POPULAR_SHOWS':
             return {
                 ...state,
@@ -29,11 +35,19 @@ const tmdbReducer = (state, action) => {
                 ...state,
                 loading: true,
             }
+
         case 'SET_DETAILS_LOADING':
             return {
                 ...state,
                 detailsLoading: true,
             }
+
+        case 'SET_PROVIDER_LOADING':
+                return {
+                    ...state,
+                    providerLoading: true,
+                }
+
         case 'SET_SEARCH_LOADING':
             return {
                 ...state,
@@ -80,6 +94,18 @@ const tmdbReducer = (state, action) => {
                 actorDetails: action.payload,
                 actorLoading: false,
             }
+        case 'PROVIDER_MOVIES':
+            return {
+                ...state,
+                movieProvider: action.payload,
+                providerLoading: false
+            }
+       case 'PROVIDER_TV':
+                    return {
+                        ...state,
+                        tvProvider: action.payload,
+                        providerLoading: false
+                    }
         case 'SET_ACTOR_LOADING':
             return {
                 ...state,

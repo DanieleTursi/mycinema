@@ -4,16 +4,18 @@ import styled from "styled-components"
 
 
 const FavWishAdd = () => {
-  const style = { color: "black", fontSize: "20px", color: "white" };
+  const style = { fontSize: "20px", color: "white" };
+  const styledButton = { color: "white", fontSize: "12px", };
   const [favClicked, setFavClicked] = useState(false);
   const [addClicked, setAddClicked] = useState(false);
   const [watClicked, setWatClicked] = useState(false);
 
   const handleFav = () => {
-
-    favClicked === true
+    favClicked
       ? setFavClicked(false)
-      : setFavClicked(true);
+
+      : setFavClicked(true)
+      ;
   };
 
   const handleAdd = () => {
@@ -61,55 +63,50 @@ const MainBar = styled.div`
     width:200px;
   }
 `
-const ButtonContainer = styled.div`
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
 
-
-
-`
+  `
 const FavButton = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background:${props => (props.favClicked === true ? 'red' : 'black')};
-  margin:0 10px;
-  border:1px solid #fff;
-  color:black;
-
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
+width: 40px;
+height: 40px;
+border - radius: 50 %;
+background:${ props => (props.favClicked === true ? 'red' : 'black') };
+margin: 0 10px;
+border: 1px solid #fff;
+color: black;
+cursor: pointer;
 `
 
 const AddButton = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background:${props => (props.addClicked === true ? 'green' : 'black')};
-  margin:0 10px;
-  border:1px solid #fff;
-  color:black;
-
-
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
+width: 40px;
+height: 40px;
+border - radius: 50 %;
+background:${ props => (props.addClicked === true ? 'green' : 'black') };
+margin: 0 10px;
+border: 1px solid #fff;
+color: black;
+cursor: pointer;
 `
 
 const WatButton = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background:${props => (props.watClicked === true ? 'green' : 'black')};
-  margin:0 10px;
-  border:1px solid #fff;
-  color:black;
+width: 40px;
+height: 40px;
+border - radius: 50 %;
+background:${ props => (props.watClicked === true ? 'green' : 'black') };
+margin: 0 10px;
+border: 1px solid #fff;
+color: black;
+cursor: pointer;
+`
 
+const ButtonContainer= styled.div`
+display: flex;
+flex - direction: column;
+justify - content: center;
+align - items: center;
 
-  @media screen and (max-width: 768px){
-    margin:0 10px;
-  }
+p{
+  font - size: 12px;
+  color: white;
+}
+
 `

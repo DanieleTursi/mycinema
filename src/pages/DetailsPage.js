@@ -11,25 +11,27 @@ import FavWishAdd from '../components/FavWishAdd/FavWishAdd';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, getDetails, rDate, credits, cast } = useContext(TmdbContext);
+    const { details, detailsLoading, providerLoading, getDetails, getProvider, rDate, credits, cast, movieProvider, tvProvider } = useContext(TmdbContext);
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
 
+
     const startEffect = async () => {
         await getDetails(showId, screenType);
+        await getProvider(showId);
+        console.log(movieProvider, tvProvider)
         handleResize();
     }
-    const currentScrollPosition = window.scrollY;
 
     useEffect(() => {
         startEffect()
     }, [])
 
-    if (!detailsLoading) {
+    if (!detailsLoading && !providerLoading) {
         return (
             <Wrapper>
-                <HeaderDetails  >
+                <HeaderDetails>
                     <BackgroundImage bg={details.backdrop_path} />
                     <DetailsWrapper>
                         <Poster bg={details.poster_path} />
@@ -58,6 +60,17 @@ const DetailsPage = () => {
                                 ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
                                     <p>Episodes: <span>{details.number_of_episodes}</span></p></>
                                 : <></>}
+
+                            {/* { movieProvider.US.buy.length > 0
+                               ? <Providers  >
+                          <p>Watch:</p>
+                            {movieProvider.US.buy.map((provider, idx) => (
+                                <ProviderBox bg={provider.logo_path} idx={idx}>
+                                </ProviderBox>
+                            ))}
+                            </Providers>
+                            :<></>
+                            } */}
 
                         </Details>
                     </DetailsWrapper>
@@ -132,6 +145,16 @@ background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
 margin:10px 0;
 `;
+
+const ProviderBox = styled.div`
+width:50px;
+height:50px;
+border-radius:8px;
+margin:0 10px;
+background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
+background-size:cover ;
+color:white;
+`
 
 const Details = styled.div`
 width:60%;
@@ -224,6 +247,11 @@ div{
 }
 `;
 
+const Providers = styled.div`
+display: flex;
+justify-content:flex-start;
+align-items:center;
+`
 
 
 const CardHolder = styled.div`

@@ -1,4 +1,3 @@
-import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import './App.css';
@@ -36,7 +35,7 @@ function App() {
                 <Route path="/actordetails/" element={<ActorDetails />} />
                 <Route path="/searchresult/" element={<SearchResultPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/user" element={<UserPage />} />
+                <Route path="/user" element={<UserPage name={"Daniele"} surname={"Tursi"} email={""}/>} />
 
               </Routes>
             </Router>
