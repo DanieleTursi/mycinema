@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import userReducer from "./UserReducer";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import jwt_decode from 'jwt-decode';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -14,8 +15,10 @@ import {
     addDoc,
     onSnapshot,
     setDoc,
+    updateDoc
 
 } from "firebase/firestore";
+import { useState } from "react";
 
 
 const UserContext = createContext('')
@@ -31,6 +34,7 @@ export const UserProvider = ({ children }) => {
         registerError: null,
         sidebarOpen: false,
         id: null,
+        watchlist: {},
 
 
     }
@@ -38,10 +42,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             if (currentUser != null) {
-                dispatch({
-                    type: 'USER_LOGGED_IN',
-                    payload: currentUser,
-                })
+                handleUserData(currentUser.uid)
             }
 
 
@@ -56,36 +57,142 @@ export const UserProvider = ({ children }) => {
 
             ...doc.data(), id: doc.id
         }))
-        console.log(data)
+        console.log(data
+        )
         dispatch({
             type: 'GET_DOC_ID',
             id: data[0].id,
         })
+        return data[0].id
     }
 
+    const updWatchlist = (newData) => {
+        console.log('working');
+        const docRef = doc(db, 'users', state.id);
+        updateDoc(docRef, {
+            // watchlist: {
+            //     movies: ['grinch'],
+            //     shows: ['Witcher']
+            // }
+            watchlist: newData
+        }
+        )
 
+    }
 
     // get the watchlist of the user
+    const [watchlistMovieData, setWatchlistMovieData] = useState({});
+    const getWatchlist = async (id) => {
+        const q = query(doc(db, "users", id));
+        const snapshot = await getDoc(q);
+        const data = snapshot.data();
+        console.log(data.watchlist)
+        setWatchlistMovieData(data.watchlist.movies)
+        dispatch({
+            type: 'ADD_DATA_TO_WATCHLIST',
+            payload: data.watchlist,
+        })
+    }
 
-    const getWatchlist = async () => {
-        const watchlist = query(collection(db, `users/${state.id}/watchlist`))
-        const watchlistDetails = await getDocs(watchlist);
-        const watchlistData = watchlistDetails.docs.map((doc) => ({
-            ...doc.data(), id: doc.id
-        }))
-        console.log(watchlistData)
+    // get all data of user from firebase
+
+    const getDataOfUser = async (id) => {
+        const q = query(doc(db, "users", id));
+        const snapshot = await getDoc(q);
+        const data = snapshot.data();
+
+        return data
 
     }
-    // add new subcollection
+    // handling the user data after login or state change
+    const handleUserData = async (uid) => {
+        const docId = await getDocId(uid);
+        const userData = await getDataOfUser(docId)
+        console.log(userData)
+        const userObject = {
+            name: userData.name,
+            email: userData.email,
+            photoURL: userData.photoUrl,
+            uid: userData.uid,
+            lists: userData.lists,
+            watchlists: userData.watchlist,
+            favourites: userData.favourites,
 
-    const newSubcollection = async (id, data) => {
-        await setDoc(collection(db, "users", id), data
-        )
+        }
+        console.log(userObject)
+        dispatch({
+            type: 'LOGIN',
+            payload: userData,
+            watchlist: userData.watchlist,
+        })
+
+
+    }
+    const removeDataFromWatchlist = (id, showOrMovie) => {
+        console.log('working-remove');
+        let watchlistMovies = [];
+        let watchlistShows = [];
+        state.watchlist.movies.forEach(movieId => {
+            watchlistMovies.push(movieId)
+        })
+        state.watchlist.shows.forEach(showId => {
+            watchlistShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            const filteredMovies = watchlistMovies.filter(movieid => movieid !== id)
+            watchlistMovies = filteredMovies
+        }
+        else {
+            const filteredShows = watchlistShows.filter(showid => showid !== id);
+            watchlistShows = filteredShows
+        }
+
+        const newObj = {
+            movies: watchlistMovies,
+            shows: watchlistShows
+        }
+        console.log(newObj);
+        dispatch({
+            type: 'UPDATE_WATCHLIST',
+            payload: newObj
+        })
+        updWatchlist(newObj)
+    }
+
+
+    const updateWatchlist = async (id, showOrMovie) => {
+        console.log(id, showOrMovie);
+        const watchlistMovies = [];
+        const watchlistShows = [];
+        state.watchlist.movies.forEach(movieId => {
+            watchlistMovies.push(movieId)
+        })
+        state.watchlist.shows.forEach(showId => {
+            watchlistShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            watchlistMovies.push(id)
+        }
+        else {
+            watchlistShows.push(id)
+        }
+
+        const newObj = {
+            movies: watchlistMovies,
+            shows: watchlistShows
+        }
+        console.log(newObj);
+        dispatch({
+            type: 'UPDATE_WATCHLIST',
+            payload: newObj
+        })
+        updWatchlist(newObj)
     }
     // Opening and closing the sidebar
 
     const handleSidebarOpen = async () => {
-        getWatchlist()
+
+
         console.log(state.id)
         dispatch({
             type: 'SIDEBAR_OPEN',
@@ -136,7 +243,9 @@ export const UserProvider = ({ children }) => {
                 },
                 lists: {
 
-                }
+                },
+                photoUrl: 'https://cdn.pixabay.com/photo/2017/07/10/11/28/bulldog-2489829_1280.jpg',
+
             });
 
             dispatch({
@@ -161,19 +270,16 @@ export const UserProvider = ({ children }) => {
         try {
             const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
             console.log(user)
-            await getDocId(user.user.uid);
-            const userObject = {
-                email: user.user.email,
-                uid: user.user.uid,
+            const docId = await getDocId(user.user.uid);
 
-            }
 
-            console.log(userObject);
+
+            const userData = await getDataOfUser(docId)
 
             dispatch({
                 type: 'LOGIN',
                 error: null,
-                payload: userObject,
+                payload: userData,
 
             })
 
@@ -210,25 +316,16 @@ export const UserProvider = ({ children }) => {
             const res = await signInWithPopup(auth, googleProvider);
             const user = res.user;
             console.log(user)
-            getDocId(res.user.uid)
 
-            const userObject = {
-                name: res.user.displayName,
-                email: res.user.email,
-                profilePic: res.user.photoURL,
-                uid: res.user.uid,
-            }
-            console.log(userObject)
-            dispatch({
-                type: 'LOGIN',
-                payload: userObject,
-            })
+            // getWatchlist(id)
+
             const q = query(collection(db, "users"), where("uid", "==", user.uid));
             const docs = await getDocs(q);
             if (docs.docs.length === 0) {
                 await addDoc(collection(db, "users"), {
                     uid: user.uid,
                     name: user.displayName,
+                    photoUrl: user.photoURL,
                     authProvider: "google",
                     email: user.email,
                     watchlist: {
@@ -243,21 +340,24 @@ export const UserProvider = ({ children }) => {
 
                     }
                 });
+                return user.uid
+            } else {
+                return user.uid
             }
         } catch (err) {
             console.error(err);
             alert(err.message);
         }
+
     };
 
 
 
 
     const handleGoogleLogin = async () => {
-        signInWithGoogle()
-
-
-
+        const uid = await signInWithGoogle()
+        console.log(uid)
+        handleUserData(uid)
     }
 
 
@@ -305,13 +405,16 @@ export const UserProvider = ({ children }) => {
         login,
         handleSidebarOpen,
         closeSidebar,
+        updWatchlist,
+        updateWatchlist,
+        removeDataFromWatchlist,
         sidebarOpen: state.sidebarOpen,
         loginError: state.loginError,
         showNavButtons: state.showNavButtons,
         register: state.register,
         user: state.user,
         registerError: state.registerError,
-
+        watchlist: state.watchlist,
 
 
     }}>{children}</UserContext.Provider>

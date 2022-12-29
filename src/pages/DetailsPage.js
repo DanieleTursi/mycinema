@@ -15,15 +15,15 @@ const DetailsPage = () => {
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
-   
+
 
     const startEffect = async () => {
         await getDetails(showId, screenType);
         await getProvider(showId);
-        console.log(movieProvider,tvProvider)
+        console.log(movieProvider, tvProvider)
         handleResize();
     }
-  
+
     useEffect(() => {
         startEffect()
     }, [])
@@ -41,13 +41,13 @@ const DetailsPage = () => {
                                     <h3>{details.vote_average && details.vote_average.toFixed(1)}</h3>
                                 </UserScore>
                                 <h4>{details.vote_count} votes</h4>
-                                <FavWishAdd/>
+                                <FavWishAdd />
                             </UserScoreContainer>
                             <Title>{details.title || details.name}</Title>
                             <RelaseYear>({rDate})</RelaseYear>
                             <h3>Overview:</h3>
                             <ReactShowMoreText lines={3}>
-                            <h4>{details.overview}</h4>
+                                <h4>{details.overview}</h4>
                             </ReactShowMoreText>
                             <DirectorWrapper>
                                 {credits != null ? <div>
@@ -55,12 +55,12 @@ const DetailsPage = () => {
                                     <h4>{credits}</h4>
                                 </div> : <></>}
                             </DirectorWrapper>
-                            <p>Genre: <span>  {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </span></p>
+                            <p>Genre: </p><span>  {details.genres === undefined || details.genres.length === 0 ? 'No Data' : details.genres[0].name} </span>
                             {details.number_of_seasons > 0
                                 ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
                                     <p>Episodes: <span>{details.number_of_episodes}</span></p></>
                                 : <></>}
-                            
+
                             {/* { movieProvider.US.buy.length > 0
                                ? <Providers  >
                           <p>Watch:</p>
@@ -71,7 +71,7 @@ const DetailsPage = () => {
                             </Providers>
                             :<></>
                             } */}
-                           
+
                         </Details>
                     </DetailsWrapper>
                 </HeaderDetails>
@@ -146,7 +146,7 @@ background-size:cover ;
 margin:10px 0;
 `;
 
-const ProviderBox= styled.div `
+const ProviderBox = styled.div`
 width:50px;
 height:50px;
 border-radius:8px;
@@ -246,7 +246,7 @@ div{
     }
 }
 `;
- 
+
 const Providers = styled.div`
 display: flex;
 justify-content:flex-start;

@@ -29,7 +29,7 @@ const Navbar = (props) => {
         </>
           : <LoggedContainer>
             {/* <LogoutButton onClick={handleLogout}>Logout</LogoutButton> */}
-            <UserImage onClick={handleSidebarOpen} image={user?.profilePic}>{user?.initials}</UserImage>
+            <UserImage onClick={handleSidebarOpen} image={user?.photoUrl}>{user?.initials}</UserImage>
             <Sidebar open={sidebarOpen} />
           </LoggedContainer>
         }
@@ -119,7 +119,7 @@ const UserImage = styled.div`
 width:50px;
 height:50px;
 border-radius:50%;
-${props => props.image && ImageCss}
+${ImageCss}
 color:#fff;
 display:flex;
 align-items:center;
