@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AiOutlineHeart, AiOutlineUnorderedList, AiOutlineEye } from 'react-icons/ai';
 import styled from "styled-components"
+import useLocalStorage from '../../hooks/useLocalStorage';
+import UserContext from '../../context/User/UserContext';
 
 
 const FavWishAdd = () => {
@@ -9,6 +11,27 @@ const FavWishAdd = () => {
   const [favClicked, setFavClicked] = useState(false);
   const [addClicked, setAddClicked] = useState(false);
   const [watClicked, setWatClicked] = useState(false);
+
+  const { updateWatchlist, removeDataFromWatchlist, watchlist, user } = useContext(UserContext);
+  const [movieId] = useLocalStorage('id', '');
+  const [showOrMovie] = useLocalStorage('st', '');
+  // const [isMovie, setIsMovie] = useState(false)
+  const checkIfInWatchlist = () => {
+    if (showOrMovie === 'movie') {
+
+      if (watchlist.movies.includes(movieId)) {
+        setWatClicked(true)
+      }
+    }
+    else {
+      if (watchlist.shows.includes(movieId)) {
+        setWatClicked(true)
+      }
+    }
+  }
+  useEffect(() => {
+    if (user !== null) { checkIfInWatchlist() }
+  }, [user])
 
   const handleFav = () => {
     favClicked
@@ -25,9 +48,15 @@ const FavWishAdd = () => {
   };
 
   const handleWat = () => {
-    watClicked === true
-      ? setWatClicked(false)
-      : setWatClicked(true);
+    if (watClicked === true) {
+      setWatClicked(false);
+      removeDataFromWatchlist(movieId, showOrMovie)
+    }
+    else {
+      setWatClicked(true);
+      updateWatchlist(movieId, showOrMovie)
+    }
+
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import userReducer from "./UserReducer";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import jwt_decode from 'jwt-decode';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -65,7 +66,19 @@ export const UserProvider = ({ children }) => {
         return data[0].id
     }
 
+    const updWatchlist = (newData) => {
+        console.log('working');
+        const docRef = doc(db, 'users', state.id);
+        updateDoc(docRef, {
+            // watchlist: {
+            //     movies: ['grinch'],
+            //     shows: ['Witcher']
+            // }
+            watchlist: newData
+        }
+        )
 
+    }
 
     // get the watchlist of the user
     const [watchlistMovieData, setWatchlistMovieData] = useState({});
@@ -110,59 +123,76 @@ export const UserProvider = ({ children }) => {
         dispatch({
             type: 'LOGIN',
             payload: userData,
+            watchlist: userData.watchlist,
         })
 
 
     }
-    const removeDataFromWatchlist = (id) => {
-        // const remove = state.watchlist.movies.filter((name) => name != id)
-        // console.log(remove);
-        // const newData = {
-        //     shows: state.watchlist.shows,
-        //     movies: remove,
-        // }
-        // dispatch({
-        //     type: 'UPDATE_MOVIE_STATE',
-        //     payload: newData,
-        // })
-        // console.log(state.watchlist);
+    const removeDataFromWatchlist = (id, showOrMovie) => {
+        console.log('working-remove');
+        let watchlistMovies = [];
+        let watchlistShows = [];
+        state.watchlist.movies.forEach(movieId => {
+            watchlistMovies.push(movieId)
+        })
+        state.watchlist.shows.forEach(showId => {
+            watchlistShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            const filteredMovies = watchlistMovies.filter(movieid => movieid !== id)
+            watchlistMovies = filteredMovies
+        }
+        else {
+            const filteredShows = watchlistShows.filter(showid => showid !== id);
+            watchlistShows = filteredShows
+        }
+
+        const newObj = {
+            movies: watchlistMovies,
+            shows: watchlistShows
+        }
+        console.log(newObj);
+        dispatch({
+            type: 'UPDATE_WATCHLIST',
+            payload: newObj
+        })
+        updWatchlist(newObj)
     }
-    const addDataToWatchlist = async (newData) => {
-        console.log(state.id);
-        const q = query(doc(db, "users", state.id));
 
 
-        console.log(watchlistMovieData);
-        setWatchlistMovieData(prev => (
-            [...prev, newData]
-        )
-        )
-        console.log(watchlistMovieData);
-        // await updateDoc(q, {
-        //     watchlist: { wData }
+    const updateWatchlist = async (id, showOrMovie) => {
+        console.log(id, showOrMovie);
+        const watchlistMovies = [];
+        const watchlistShows = [];
+        state.watchlist.movies.forEach(movieId => {
+            watchlistMovies.push(movieId)
+        })
+        state.watchlist.shows.forEach(showId => {
+            watchlistShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            watchlistMovies.push(id)
+        }
+        else {
+            watchlistShows.push(id)
+        }
 
-        // })
-    }
-    // add new subcollection
-
-    const updateWatchlist = async () => {
-        const watchlist = collection(db, 'users',)
-
-        const watchlistDetails = await getDocs(watchlist);
-        const watchlistData = watchlistDetails.docs.map((doc) =>
-            doc.data()
-        )
-        console.log(watchlistData)
-        // await setDoc(collection(db, "users", id), data
-        // )
+        const newObj = {
+            movies: watchlistMovies,
+            shows: watchlistShows
+        }
+        console.log(newObj);
+        dispatch({
+            type: 'UPDATE_WATCHLIST',
+            payload: newObj
+        })
+        updWatchlist(newObj)
     }
     // Opening and closing the sidebar
 
     const handleSidebarOpen = async () => {
 
-        // await addDataToWatchlist('transformers')
-        removeDataFromWatchlist('nothing')
-        // updateWatchlist()
+
         console.log(state.id)
         dispatch({
             type: 'SIDEBAR_OPEN',
@@ -375,13 +405,16 @@ export const UserProvider = ({ children }) => {
         login,
         handleSidebarOpen,
         closeSidebar,
+        updWatchlist,
+        updateWatchlist,
+        removeDataFromWatchlist,
         sidebarOpen: state.sidebarOpen,
         loginError: state.loginError,
         showNavButtons: state.showNavButtons,
         register: state.register,
         user: state.user,
         registerError: state.registerError,
-
+        watchlist: state.watchlist,
 
 
     }}>{children}</UserContext.Provider>
