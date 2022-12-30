@@ -43,10 +43,10 @@ const tmdbReducer = (state, action) => {
             }
 
         case 'SET_PROVIDER_LOADING':
-                return {
-                    ...state,
-                    providerLoading: true,
-                }
+            return {
+                ...state,
+                providerLoading: true,
+            }
 
         case 'SET_SEARCH_LOADING':
             return {

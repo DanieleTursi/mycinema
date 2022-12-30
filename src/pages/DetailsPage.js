@@ -11,19 +11,19 @@ import FavWishAdd from '../components/FavWishAdd/FavWishAdd';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, getDetails, rDate, credits, cast, provider} = useContext(TmdbContext);
+    const { details, detailsLoading, getDetails, rDate, credits, cast, provider } = useContext(TmdbContext);
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
 
     const startEffect = async () => {
-        await getDetails(showId, screenType);   
+        await getDetails(showId, screenType);
         handleResize();
     }
 
     useEffect(() => {
         startEffect()
-        console.log(showId,screenType,provider)
+        console.log(showId, screenType, provider)
     }, [])
 
     if (!detailsLoading) {
@@ -58,7 +58,7 @@ const DetailsPage = () => {
                                 ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
                                     <p>Episodes: <span>{details.number_of_episodes}</span></p></>
                                 : <></>}
-{/* 
+                            {/* 
                             { provider.GB.flatrate.length > 0 
                                ? <><Providers>
                                 <p>Watch:</p>
@@ -78,7 +78,21 @@ const DetailsPage = () => {
                                 :<></>
 
                             } */}
+                            <Providers>
+                                {provider?.flatrate ? <p>Watch</p> : provider?.buy && <p>Buy</p>}
+                                {provider?.flatrate?.map(
+                                    (provider, idx) => (
+                                        <ProviderBox bg={provider.logo_path} key={idx}>
+                                        </ProviderBox>
+                                    ))
 
+                                    || provider?.buy?.map(
+                                        (provider, idx) => (
+                                            <ProviderBox bg={provider.logo_path} key={idx}>
+                                            </ProviderBox>
+                                        ))
+                                }
+                            </Providers>
                         </Details>
                     </DetailsWrapper>
                 </HeaderDetails>
