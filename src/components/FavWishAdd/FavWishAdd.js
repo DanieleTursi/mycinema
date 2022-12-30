@@ -17,21 +17,23 @@ const FavWishAdd = () => {
   const [showOrMovie] = useLocalStorage('st', '');
   // const [isMovie, setIsMovie] = useState(false)
   const checkIfInWatchlist = () => {
-    if (showOrMovie === 'movie') {
-
-      if (watchlist.movies.includes(movieId)) {
-        setWatClicked(true)
+    if (watchlist !== undefined) {
+      if (showOrMovie === 'movie') {
+        console.log(watchlist);
+        if (watchlist.movies.includes(movieId)) {
+          setWatClicked(true)
+        }
       }
-    }
-    else {
-      if (watchlist.shows.includes(movieId)) {
-        setWatClicked(true)
+      else {
+        if (watchlist.shows.includes(movieId)) {
+          setWatClicked(true)
+        }
       }
     }
   }
   useEffect(() => {
-    if (user !== null) { checkIfInWatchlist() }
-  }, [user])
+    checkIfInWatchlist()
+  }, [watchlist])
 
   const handleFav = () => {
     favClicked

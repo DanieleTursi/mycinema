@@ -34,7 +34,10 @@ export const UserProvider = ({ children }) => {
         registerError: null,
         sidebarOpen: false,
         id: null,
-        watchlist: {},
+        watchlist: {
+            movies: [],
+            shows: []
+        },
 
 
     }
@@ -80,19 +83,7 @@ export const UserProvider = ({ children }) => {
 
     }
 
-    // get the watchlist of the user
-    const [watchlistMovieData, setWatchlistMovieData] = useState({});
-    const getWatchlist = async (id) => {
-        const q = query(doc(db, "users", id));
-        const snapshot = await getDoc(q);
-        const data = snapshot.data();
-        console.log(data.watchlist)
-        setWatchlistMovieData(data.watchlist.movies)
-        dispatch({
-            type: 'ADD_DATA_TO_WATCHLIST',
-            payload: data.watchlist,
-        })
-    }
+
 
     // get all data of user from firebase
 
@@ -275,6 +266,7 @@ export const UserProvider = ({ children }) => {
 
 
             const userData = await getDataOfUser(docId)
+            handleUserData(user.user.uid)
 
             dispatch({
                 type: 'LOGIN',
