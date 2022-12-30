@@ -33,8 +33,7 @@ export const TmdbProvider = ({ children }) => {
         creditsLoading: false,
         latestMovies: [],
         videos: [],
-        movieProvider: [],
-        tvProvider: [],
+        provider: [],
         bestLast20:[]
     }
     const [state, dispatch] = useReducer(tmdbReducer, initialState);
@@ -172,21 +171,14 @@ export const TmdbProvider = ({ children }) => {
 
     //get provider for a movie or shows
 
-    const getProvider = async (id) => {
+    const getProvider = async (id,channel) => {
         setProviderLoading();
-        const providerMovieResponse = await fetch(`${URL}movie/${id}/watch/providers?${params}`);
-        const providerMovieData = await providerMovieResponse.json();
-        const providerTvResponse = await fetch(`${URL}tv/${id}/watch/providers?${params}`);
-        const providerTvData = await providerTvResponse.json();
-
+        const providerResponse = await fetch(`${URL}${channel}/${id}/watch/providers?${params}`);
+        const providerData = await providerResponse.json();
+    
             dispatch({
-                type: 'PROVIDER_TV',
-                payload: providerTvData.results,
-            })
-       
-            dispatch({
-                type: 'PROVIDER_MOVIES',
-                payload: providerMovieData.results,
+                type: 'PROVIDER',
+                payload: providerData.results,
             })
     }
 
@@ -235,7 +227,7 @@ export const TmdbProvider = ({ children }) => {
     // get the details of a show, movie or actor
     const getDetails = async (id, channel) => {
         setDetailsLoading();
-
+        getProvider(id,channel)
         const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
         const details = await response.json();
 
@@ -311,8 +303,7 @@ export const TmdbProvider = ({ children }) => {
         series: state.series,
         topSeries: state.topSeries,
         topMovies: state.topMovies,
-        movieProvider:state.movieProvider,
-        tvProvider:state.tvProvider,
+        provider:state.provider,
         details: state.details,
         mandtid: state.movieAndTvID,
         rDate: state.releaseDate,

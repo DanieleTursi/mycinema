@@ -64,15 +64,15 @@ const FavWishAdd = () => {
   return (
     <MainBar>
       <ButtonContainer>
-        <FavButton favClicked={favClicked} onClick={handleFav}><AiOutlineHeart style={style} /></FavButton>
+        <FavButton favClicked={favClicked} onClick={handleFav} style={styledButton}><AiOutlineHeart style={style} /></FavButton>
         <p>to favourite</p>
       </ButtonContainer>
       <ButtonContainer>
-        <AddButton addClicked={addClicked} onClick={handleAdd}><AiOutlineUnorderedList style={style} /></AddButton>
+        <AddButton addClicked={addClicked} onClick={handleAdd} style={styledButton}><AiOutlineUnorderedList style={style} /></AddButton>
         <p>to a list</p>
       </ButtonContainer>
       <ButtonContainer>
-        <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style} /></WatButton>
+        <WatButton watClicked={watClicked} onClick={handleWat} style={styledButton}><AiOutlineEye style={style} /></WatButton>
         <p>to watchlist</p>
       </ButtonContainer>
     </MainBar>
@@ -99,7 +99,7 @@ const MainBar = styled.div`
 const FavButton = styled.button`
 width: 40px;
 height: 40px;
-border - radius: 50 %;
+border-radius: 50%;
 background:${props => (props.favClicked === true ? 'red' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
@@ -110,7 +110,7 @@ cursor: pointer;
 const AddButton = styled.button`
 width: 40px;
 height: 40px;
-border - radius: 50 %;
+border-radius: 50%;
 background:${props => (props.addClicked === true ? 'green' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
@@ -121,7 +121,7 @@ cursor: pointer;
 const WatButton = styled.button`
 width: 40px;
 height: 40px;
-border - radius: 50 %;
+border-radius: 50%;
 background:${props => (props.watClicked === true ? 'green' : 'black')};
 margin: 0 10px;
 border: 1px solid #fff;
@@ -131,12 +131,12 @@ cursor: pointer;
 
 const ButtonContainer = styled.div`
 display: flex;
-flex - direction: column;
-justify - content: center;
-align - items: center;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 
 p{
-  font - size: 12px;
+  font-size: 12px;
   color: white;
 }
 
