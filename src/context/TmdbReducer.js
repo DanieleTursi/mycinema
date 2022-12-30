@@ -94,16 +94,10 @@ const tmdbReducer = (state, action) => {
                 actorDetails: action.payload,
                 actorLoading: false,
             }
-        case 'PROVIDER_MOVIES':
+        case 'PROVIDER':
             return {
                 ...state,
-                movieProvider: action.payload,
-                providerLoading: false
-            }
-        case 'PROVIDER_TV':
-            return {
-                ...state,
-                tvProvider: action.payload,
+                provider: action.payload,
                 providerLoading: false
             }
         case 'SET_ACTOR_LOADING':

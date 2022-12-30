@@ -11,24 +11,22 @@ import FavWishAdd from '../components/FavWishAdd/FavWishAdd';
 
 
 const DetailsPage = () => {
-    const { details, detailsLoading, providerLoading, getDetails, getProvider, rDate, credits, cast, movieProvider, tvProvider } = useContext(TmdbContext);
+    const { details, detailsLoading, getDetails, rDate, credits, cast, provider} = useContext(TmdbContext);
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
 
-
     const startEffect = async () => {
-        await getDetails(showId, screenType);
-        await getProvider(showId);
-        console.log(movieProvider, tvProvider)
+        await getDetails(showId, screenType);   
         handleResize();
     }
 
     useEffect(() => {
         startEffect()
+        console.log(showId,screenType,provider)
     }, [])
 
-    if (!detailsLoading && !providerLoading) {
+    if (!detailsLoading) {
         return (
             <Wrapper>
                 <HeaderDetails>
@@ -60,16 +58,25 @@ const DetailsPage = () => {
                                 ? <><p>Seasons: <span>{details.number_of_seasons}</span></p>
                                     <p>Episodes: <span>{details.number_of_episodes}</span></p></>
                                 : <></>}
-
-                            {/* { movieProvider.US.buy.length > 0
-                               ? <Providers  >
-                          <p>Watch:</p>
-                            {movieProvider.US.buy.map((provider, idx) => (
+{/* 
+                            { provider.GB.flatrate.length > 0 
+                               ? <><Providers>
+                                <p>Watch:</p>
+                                     {provider.GB.flatrate.map((provider, idx) => (
+                                         <ProviderBox bg={provider.logo_path} idx={idx}>
+                                       </ProviderBox>
+                                 ))}
+                                 </Providers>
+                                 </>
+                               : provider.GB.buy.length > 0 
+                                ? <><Providers>
+                                <p>Watch:</p>
+                                {provider.GB.buy.map((provider, idx) => (
                                 <ProviderBox bg={provider.logo_path} idx={idx}>
-                                </ProviderBox>
-                            ))}
-                            </Providers>
-                            :<></>
+                                </ProviderBox>))}
+                                </Providers></>
+                                :<></>
+
                             } */}
 
                         </Details>
