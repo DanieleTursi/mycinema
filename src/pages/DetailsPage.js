@@ -15,9 +15,14 @@ const DetailsPage = () => {
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
+    const [link,setLink] = useState("");
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      };
 
     const startEffect = async () => {
         await getDetails(showId, screenType);
+        setLink(provider.link);
         handleResize();
     }
 
@@ -79,19 +84,24 @@ const DetailsPage = () => {
 
                             } */}
                             <Providers>
-                                {provider?.flatrate ? <p>Watch</p> : provider?.buy && <p>Buy</p>}
-                                {provider?.flatrate?.map(
+                            {provider?.flatrate 
+                                ? <><p>Stream:</p> 
+                                    {provider?.flatrate?.map(
                                     (provider, idx) => (
-                                        <ProviderBox bg={provider.logo_path} key={idx}>
+                                        <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
                                         </ProviderBox>
-                                    ))
-
-                                    || provider?.buy?.map(
+                                    ))}</>
+                                :<></>}
+                            
+                            {provider?.buy 
+                                ? <><p>Buy:</p> 
+                                    {provider?.buy?.map(
                                         (provider, idx) => (
-                                            <ProviderBox bg={provider.logo_path} key={idx}>
+                                            <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
                                             </ProviderBox>
-                                        ))
-                                }
+                                    ))}</>
+                                
+                                :<></>}
                             </Providers>
                         </Details>
                     </DetailsWrapper>
@@ -175,6 +185,7 @@ margin:0 10px;
 background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
 color:white;
+cursor:pointer;
 `
 
 const Details = styled.div`

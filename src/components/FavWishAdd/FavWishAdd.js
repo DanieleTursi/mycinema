@@ -7,7 +7,7 @@ import UserContext from '../../context/User/UserContext';
 
 const FavWishAdd = () => {
   const style = { fontSize: "20px", color: "white" };
-  const styledButton = { color: "white", fontSize: "12px", };
+  const styledP = { color: "white", fontSize: "12px", };
   const [favClicked, setFavClicked] = useState(false);
   const [addClicked, setAddClicked] = useState(false);
   const [watClicked, setWatClicked] = useState(false);
@@ -64,16 +64,16 @@ const FavWishAdd = () => {
   return (
     <MainBar>
       <ButtonContainer>
-        <FavButton favClicked={favClicked} onClick={handleFav} style={styledButton}><AiOutlineHeart style={style} /></FavButton>
-        <p>to favourite</p>
+        <FavButton favClicked={favClicked} onClick={handleFav} ><AiOutlineHeart style={style} /></FavButton>
+        <p style={styledP}>to favourite</p>
       </ButtonContainer>
       <ButtonContainer>
-        <AddButton addClicked={addClicked} onClick={handleAdd} style={styledButton}><AiOutlineUnorderedList style={style} /></AddButton>
-        <p>to a list</p>
+        <AddButton addClicked={addClicked} onClick={handleAdd} ><AiOutlineUnorderedList style={style} /></AddButton>
+        <p style={styledP}>to a list</p>
       </ButtonContainer>
       <ButtonContainer>
-        <WatButton watClicked={watClicked} onClick={handleWat} style={styledButton}><AiOutlineEye style={style} /></WatButton>
-        <p>to watchlist</p>
+        <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style} /></WatButton>
+        <p style={styledP}>to watchlist</p>
       </ButtonContainer>
     </MainBar>
   )
