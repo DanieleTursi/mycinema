@@ -79,15 +79,16 @@ const DetailsPage = () => {
 
                             } */}
                             <Providers>
+                                {provider?.flatrate ? <p>Watch</p> : provider?.buy && <p>Buy</p>}
                                 {provider?.flatrate?.map(
                                     (provider, idx) => (
-                                        <ProviderBox bg={provider.logo_path} idx={idx}>
+                                        <ProviderBox bg={provider.logo_path} key={idx}>
                                         </ProviderBox>
                                     ))
 
                                     || provider?.buy?.map(
                                         (provider, idx) => (
-                                            <ProviderBox bg={provider.logo_path} idx={idx}>
+                                            <ProviderBox bg={provider.logo_path} key={idx}>
                                             </ProviderBox>
                                         ))
                                 }
