@@ -176,9 +176,10 @@ export const TmdbProvider = ({ children }) => {
         const providerResponse = await fetch(`${URL}${channel}/${id}/watch/providers?${params}`);
         const providerData = await providerResponse.json();
 
+        console.log(providerData.results.GB);
         dispatch({
             type: 'PROVIDER',
-            payload: providerData.results,
+            payload: providerData.results.GB,
         })
     }
 
