@@ -231,7 +231,8 @@ export const TmdbProvider = ({ children }) => {
         getProvider(id, channel)
         const response = await fetch(`${URL}${channel}/${id}?${params}${lang}`);
         const details = await response.json();
-
+        const wrap = [];
+        wrap.push(details)
         const creditFetch = await fetch(`${URL}${channel}/${id}/credits?${params}${lang}`);
         const credits = await creditFetch.json();
 
@@ -273,7 +274,9 @@ export const TmdbProvider = ({ children }) => {
                 })
 
             }
+
         }
+        return wrap
     }
 
     return <TmdbContext.Provider value={{

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
 import TmdbContext from '../context/TmdbContext';
@@ -6,9 +6,26 @@ import UserContext from '../context/User/UserContext';
 
 
 const UserPage = ({ name, surname, email }) => {
-  const { searchMovies, movies, searchPeople, searchLoading, getPopular } = useContext(TmdbContext);
+  const { searchMovies, movies, searchPeople, searchLoading, getPopular, getDetails } = useContext(TmdbContext);
   const { user, updWatchlist, watchlist } = useContext(UserContext);
-
+  const [moviesWl, setMoviesWl] = useState([]);
+  const [showsWl, setShowsWl] = useState([]);
+  const watchlistMovieFunction = () => {
+    const moviesWl = [];
+    watchlist.movies.forEach(movie => {
+      getDetails(movie, 'movie').then((x) => moviesWl.push(x));
+    })
+    return moviesWl
+  }
+  const watchlistTvFunction = () => {
+    const showsWl = [];
+    watchlist.shows.forEach(show => {
+      getDetails(show, 'tv').then((x) => showsWl.push(x));
+      console.log(show);
+    })
+    console.log(showsWl);
+    return showsWl
+  }
 
   useEffect(() => {
     getPopular()
@@ -16,6 +33,12 @@ const UserPage = ({ name, surname, email }) => {
     if (!user) {
       window.location.replace('/')
     }
+    const mwl = watchlistMovieFunction();
+    const swl = watchlistTvFunction();
+    setMoviesWl(mwl)
+    setShowsWl(swl)
+    console.log(mwl, swl);
+    console.log(movies);
   }, [user])
 
   return (
@@ -37,7 +60,13 @@ const UserPage = ({ name, surname, email }) => {
         </div>
       </Details>
 
-      <button onClick={updWatchlist}>Test</button>
+      {/* <button onClick={updWatchlist}>Test</button> */}
+      {moviesWl.map((movie, idx) => (
+        <h1 key={idx}>{movie[0].title}</h1>
+      ))}
+      {showsWl.map((movie, idx) => (
+        <h1 key={idx}>{movie[0].name}</h1>
+      ))}
       <DetailsWrapper side='right' name='Wishlist || ' movies={movies} type='movie' page='detailsPage' />
 
 
