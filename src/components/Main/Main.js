@@ -25,15 +25,12 @@ const Main = () => {
           <CardWrapper side='right' name='Most Popular || ' movies={movies} type='movie' content={"MOVIES"} />
           <CardWrapper side='left' name='|| Top Rated ' movies={topSeries} type='tv' />
           <CardWrapper side='right' name='Top Rated ||' movies={topMovies} type='movie' content={"MOVIES"} />
-          <WrapperSuggestion>
-          <CardWrapper side='center' name='Best movies last 20 years ||' movies={bestLast20} type='movie' />
-          </WrapperSuggestion></>}
+          <CardWrapper side='center' name='Last 20 yrs ||' movies={bestLast20} type='movie' content={"MOVIES"}/>
+         </>}
       </CardWrapperHolder>
 
     </MainWrapper>
   )
-
-
 }
 export default Main
 
@@ -44,8 +41,6 @@ height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
-
-
 `;
 
 const CardWrapperHolder = styled.div`
@@ -55,10 +50,3 @@ display:flex;
 flex-wrap:wrap;
 justify-content:space-between;
 `;
-
-const WrapperSuggestion= styled.div`
-max-width:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-`
