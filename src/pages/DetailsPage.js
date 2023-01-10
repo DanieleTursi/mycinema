@@ -84,6 +84,7 @@ const DetailsPage = () => {
 
                             } */}
                             <Providers>
+                                {/* <ProviderList> */}
                             {provider?.flatrate 
                                 ? <><p>Stream:</p> 
                                     {provider?.flatrate?.map(
@@ -92,7 +93,10 @@ const DetailsPage = () => {
                                         </ProviderBox>
                                     ))}</>
                                 :<></>}
-                            
+                                </Providers>
+                            {/* </ProviderList>
+                            <ProviderList> */}
+                            <Providers>
                             {provider?.buy 
                                 ? <><p>Buy:</p> 
                                     {provider?.buy?.map(
@@ -102,6 +106,7 @@ const DetailsPage = () => {
                                     ))}</>
                                 
                                 :<></>}
+                                {/* </ProviderList> */}
                             </Providers>
                         </Details>
                     </DetailsWrapper>
@@ -162,8 +167,7 @@ justify-content:center;
 
 @media screen and (max-width: 768px){
     flex-direction:column;
-    padding:0 5%;
-    
+    padding:0 5%; 
 }
 `;
 
@@ -186,6 +190,13 @@ background:url(https://www.themoviedb.org/t/p/original${props => props.bg});
 background-size:cover ;
 color:white;
 cursor:pointer;
+
+@media screen and (max-width: 768px){
+    width:30px;
+    height:30px;
+    margin:0 3px;
+    
+}
 `
 
 const Details = styled.div`
@@ -281,10 +292,22 @@ div{
 
 const Providers = styled.div`
 display: flex;
+flex-direction:row;
 justify-content:flex-start;
 align-items:center;
-`
+margin-top:10px;
 
+`
+const ProviderList= styled.div`
+display:flex;
+flex-direction:row;
+
+@media screen and (max-width: 768px){
+    width:100%;
+    flex-wrap:wrap;
+   
+}
+`
 
 const CardHolder = styled.div`
 width:100%;

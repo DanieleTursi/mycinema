@@ -49,6 +49,10 @@ margin:10px;
 const Copyright = styled.div`
 font-size:26px;
 font-family: 'PT Sans Narrow', sans-serif;
+
+@media screen and (max-width: 768px){
+  font-size:20px;
+}
 `;
 
 const FooterLinks = styled.div`
@@ -60,12 +64,20 @@ a{
   text-decoration:none;
   color:white;
   margin:20px;
+
+  @media screen and (max-width: 768px){
+   margin:0 10px;
+   font-size:12px;
+}
 }
 
 
-@media screen and (max-width: 768px){
-    display:flex;
-}
+// @media screen and (max-width: 768px){
+//     display:flex;
+//     flex-direction:column;
+//     justify-content:flex-start;
+//     align-items:flex-start;
+// }
 `;
 
 export default Footer
