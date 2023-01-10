@@ -1,31 +1,68 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import TmdbContext from '../../context/TmdbContext';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import noImage from '../../assets/images/noImage.png'
+import UserContext from '../../context/User/UserContext';
+
 
 const CardDetails = (props) => {
   const { getDetails } = useContext(TmdbContext);
   const [showId, setShowId] = useLocalStorage('id', '');
   const [screenType, setScreenType] = useLocalStorage('st', '');
+  const [inWatchList, setInWatchList] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const { removeDataFromWatchlist, watchlist, } = useContext(UserContext);
+
   const navigate = useNavigate();
   const getId = async () => {
 
     await getDetails(showId, props.type);
+    console.log(props.type)
     navigate('/detailspage/')
   }
-
+  const mouseEnterHandler = () => {
+    setShowMessage(true)
+  }
+  const mouseLeaveHandler = () => {
+    setShowMessage(false)
+  }
   const idHandler = async () => {
     await setShowId(props.id);
-    await setScreenType(props.type)
+    await setScreenType(props.type === 'show' ? 'tv' : props.type)
     getId()
+
   }
 
-  return (
-    <>
+  const checkIfInWatchlist = () => {
+    if (watchlist !== undefined) {
+      if (props.type === 'movie') {
+        console.log(watchlist);
+        if (watchlist.movies.includes(props.id)) {
+          setInWatchList(true)
+        }
+      }
+      else {
+        if (watchlist.shows.includes(props.id)) {
+          setInWatchList(true)
+        }
+      }
+    }
+  }
+  useEffect(() => {
+    checkIfInWatchlist()
+  }, [])
+  return (<>
+
+    <Wrapper>
+      <RemoveButton onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} onClick={() => { removeDataFromWatchlist(props.id, props.type) }} inWatchList={inWatchList}>X
+
+      </RemoveButton>
+      <WatchlistInfo showMessage={showMessage}>Remove from Watchlist</WatchlistInfo>
       <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating} id='cardDetails'>
-        <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
+
+        <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release} >
         </Container>
         <AllInfo bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
           <Info bg={props.bg} id={props.id} rating={props.rating} release={props.release}>
@@ -36,15 +73,23 @@ const CardDetails = (props) => {
           </Info>
           <h4>Title: <span>{props.title}</span></h4>
           {props.character != '' &&
-            <h4>As:   <span>{props.character}</span></h4>
+            <h4>{props.character && 'As:'}   <span>{props.character}</span></h4>
           }
         </AllInfo>
       </MainContainer>
-    </>
+    </Wrapper>
+  </>
   )
 }
 
 export default CardDetails
+const Wrapper = styled.div`
+position:relative ;
+margin-top:10px;
+width:320px;
+height:145px;
+`;
+
 
 const MainContainer = styled.div.attrs(props => ({
   style: {
@@ -55,10 +100,10 @@ const MainContainer = styled.div.attrs(props => ({
 
 flex-direction:row;
 align-items:center;
+position:relative;
 
-margin-top:10px;
-width:320px;
-height:145px;
+width:100%;
+height:100%;
 text-shadow:1px 1px 1px black;
 border-radius:8px;
 padding:2px;
@@ -75,7 +120,7 @@ span{
 }
 
 &:hover{
-  opacity:0.8;
+  opacity:0.9;
 }
 `
 
@@ -141,3 +186,40 @@ const Rating = styled.div`
     }  
     `;
 
+const RemoveButton = styled.div`
+position:absolute;
+display:${props => props.inWatchList ? 'flex' : 'none'};
+align-items:center;
+justify-content:center;
+right:10px;
+top:20px;
+width:20px;
+height:20px;
+border-radius:50% ;
+border:1px solid #fff;
+font-size: 13px;
+z-index:50;
+cursor:pointer;
+color:#fff;
+&:hover{
+  color:#000;
+  background-color:#fff ;
+  border:1px solid #000;
+}
+
+
+`;
+
+const WatchlistInfo = styled.span`
+position:absolute;
+display:${props => !props.showMessage && 'none'} ;
+z-index:60 ;
+top:45px;
+right:-40px;
+background-color:#fff ;
+border:1px solid black;
+border-radius: 7px;
+font-weight:bold;
+font-size:12px;
+padding:3px;
+`;
