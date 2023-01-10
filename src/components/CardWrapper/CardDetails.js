@@ -32,7 +32,6 @@ const CardDetails = (props) => {
     await setShowId(props.id);
     await setScreenType(props.type === 'show' ? 'tv' : props.type)
     getId()
-
   }
 
   const checkIfInWatchlist = () => {
