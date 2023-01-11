@@ -30,7 +30,10 @@ export const UserProvider = ({ children }) => {
             movies: [],
             shows: []
         },
-
+        favourites: {
+            movies: [],
+            shows: []
+        },
 
     }
     const [state, dispatch] = useReducer(userReducer, initialState);
@@ -58,14 +61,6 @@ export const UserProvider = ({ children }) => {
         return data[0].id
     }
 
-    const updWatchlist = (newData) => {
-        const docRef = doc(db, 'users', state.id);
-        updateDoc(docRef, {
-            watchlist: newData
-        }
-        )
-
-    }
 
 
 
@@ -88,6 +83,7 @@ export const UserProvider = ({ children }) => {
             type: 'LOGIN',
             payload: userData,
             watchlist: userData.watchlist,
+            favourites: userData.favourites,
         })
 
 
@@ -121,7 +117,81 @@ export const UserProvider = ({ children }) => {
         })
         updWatchlist(newObj)
     }
+    // Update Favourites
+    const addFavourite = (newData) => {
+        const docRef = doc(db, 'users', state.id);
+        updateDoc(docRef, {
+            favourites: newData
+        }
+        )
 
+    }
+    const updateFavourites = async (id, showOrMovie) => {
+        const favouriteMovies = [];
+        const favouriteShows = [];
+        state.favourites.movies.forEach(movieId => {
+            favouriteMovies.push(movieId)
+        })
+        state.favourites.shows.forEach(showId => {
+            favouriteShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            favouriteMovies.push(id)
+        }
+        else {
+            favouriteShows.push(id)
+        }
+
+        const newObj = {
+            movies: favouriteMovies,
+            shows: favouriteShows
+        }
+        dispatch({
+            type: 'UPDATE_FAVOURITES',
+            payload: newObj
+        })
+        addFavourite(newObj)
+    }
+    // Remove data from Favourites
+    const removeDataFromFavourites = (id, showOrMovie) => {
+        let favouriteMovies = [];
+        let favouriteShows = [];
+        state.favourites.movies.forEach(movieId => {
+            favouriteMovies.push(movieId)
+        })
+        state.favourites.shows.forEach(showId => {
+            favouriteShows.push(showId)
+        })
+        if (showOrMovie === 'movie') {
+            const filteredMovies = favouriteMovies.filter(movieid => movieid !== id)
+            favouriteMovies = filteredMovies
+        }
+        else {
+            const filteredShows = favouriteShows.filter(showid => showid !== id);
+            favouriteShows = filteredShows
+        }
+
+        const newObj = {
+            movies: favouriteMovies,
+            shows: favouriteShows
+        }
+        dispatch({
+            type: 'UPDATE_FAVOURITES',
+            payload: newObj
+        })
+        addFavourite(newObj)
+    }
+
+
+    // Update Watchlist
+    const updWatchlist = (newData) => {
+        const docRef = doc(db, 'users', state.id);
+        updateDoc(docRef, {
+            watchlist: newData
+        }
+        )
+
+    }
 
     const updateWatchlist = async (id, showOrMovie) => {
         const watchlistMovies = [];
@@ -274,9 +344,6 @@ export const UserProvider = ({ children }) => {
             const res = await signInWithPopup(auth, googleProvider);
             const user = res.user;
 
-
-            // getWatchlist(id)
-
             const q = query(collection(db, "users"), where("uid", "==", user.uid));
             const docs = await getDocs(q);
             if (docs.docs.length === 0) {
@@ -365,7 +432,9 @@ export const UserProvider = ({ children }) => {
         closeSidebar,
         updWatchlist,
         updateWatchlist,
+        updateFavourites,
         removeDataFromWatchlist,
+        removeDataFromFavourites,
         sidebarOpen: state.sidebarOpen,
         loginError: state.loginError,
         showNavButtons: state.showNavButtons,
@@ -373,6 +442,7 @@ export const UserProvider = ({ children }) => {
         user: state.user,
         registerError: state.registerError,
         watchlist: state.watchlist,
+        favourites: state.favourites,
 
 
     }}>{children}</UserContext.Provider>

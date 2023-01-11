@@ -17,6 +17,8 @@ const userReducer = (state, action) => {
                 showNavButtons: false,
                 loginError: action.error,
                 watchlist: action.watchlist,
+                favourites: action.favourites,
+
             }
         case 'LOGOUT':
             return {
@@ -52,11 +54,6 @@ const userReducer = (state, action) => {
                 ...state,
                 id: action.id,
             }
-        case 'ADD_DATA_TO_WATCHLIST':
-            return {
-                ...state,
-                watchlist: action.payload,
-            }
 
         case 'UPDATE_MOVIE_STATE':
             return {
@@ -67,6 +64,11 @@ const userReducer = (state, action) => {
             return {
                 ...state,
                 watchlist: action.payload,
+            }
+        case 'UPDATE_FAVOURITES':
+            return {
+                ...state,
+                favourites: action.payload,
             }
         default:
             return state

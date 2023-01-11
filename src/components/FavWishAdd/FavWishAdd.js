@@ -12,7 +12,7 @@ const FavWishAdd = () => {
   const [addClicked, setAddClicked] = useState(false);
   const [watClicked, setWatClicked] = useState(false);
 
-  const { updateWatchlist, removeDataFromWatchlist, watchlist, user } = useContext(UserContext);
+  const { updateWatchlist, updateFavourites, favourites, removeDataFromWatchlist, removeDataFromFavourites, watchlist, user } = useContext(UserContext);
   const [movieId] = useLocalStorage('id', '');
   const [showOrMovie] = useLocalStorage('st', '');
 
@@ -31,16 +31,37 @@ const FavWishAdd = () => {
       }
     }
   }
+  const checkIfInFavourites = () => {
+    if (favourites !== undefined) {
+      if (showOrMovie === 'movie') {
+
+        if (favourites.movies.includes(movieId)) {
+          setFavClicked(true)
+        }
+      }
+      else {
+        if (favourites.shows.includes(movieId)) {
+          setFavClicked(true)
+        }
+      }
+    }
+  }
   useEffect(() => {
-    checkIfInWatchlist()
-  }, [watchlist])
+    checkIfInWatchlist();
+    checkIfInFavourites();
+  }, [watchlist, favourites])
 
   const handleFav = () => {
-    favClicked
-      ? setFavClicked(false)
+    if (favClicked) {
+      setFavClicked(false);
+      removeDataFromFavourites(movieId, showOrMovie)
+    }
+    else {
+      setFavClicked(true);
+      updateFavourites(movieId, showOrMovie)
+    }
 
-      : setFavClicked(true)
-      ;
+
   };
 
   const handleAdd = () => {

@@ -7,9 +7,11 @@ import UserContext from '../context/User/UserContext';
 
 const UserPage = () => {
   const { getPopular, getDetails } = useContext(TmdbContext);
-  const { user, watchlist } = useContext(UserContext);
+  const { user, watchlist, favourites } = useContext(UserContext);
   const [moviesWl, setMoviesWl] = useState([]);
   const [showsWl, setShowsWl] = useState([]);
+  const [moviesFl, setMoviesFl] = useState([]);
+  const [showsFl, setShowsFl] = useState([]);
   const [buttonClicked, setButtonClicked] = useState('Watchlist')
   const [movieOrTv, setMovieOrTv] = useState('movie')
 
@@ -21,6 +23,26 @@ const UserPage = () => {
   const buttonClickHandler = (input) => {
     setButtonClicked(input);
   }
+  // get favourites for movies and tv
+  const favouritesMovieFunction = () => {
+    const moviesFl = [];
+    favourites.movies.forEach(movie => {
+      getDetails(movie, 'movie').then((x) => { moviesFl.push(x[0]) });
+
+    })
+
+    return moviesFl
+  }
+  const favouritesTvFunction = () => {
+    const showsFl = [];
+    favourites.shows.forEach(show => {
+      getDetails(show, 'tv').then((x) => showsFl.push(x[0]));
+
+    })
+
+    return showsFl
+  }
+
   // get the watchlist for movies and tv
   const watchlistMovieFunction = () => {
     const moviesWl = [];
@@ -49,10 +71,14 @@ const UserPage = () => {
     }
     const mwl = watchlistMovieFunction();
     const swl = watchlistTvFunction();
+    const mfl = favouritesMovieFunction();
+    const sfl = favouritesTvFunction();
     setMoviesWl(mwl)
     setShowsWl(swl)
+    setMoviesFl(mfl);
+    setShowsFl(sfl);
 
-  }, [user, watchlist])
+  }, [user, watchlist, favourites])
 
   return (
     <UserPageContainer>
@@ -85,10 +111,10 @@ const UserPage = () => {
             TV({showsWl.length})</ListButton>
         </ListSelector>
         <WatchListWrapper show={movieOrTv === 'movie' ? true : false}>
-          <DetailsWrapper movies={moviesWl} type='movie' page='detailsPage' />
+          <DetailsWrapper movies={moviesWl} type='movie' page='detailsPage' where='watchlist' />
         </WatchListWrapper>
         <WatchListWrapper show={movieOrTv === 'tv' ? true : false}>
-          <DetailsWrapper movies={showsWl} type='show' page='detailsPage' />
+          <DetailsWrapper movies={showsWl} type='show' page='detailsPage' where='watchlist' />
         </WatchListWrapper>
 
 
@@ -97,7 +123,22 @@ const UserPage = () => {
         Lists
       </UserListsWrapper>
       <UserListsWrapper show={buttonClicked === 'Favourites' ? 'show' : 'noShow'}>
-        Favourites
+        <ListSelector show={movieOrTv}>
+          <ListButton onClick={() => { movieOrTvHandler('movie') }}
+            show={movieOrTv === 'movie' ? true : false}>
+            MOVIES({moviesFl.length})</ListButton>
+          <ListButton onClick={() => { movieOrTvHandler('tv') }}
+            show={movieOrTv === 'tv' ? true : false}>
+            TV({showsFl.length})</ListButton>
+        </ListSelector>
+        <WatchListWrapper show={movieOrTv === 'movie' ? true : false}>
+          <DetailsWrapper movies={moviesFl} type='movie' page='detailsPage' where='favourites' />
+        </WatchListWrapper>
+        <WatchListWrapper show={movieOrTv === 'tv' ? true : false}>
+          <DetailsWrapper movies={showsFl} type='show' page='detailsPage' where='favourites' />
+        </WatchListWrapper>
+
+
       </UserListsWrapper>
     </UserPageContainer>
   )
