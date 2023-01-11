@@ -12,8 +12,9 @@ const CardDetails = (props) => {
   const [showId, setShowId] = useLocalStorage('id', '');
   const [screenType, setScreenType] = useLocalStorage('st', '');
   const [inWatchList, setInWatchList] = useState(false);
+  const [inFavourites, setInFavourites] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const { removeDataFromWatchlist, watchlist, } = useContext(UserContext);
+  const { removeDataFromWatchlist, watchlist, favourites, removeDataFromFavourites } = useContext(UserContext);
 
   const navigate = useNavigate();
   const getId = async () => {
@@ -37,7 +38,7 @@ const CardDetails = (props) => {
   const checkIfInWatchlist = () => {
     if (watchlist !== undefined) {
       if (props.type === 'movie') {
-        console.log(watchlist);
+
         if (watchlist.movies.includes(props.id)) {
           setInWatchList(true)
         }
@@ -49,16 +50,41 @@ const CardDetails = (props) => {
       }
     }
   }
+  const checkIfInFavourites = () => {
+    if (favourites !== undefined) {
+      if (props.type === 'movie') {
+
+        if (favourites.movies.includes(props.id)) {
+          setInFavourites(true)
+        }
+      }
+      else {
+        if (favourites.shows.includes(props.id)) {
+          setInFavourites(true)
+        }
+      }
+    }
+  }
+  const removeData = () => {
+    if (props.where === 'watchlist') {
+      removeDataFromWatchlist(props.id, props.type)
+    }
+    else if (props.where === 'favourites') {
+      removeDataFromFavourites(props.id, props.type)
+    }
+  }
+
   useEffect(() => {
-    checkIfInWatchlist()
+    checkIfInWatchlist();
+    checkIfInFavourites();
   }, [])
   return (<>
 
     <Wrapper>
-      <RemoveButton onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} onClick={() => { removeDataFromWatchlist(props.id, props.type) }} inWatchList={inWatchList}>X
+      <RemoveButton onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} onClick={removeData} inWatchList={inWatchList} inFavourites={inFavourites}>X
 
       </RemoveButton>
-      <WatchlistInfo showMessage={showMessage}>Remove from Watchlist</WatchlistInfo>
+      <WatchlistInfo showMessage={showMessage}>{props.where === 'watchlist' ? 'Remove from Watchlist' : 'Remove from Favourites'}</WatchlistInfo>
       <MainContainer onClick={idHandler} bg={props.bg} rating={props.rating} id='cardDetails'>
 
         <Container bg={props.bg} id={props.id} rating={props.rating} release={props.release} >
@@ -187,7 +213,7 @@ const Rating = styled.div`
 
 const RemoveButton = styled.div`
 position:absolute;
-display:${props => props.inWatchList ? 'flex' : 'none'};
+display:${props => props.inWatchList || props.inFavourites ? 'flex' : 'none'};
 align-items:center;
 justify-content:center;
 right:10px;

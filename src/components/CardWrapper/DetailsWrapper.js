@@ -18,7 +18,7 @@ const DetailsWrapper = (props) => {
             {props.name}
           </Title>
           {props.movies.slice(0, show).map((movie, idx) => (
-            <CardDetails page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
+            <CardDetails where={props.where} page={props.page} key={idx} bg={movie.poster_path} id={movie.id} type={props.type} rating={movie.vote_average} character={movie.character} release={movie.release_date || movie.first_air_date} title={movie.name || movie.title} />
           ))}
         </Container>
         {props.movies.length > 15 &&

@@ -111,7 +111,7 @@ text-align:center;
 
 `;
 const ImageCss = css`
-background-image:url(${props => `props.image`});
+background-image:url(${props => props.image});
 background-size:cover;
 `
 
@@ -127,3 +127,4 @@ justify-content:center;
 border:1px solid #fff;
 cursor:pointer;
 `;
+

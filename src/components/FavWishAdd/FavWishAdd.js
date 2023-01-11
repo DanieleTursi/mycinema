@@ -12,14 +12,14 @@ const FavWishAdd = () => {
   const [addClicked, setAddClicked] = useState(false);
   const [watClicked, setWatClicked] = useState(false);
 
-  const { updateWatchlist, removeDataFromWatchlist, watchlist, user } = useContext(UserContext);
+  const { updateWatchlist, updateFavourites, favourites, removeDataFromWatchlist, removeDataFromFavourites, watchlist, user } = useContext(UserContext);
   const [movieId] = useLocalStorage('id', '');
   const [showOrMovie] = useLocalStorage('st', '');
-  // const [isMovie, setIsMovie] = useState(false)
+
   const checkIfInWatchlist = () => {
     if (watchlist !== undefined) {
       if (showOrMovie === 'movie') {
-        console.log(watchlist);
+
         if (watchlist.movies.includes(movieId)) {
           setWatClicked(true)
         }
@@ -31,16 +31,37 @@ const FavWishAdd = () => {
       }
     }
   }
+  const checkIfInFavourites = () => {
+    if (favourites !== undefined) {
+      if (showOrMovie === 'movie') {
+
+        if (favourites.movies.includes(movieId)) {
+          setFavClicked(true)
+        }
+      }
+      else {
+        if (favourites.shows.includes(movieId)) {
+          setFavClicked(true)
+        }
+      }
+    }
+  }
   useEffect(() => {
-    checkIfInWatchlist()
-  }, [watchlist])
+    checkIfInWatchlist();
+    checkIfInFavourites();
+  }, [watchlist, favourites])
 
   const handleFav = () => {
-    favClicked
-      ? setFavClicked(false)
+    if (favClicked) {
+      setFavClicked(false);
+      removeDataFromFavourites(movieId, showOrMovie)
+    }
+    else {
+      setFavClicked(true);
+      updateFavourites(movieId, showOrMovie)
+    }
 
-      : setFavClicked(true)
-      ;
+
   };
 
   const handleAdd = () => {
@@ -60,23 +81,25 @@ const FavWishAdd = () => {
     }
 
   };
+  if (user) {
+    return (
+      <MainBar>
+        <ButtonContainer>
+          <FavButton favClicked={favClicked} onClick={handleFav} ><AiOutlineHeart style={style} /></FavButton>
+          <p style={styledP}>to favourite</p>
+        </ButtonContainer>
+        <ButtonContainer>
+          <AddButton addClicked={addClicked} onClick={handleAdd} ><AiOutlineUnorderedList style={style} /></AddButton>
+          <p style={styledP}>to a list</p>
+        </ButtonContainer>
+        <ButtonContainer>
+          <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style} /></WatButton>
+          <p style={styledP}>to watchlist</p>
+        </ButtonContainer>
+      </MainBar>
+    )
+  }
 
-  return (
-    <MainBar>
-      <ButtonContainer>
-        <FavButton favClicked={favClicked} onClick={handleFav} ><AiOutlineHeart style={style} /></FavButton>
-        <p style={styledP}>to favourite</p>
-      </ButtonContainer>
-      <ButtonContainer>
-        <AddButton addClicked={addClicked} onClick={handleAdd} ><AiOutlineUnorderedList style={style} /></AddButton>
-        <p style={styledP}>to a list</p>
-      </ButtonContainer>
-      <ButtonContainer>
-        <WatButton watClicked={watClicked} onClick={handleWat}><AiOutlineEye style={style} /></WatButton>
-        <p style={styledP}>to watchlist</p>
-      </ButtonContainer>
-    </MainBar>
-  )
 }
 
 export default FavWishAdd
