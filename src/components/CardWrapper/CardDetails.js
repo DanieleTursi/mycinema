@@ -37,7 +37,7 @@ const CardDetails = (props) => {
   const checkIfInWatchlist = () => {
     if (watchlist !== undefined) {
       if (props.type === 'movie') {
-        console.log(watchlist);
+
         if (watchlist.movies.includes(props.id)) {
           setInWatchList(true)
         }

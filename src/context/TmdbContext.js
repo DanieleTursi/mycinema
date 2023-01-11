@@ -1,12 +1,10 @@
-
-import { array } from "prop-types";
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import tmdbReducer from './TmdbReducer'
 const TmdbContext = createContext();
-
 const TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
 const URL = 'https://api.themoviedb.org/3/'
 const lang = '&language=en-US&page=1';
+
 export const TmdbProvider = ({ children }) => {
     const initialState = {
         movies: [],
@@ -84,7 +82,6 @@ export const TmdbProvider = ({ children }) => {
             const dataSeries = await resSeries.json()
             const resPeople = await fetch(`${URL}search/person?${params}&language=en-US&query=${value}&page=1`)
             const dataPeople = await resPeople.json()
-            // console.log(dataMovies, dataSeries, dataPeople)
             dispatch({ type: 'GET_SEARCH', searchMovies: dataMovies.results, searchTV: dataSeries.results, searchPeople: dataPeople.results })
         }
     }
@@ -98,9 +95,6 @@ export const TmdbProvider = ({ children }) => {
         if (type === 'movie') {
             const movieVideos = await fetch(`${URL}movie/${id}/videos?${params}${lang}`);
             const movieVideosData = await movieVideos.json();
-
-            // console.log(movieVideosData.results);
-
             dispatch({
                 type: 'MOVIE_VIDEOS',
                 payload: movieVideosData.results,
@@ -110,14 +104,11 @@ export const TmdbProvider = ({ children }) => {
         else {
             const tvVideos = await fetch(`${URL}tv/${id}/videos?${params}${lang}`);
             const tvVideosData = await tvVideos.json();
-            console.log(tvVideosData.results);
             dispatch({
                 type: 'MOVIE_VIDEOS',
                 payload: tvVideosData.results,
             })
         }
-
-
     }
 
     // get bestLast20 movies
@@ -176,7 +167,7 @@ export const TmdbProvider = ({ children }) => {
         const providerResponse = await fetch(`${URL}${channel}/${id}/watch/providers?${params}`);
         const providerData = await providerResponse.json();
 
-        console.log(providerData.results.GB);
+
         dispatch({
             type: 'PROVIDER',
             payload: providerData.results.GB,
@@ -192,7 +183,6 @@ export const TmdbProvider = ({ children }) => {
 
         const tvCredits = await fetch(`${URL}person/${id}/tv_credits?${params}${lang}`);
         const tvCreditsData = await tvCredits.json()
-        // console.log(tvCreditsData.cast, movieCreditsData.cast);
 
         dispatch({
             type: 'ACTOR_CREDITS',

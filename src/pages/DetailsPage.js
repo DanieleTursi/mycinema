@@ -15,20 +15,20 @@ const DetailsPage = () => {
     const { handleResize, isSmall } = useContext(SizeContext);
     const [showId] = useLocalStorage('id', '');
     const [screenType] = useLocalStorage('st', '');
-    const [link,setLink] = useState("");
+    const [link, setLink] = useState("");
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
-      };
+    };
 
     const startEffect = async () => {
         await getDetails(showId, screenType);
-        setLink(provider.link);
+        setLink(provider?.link);
         handleResize();
     }
 
     useEffect(() => {
         startEffect()
-        console.log(showId, screenType, provider)
+
     }, [])
 
     if (!detailsLoading) {
@@ -85,27 +85,27 @@ const DetailsPage = () => {
                             } */}
                             <Providers>
                                 {/* <ProviderList> */}
-                            {provider?.flatrate 
-                                ? <><p>Stream:</p> 
-                                    {provider?.flatrate?.map(
-                                    (provider, idx) => (
-                                        <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
-                                        </ProviderBox>
-                                    ))}</>
-                                :<></>}
-                                </Providers>
+                                {provider?.flatrate
+                                    ? <><p>Stream:</p>
+                                        {provider?.flatrate?.map(
+                                            (provider, idx) => (
+                                                <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
+                                                </ProviderBox>
+                                            ))}</>
+                                    : <></>}
+                            </Providers>
                             {/* </ProviderList>
                             <ProviderList> */}
                             <Providers>
-                            {provider?.buy 
-                                ? <><p>Buy:</p> 
-                                    {provider?.buy?.map(
-                                        (provider, idx) => (
-                                            <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
-                                            </ProviderBox>
-                                    ))}</>
-                                
-                                :<></>}
+                                {provider?.buy
+                                    ? <><p>Buy:</p>
+                                        {provider?.buy?.map(
+                                            (provider, idx) => (
+                                                <ProviderBox bg={provider.logo_path} key={idx} onClick={() => openInNewTab(`${link}`)}>
+                                                </ProviderBox>
+                                            ))}</>
+
+                                    : <></>}
                                 {/* </ProviderList> */}
                             </Providers>
                         </Details>
@@ -298,7 +298,7 @@ align-items:center;
 margin-top:10px;
 
 `
-const ProviderList= styled.div`
+const ProviderList = styled.div`
 display:flex;
 flex-direction:row;
 

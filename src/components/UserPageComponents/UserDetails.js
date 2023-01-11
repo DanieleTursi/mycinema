@@ -3,19 +3,28 @@ import styled from 'styled-components'
 
 
 const UserDetails = (props) => {
-    return (
-        <Details>
-            <h4>User Details:</h4>
-            <h3>Name: <span>{props.user?.name || props.user?.displayName}</span></h3>
-            <h3>Email: <span>{props.user?.email}</span></h3>
+  return (
+    <Wrap>
+      <Details>
+        <h4>User Details:</h4>
+        <h3>Name: <span>{props.user?.name || props.user?.displayName}</span></h3>
+        <h3>Email: <span>{props.user?.email}</span></h3>
 
-        </Details>
-    )
+      </Details>
+      <ImageWrapper image={props.user?.photoUrl
+      } />
+    </Wrap>
+  )
 }
 
 export default UserDetails
 
-
+const Wrap = styled.div`
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+`;
 
 const Details = styled.div`
   width:500px;
@@ -44,3 +53,12 @@ const Details = styled.div`
   
   
 `
+const ImageWrapper = styled.div`
+width:100px;
+height:100px;
+border:1px solid #000;
+border-radius:7px;
+background-image:url(${props => props.image});
+background-size:cover;
+
+`;

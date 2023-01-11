@@ -61,11 +61,12 @@ const MovieTrailer = () => {
 
 
     const checkIfTrailerAvailable = async () => {
+
         const available = await videos.filter((obj) => obj.type === 'Trailer').length;
         const newType = await videos.filter((obj) => obj.type != '');
 
         if (available === 0) {
-            setVideoType(newType[0].type)
+            setVideoType(newType[0]?.type)
         }
     }
 

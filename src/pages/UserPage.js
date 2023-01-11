@@ -2,48 +2,48 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import DetailsWrapper from '../components/CardWrapper/DetailsWrapper';
 import UserDetails from '../components/UserPageComponents/UserDetails';
-
 import TmdbContext from '../context/TmdbContext';
 import UserContext from '../context/User/UserContext';
 
-
-const UserPage = ({ name, surname, email }) => {
-  const { searchMovies, movies, searchPeople, searchLoading, getPopular, getDetails } = useContext(TmdbContext);
-  const { user, updWatchlist, watchlist } = useContext(UserContext);
+const UserPage = () => {
+  const { getPopular, getDetails } = useContext(TmdbContext);
+  const { user, watchlist } = useContext(UserContext);
   const [moviesWl, setMoviesWl] = useState([]);
   const [showsWl, setShowsWl] = useState([]);
-
   const [buttonClicked, setButtonClicked] = useState('Watchlist')
   const [movieOrTv, setMovieOrTv] = useState('movie')
 
+  // select movies or tv visible in watchlist
   const movieOrTvHandler = (input) => {
     setMovieOrTv(input)
   }
+  // Updatse witch button was clicked
   const buttonClickHandler = (input) => {
     setButtonClicked(input);
   }
+  // get the watchlist for movies and tv
   const watchlistMovieFunction = () => {
     const moviesWl = [];
     watchlist.movies.forEach(movie => {
       getDetails(movie, 'movie').then((x) => { moviesWl.push(x[0]) });
 
     })
-    console.log(moviesWl)
+
     return moviesWl
   }
   const watchlistTvFunction = () => {
     const showsWl = [];
     watchlist.shows.forEach(show => {
       getDetails(show, 'tv').then((x) => showsWl.push(x[0]));
-      console.log(show);
+
     })
-    console.log(showsWl);
+
     return showsWl
   }
 
   useEffect(() => {
     getPopular()
-    console.log(user);
+
     if (!user) {
       window.location.replace('/')
     }
@@ -51,8 +51,7 @@ const UserPage = ({ name, surname, email }) => {
     const swl = watchlistTvFunction();
     setMoviesWl(mwl)
     setShowsWl(swl)
-    console.log(mwl, swl);
-    console.log(movies);
+
   }, [user, watchlist])
 
   return (
@@ -100,12 +99,6 @@ const UserPage = ({ name, surname, email }) => {
       <UserListsWrapper show={buttonClicked === 'Favourites' ? 'show' : 'noShow'}>
         Favourites
       </UserListsWrapper>
-
-
-
-
-
-
     </UserPageContainer>
   )
 }
@@ -121,11 +114,8 @@ const UserPageContainer = styled.div`
 const UserPageNavigation = styled.div`
 width:150px;
 height:400px;
-
-
 margin:20px 0 20px 50px;
 `;
-
 
 const UserNavButton = styled.div`
 display:flex;

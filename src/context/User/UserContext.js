@@ -1,28 +1,20 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import userReducer from "./UserReducer";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import jwt_decode from 'jwt-decode';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { db } from '../../firebase';
 import {
-    getFirestore,
+
     query,
     getDocs,
     doc, getDoc,
     collection,
     where,
     addDoc,
-    onSnapshot,
-    setDoc,
     updateDoc
 
 } from "firebase/firestore";
-import { useState } from "react";
-
-
 const UserContext = createContext('')
-
 
 export const UserProvider = ({ children }) => {
     const initialState = {
@@ -47,8 +39,6 @@ export const UserProvider = ({ children }) => {
             if (currentUser != null) {
                 handleUserData(currentUser.uid)
             }
-
-
         });
     }, []);
 
@@ -60,8 +50,7 @@ export const UserProvider = ({ children }) => {
 
             ...doc.data(), id: doc.id
         }))
-        console.log(data
-        )
+
         dispatch({
             type: 'GET_DOC_ID',
             id: data[0].id,
@@ -70,13 +59,8 @@ export const UserProvider = ({ children }) => {
     }
 
     const updWatchlist = (newData) => {
-        console.log('working');
         const docRef = doc(db, 'users', state.id);
         updateDoc(docRef, {
-            // watchlist: {
-            //     movies: ['grinch'],
-            //     shows: ['Witcher']
-            // }
             watchlist: newData
         }
         )
@@ -98,19 +82,8 @@ export const UserProvider = ({ children }) => {
     // handling the user data after login or state change
     const handleUserData = async (uid) => {
         const docId = await getDocId(uid);
-        const userData = await getDataOfUser(docId)
-        console.log(userData)
-        const userObject = {
-            name: userData.name,
-            email: userData.email,
-            photoURL: userData.photoUrl,
-            uid: userData.uid,
-            lists: userData.lists,
-            watchlists: userData.watchlist,
-            favourites: userData.favourites,
+        const userData = await getDataOfUser(docId);
 
-        }
-        console.log(userObject)
         dispatch({
             type: 'LOGIN',
             payload: userData,
@@ -119,8 +92,8 @@ export const UserProvider = ({ children }) => {
 
 
     }
+    // Removing data from the watchlist
     const removeDataFromWatchlist = (id, showOrMovie) => {
-        console.log('working-remove');
         let watchlistMovies = [];
         let watchlistShows = [];
         state.watchlist.movies.forEach(movieId => {
@@ -142,7 +115,6 @@ export const UserProvider = ({ children }) => {
             movies: watchlistMovies,
             shows: watchlistShows
         }
-        console.log(newObj);
         dispatch({
             type: 'UPDATE_WATCHLIST',
             payload: newObj
@@ -152,7 +124,6 @@ export const UserProvider = ({ children }) => {
 
 
     const updateWatchlist = async (id, showOrMovie) => {
-        console.log(id, showOrMovie);
         const watchlistMovies = [];
         const watchlistShows = [];
         state.watchlist.movies.forEach(movieId => {
@@ -172,7 +143,6 @@ export const UserProvider = ({ children }) => {
             movies: watchlistMovies,
             shows: watchlistShows
         }
-        console.log(newObj);
         dispatch({
             type: 'UPDATE_WATCHLIST',
             payload: newObj
@@ -182,9 +152,6 @@ export const UserProvider = ({ children }) => {
     // Opening and closing the sidebar
 
     const handleSidebarOpen = async () => {
-
-
-        console.log(state.id)
         dispatch({
             type: 'SIDEBAR_OPEN',
             payload: !state.sidebarOpen,
@@ -211,13 +178,12 @@ export const UserProvider = ({ children }) => {
             payload: user
         })
 
-        console.log(user);
+
 
     }
     const registerFunc = async (email, password, setErrorSpan, name) => {
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(res);
             const user = res.user;
             await addDoc(collection(db, "users"), {
                 uid: user.uid,
@@ -260,7 +226,7 @@ export const UserProvider = ({ children }) => {
 
         try {
             const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-            console.log(user)
+
             const docId = await getDocId(user.user.uid);
 
 
@@ -307,7 +273,7 @@ export const UserProvider = ({ children }) => {
         try {
             const res = await signInWithPopup(auth, googleProvider);
             const user = res.user;
-            console.log(user)
+
 
             // getWatchlist(id)
 
@@ -348,7 +314,7 @@ export const UserProvider = ({ children }) => {
 
     const handleGoogleLogin = async () => {
         const uid = await signInWithGoogle()
-        console.log(uid)
+
         handleUserData(uid)
     }
 

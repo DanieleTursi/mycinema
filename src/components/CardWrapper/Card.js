@@ -19,7 +19,6 @@ const Card = (props) => {
   const idHandler = async () => {
     await setShowId(props.id);
     await setScreenType(props.type)
-    console.log(showId)
     getId()
   }
 
